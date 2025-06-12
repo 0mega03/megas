@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>選択制DCにおける給与計算の流れ</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 800px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>選択制DCにおける給与計算の考え方</h1>
+        <div class="mermaid">
+            graph TD
+                subgraph "【ステップ1】 会社の給与制度"
+                    A["<b>給与の内訳</b><br/>基本給: 170,000円<br/>生涯設計手当: 30,000円"]
+                end
+
+                subgraph "【ステップ2】 最低賃金のチェック"
+                    B["<b>計算対象額: 200,000円</b><br/>この『基本給＋手当』の合計額を<br/>時給換算して最低賃金を判断します"]
+                end
+
+                subgraph "【ステップ3】 従業員の選択"
+                    C{"生涯設計手当をどうするか？"}
+                end
+
+                subgraph "【ステップ4】 税・社会保険料の計算"
+                    D["<b>DCへ拠出する場合</b><br/>計算対象: <b>170,000円</b><br/>(拠出分は給与と見なされない)"]
+                    E["<b>現金で受給する場合</b><br/>計算対象: <b>200,000円</b><br/>(手当も給与として課税対象)"]
+                end
+
+                A -- "① 給与が提示される" --> B;
+                B -- "② この時点で最低賃金はクリア" --> C;
+                C -- "DCへ拠出" --> D;
+                C -- "現金で受給" --> E;
+
+                style A fill:#f0f4ff,stroke:#5c6bc0
+                style B fill:#e3f2fd,stroke:#333,stroke-width:2px,font-weight:bold
+                style D fill:#e8f5e9,stroke:#4caf50
+                style E fill:#fff3e0,stroke:#ffa726
+        </div>
+    </div>
+
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【改善版】選択制DCにおける給与計算の流れ</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f8f9fa; /* Slightly cooler gray */
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            padding: 20px 40px 40px 40px;
+            width: 100%;
+            max-width: 950px; /* Increased width for LR layout */
+        }
+        h1 {
+            text-align: center;
+            color: #212529;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+    </style>
+</head>
