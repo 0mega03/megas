@@ -1,0 +1,58 @@
+name: sales-mtg-report
+
+# スケジュールは UTC 基準（JST = UTC+9・夏時間なし）
+#   日曜 17:00 JST = 日曜 08:00 UTC
+#   火曜 19:00 JST = 火曜 10:00 UTC
+on:
+  schedule:
+    - cron: '0 8 * * 0'   # Sun 17:00 JST
+    - cron: '0 10 * * 2'  # Tue 19:00 JST
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sales-mtg-report
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Write Notion token file
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+        run: |
+          if [ -z "${NOTION_TOKEN}" ]; then
+            echo "::error::secret NOTION_TOKEN is not set"
+            exit 1
+          fi
+          mkdir -p .tmp
+          printf 'アクセストークン=%s\n' "${NOTION_TOKEN}" > .tmp/notion_token.txt
+
+      - name: Dry run (aggregation only)
+        run: python3 generate_report.py --dry-run
+
+      - name: Real run (create MTG DB page)
+        run: python3 generate_report.py
+
+      - name: Keep-alive commit (avoid 60-day auto-disable)
+        if: always()
+        run: |
+          rm -f .tmp/notion_token.txt
+          printf '%s UTC  status=%s  run=%s\n' \
+            "$(date -u '+%Y-%m-%d %H:%M:%S')" "${{ job.status }}" "${GITHUB_RUN_ID}" >> runs.log
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add runs.log
+          git commit -m "chore: keep-alive $(date -u '+%Y-%m-%d %H:%M:%S') UTC [skip ci]" || exit 0
+          git push
