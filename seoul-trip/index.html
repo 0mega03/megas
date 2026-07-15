@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>ソウル旅行 事前キャッチアップガイド</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --bg-elev: #171a21;
+    --bg-card: #1c2029;
+    --line: #2a2f3a;
+    --text: #e8eaed;
+    --text-sub: #9aa0ac;
+    --accent: #ff5a4d;
+    --accent-2: #4da6ff;
+    --accent-3: #35c46b;
+    --gold: #f0b429;
+    --radius: 14px;
+    --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+    --sidebar-w: 248px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans",
+      "Noto Sans JP", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: var(--sidebar-w);
+    background: var(--bg-elev);
+    border-right: 1px solid var(--line);
+    padding: 26px 16px 24px;
+    overflow-y: auto;
+    z-index: 40;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; padding: 0 8px 22px; }
+  .brand .flag { font-size: 26px; }
+  .brand .txt b { display: block; font-size: 15px; letter-spacing: -0.01em; }
+  .brand .txt span { font-size: 11px; color: var(--text-sub); }
+
+  .nav { display: flex; flex-direction: column; gap: 4px; }
+  .nav a {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    text-decoration: none;
+    color: var(--text-sub);
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.15s;
+    cursor: pointer;
+  }
+  .nav a .ic { width: 20px; text-align: center; font-size: 16px; flex: none; }
+  .nav a:hover { background: var(--bg-card); color: var(--text); }
+  .nav a.active { background: rgba(255, 90, 77, 0.14); color: #fff; }
+  .nav a.active .ic { filter: none; }
+
+  .nav .divider { height: 1px; background: var(--line); margin: 12px 8px; }
+
+  /* ---------- Main ---------- */
+  .main { margin-left: var(--sidebar-w); min-height: 100vh; }
+  .page { display: none; animation: fade 0.25s ease; }
+  .page.active { display: block; }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 32px 80px; }
+
+  /* Page header */
+  .phead { margin-bottom: 28px; }
+  .phead .kicker { color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+  .phead h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; margin: 6px 0 8px; }
+  .phead p { color: var(--text-sub); font-size: 15px; max-width: 640px; }
+
+  h2.block { font-size: 19px; font-weight: 800; margin: 34px 0 16px; letter-spacing: -0.01em; }
+
+  /* ---------- Home hero ---------- */
+  .hero-card {
+    background:
+      radial-gradient(700px 260px at 20% -10%, rgba(255, 90, 77, 0.22), transparent),
+      radial-gradient(600px 240px at 100% 120%, rgba(77, 166, 255, 0.16), transparent),
+      var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 40px 34px;
+    box-shadow: var(--shadow);
+  }
+  .hero-card .flag { font-size: 40px; }
+  .hero-card h1 { font-size: 30px; font-weight: 800; margin: 10px 0 8px; letter-spacing: -0.02em; }
+  .hero-card p { color: var(--text-sub); max-width: 560px; }
+
+  .home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 22px; }
+  @media (max-width: 640px) { .home-grid { grid-template-columns: 1fr; } }
+  .home-tile {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    padding: 18px 20px;
+    cursor: pointer;
+    transition: 0.15s;
+    text-decoration: none;
+    display: block;
+  }
+  .home-tile:hover { border-color: var(--accent-2); transform: translateY(-2px); }
+  .home-tile .ic { font-size: 22px; }
+  .home-tile b { display: block; margin: 8px 0 2px; font-size: 15px; }
+  .home-tile span { color: var(--text-sub); font-size: 13px; }
+
+  /* ---------- App cards ---------- */
+  .apps { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 700px) { .apps { grid-template-columns: 1fr; } }
+  .app-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+  }
+  .app-card .icon {
+    width: 54px; height: 54px; border-radius: 13px;
+    display: grid; place-items: center;
+    font-size: 24px; font-weight: 800; margin-bottom: 14px;
+  }
+  .icon-ct { background: linear-gradient(135deg, #ff5a4d, #ff8a3d); color: #fff; }
+  .icon-nm { background: linear-gradient(135deg, #2db400, #1f8f00); color: #fff; }
+  .app-card h3 { font-size: 19px; margin-bottom: 4px; }
+  .app-card .role { color: var(--gold); font-size: 13px; font-weight: 700; margin-bottom: 10px; }
+  .app-card p { color: var(--text-sub); font-size: 14px; margin-bottom: 18px; }
+  .dl-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .dl-btn {
+    text-decoration: none; flex: 1; min-width: 130px; text-align: center;
+    padding: 11px 14px; border-radius: 10px; font-size: 13px; font-weight: 700;
+    border: 1px solid var(--line); color: var(--text); background: var(--bg-elev); transition: 0.15s;
+  }
+  .dl-btn:hover { border-color: var(--accent-2); color: #fff; transform: translateY(-1px); }
+  .dl-btn small { display: block; font-size: 11px; color: var(--text-sub); font-weight: 500; }
+
+  .tip {
+    margin-top: 18px;
+    background: rgba(240, 180, 41, 0.08);
+    border: 1px solid rgba(240, 180, 41, 0.3);
+    border-radius: 10px; padding: 14px 16px; font-size: 13.5px; color: #f4d488;
+  }
+  .note {
+    margin-top: 18px;
+    background: rgba(77, 166, 255, 0.08);
+    border: 1px solid rgba(77, 166, 255, 0.28);
+    border-radius: 10px; padding: 14px 16px; font-size: 13.5px; color: #bcdcff;
+  }
+
+  /* ---------- Restaurants ---------- */
+  .rests { display: grid; gap: 14px; }
+  .rest {
+    display: flex; gap: 16px; align-items: flex-start;
+    background: var(--bg-card); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 18px 20px;
+  }
+  .rest .badge {
+    flex: none; width: 40px; height: 40px; border-radius: 10px;
+    background: var(--bg-elev); display: grid; place-items: center; font-size: 20px;
+  }
+  .rest h3 { font-size: 17px; margin-bottom: 2px; }
+  .rest .meta { color: var(--text-sub); font-size: 13px; margin-bottom: 8px; }
+  .rest a.link { color: var(--accent-2); font-size: 13px; text-decoration: none; word-break: break-all; }
+  .rest a.link:hover { text-decoration: underline; }
+
+  /* ---------- Tables ---------- */
+  .tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 560px; }
+  thead th {
+    background: var(--bg-elev); text-align: left; padding: 12px 15px; font-weight: 700;
+    color: var(--text); border-bottom: 1px solid var(--line); white-space: nowrap;
+  }
+  tbody td { padding: 11px 15px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(255, 255, 255, 0.02); }
+  td.cat, td.area { font-weight: 700; white-space: nowrap; }
+  td.rank { font-weight: 800; color: var(--accent); text-align: center; width: 44px; font-size: 15px; }
+  .rank-top { color: var(--gold) !important; }
+  td strong { color: #fff; }
+  td .yen { color: var(--text-sub); font-size: 12px; display: block; }
+  .grp-title { font-size: 15px; font-weight: 800; margin: 26px 0 12px; display: flex; align-items: center; gap: 8px; }
+  .grp-title .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--accent); }
+
+  /* ---------- Itinerary ---------- */
+  .timeline { display: grid; gap: 16px; }
+  .day { background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+  .day h3 { font-size: 18px; margin-bottom: 4px; }
+  .day .sub { color: var(--text-sub); font-size: 13px; margin-bottom: 16px; }
+  .slot { margin-bottom: 14px; }
+  .slot:last-child { margin-bottom: 0; }
+  .slot .label {
+    display: inline-block; font-size: 12px; font-weight: 700; color: var(--accent-2);
+    background: rgba(77, 166, 255, 0.12); padding: 3px 10px; border-radius: 999px; margin-bottom: 8px;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { background: var(--bg-elev); border: 1px solid var(--line); padding: 6px 12px; border-radius: 8px; font-size: 13px; }
+  .plan-split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 6px; }
+  @media (max-width: 600px) { .plan-split { grid-template-columns: 1fr; } }
+  .plan-card { background: var(--bg-elev); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+  .plan-card h4 { font-size: 15px; margin-bottom: 8px; }
+  .plan-card.a h4 { color: #c9a7ff; }
+  .plan-card.b h4 { color: #ffab7a; }
+
+  /* ---------- Mobile ---------- */
+  .topbar { display: none; }
+  .backdrop { display: none; }
+  @media (max-width: 860px) {
+    .sidebar { transform: translateX(-100%); transition: transform 0.25s; box-shadow: var(--shadow); }
+    .sidebar.open { transform: none; }
+    .main { margin-left: 0; }
+    .topbar {
+      display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 30;
+      background: rgba(15,17,21,0.9); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line); padding: 12px 16px;
+    }
+    .topbar button { background: var(--bg-card); border: 1px solid var(--line); color: var(--text); border-radius: 9px; padding: 8px 12px; font-size: 18px; cursor: pointer; }
+    .topbar b { font-size: 15px; }
+    .container { padding: 24px 18px 70px; }
+    .backdrop.show { display: block; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 35; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <span class="flag">🇰🇷</span>
+      <span class="txt"><b>ソウル旅行ガイド</b><span>男6人・江南拠点</span></span>
+    </div>
+    <nav class="nav" id="nav">
+      <a data-target="home"><span class="ic">🏠</span>ホーム</a>
+      <a data-target="apps"><span class="ic">📱</span>必携アプリ</a>
+      <a data-target="distances"><span class="ic">🚕</span>江南からの移動</a>
+      <a data-target="rests"><span class="ic">🍽️</span>気になる店</a>
+      <a data-target="food"><span class="ic">🍲</span>グルメ分類</a>
+      <a data-target="exp"><span class="ic">⭐</span>体験ランキング</a>
+      <a data-target="plan"><span class="ic">🗓️</span>モデル行程</a>
+    </nav>
+  </aside>
+  <div class="backdrop" id="backdrop"></div>
+
+  <div class="main">
+    <div class="topbar">
+      <button id="menuBtn" aria-label="メニュー">☰</button>
+      <b id="topTitle">ソウル旅行ガイド</b>
+    </div>
+
+    <!-- HOME -->
+    <section class="page" id="page-home">
+      <div class="container">
+        <div class="hero-card">
+          <div class="flag">🇰🇷</div>
+          <h1>ソウル旅行 事前キャッチアップガイド</h1>
+          <p>男6人・江南（カンナム）拠点のソウル旅行に向けて、出発前に押さえるべきアプリ・移動・グルメ・体験・行程を1サイトに集約。左メニューから各ページへ。</p>
+        </div>
+        <div class="home-grid">
+          <a class="home-tile" data-target="apps"><div class="ic">📱</div><b>必携アプリ</b><span>CATCHTABLE / Naver Map のDL</span></a>
+          <a class="home-tile" data-target="distances"><div class="ic">🚕</div><b>江南からの移動</b><span>各エリアの距離・時間・タクシー代</span></a>
+          <a class="home-tile" data-target="rests"><div class="ic">🍽️</div><b>気になる店</b><span>ピックアップ済みの候補3店</span></a>
+          <a class="home-tile" data-target="food"><div class="ic">🍲</div><b>グルメ分類</b><span>韓国料理の全体マップ</span></a>
+          <a class="home-tile" data-target="exp"><div class="ic">⭐</div><b>体験ランキング</b><span>やりたい体験 優先順位20</span></a>
+          <a class="home-tile" data-target="plan"><div class="ic">🗓️</div><b>モデル行程</b><span>1日目＋夜プラン2択</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- APPS -->
+    <section class="page" id="page-apps">
+      <div class="container">
+        <div class="phead">
+          <div class="kicker">Apps</div>
+          <h1>出発前に入れておく必携アプリ</h1>
+          <p>予約と移動はこの2つでほぼ完結。到着前にインストール＆アカウント作成まで済ませておくと現地がスムーズ。</p>
+        </div>
+
+        <div class="apps">
+          <div class="app-card">
+            <div class="icon icon-ct">CT</div>
+            <h3>CATCHTABLE Global</h3>
+            <div class="role">人気店の予約・ウェイティング</div>
+            <p>韓国 No.1 のグルメ予約アプリの海外旅行者版。韓国の電話番号なしで、海外カードと英語で8,000店以上を予約可能。行列店のリモート順番待ちにも対応。<br />※韓国版とは別物。旅行者は必ず「Global」版を入れる。</p>
+            <div class="dl-row">
+              <a class="dl-btn" href="https://apps.apple.com/us/app/catchtable-book-restaurants/id1639046576" target="_blank" rel="noopener">App Store<small>iPhone / iPad</small></a>
+              <a class="dl-btn" href="https://play.google.com/store/apps/details?id=kr.co.catchtable.global.catchtable_global" target="_blank" rel="noopener">Google Play<small>Android</small></a>
+            </div>
+          </div>
+
+          <div class="app-card">
+            <div class="icon icon-nm">N</div>
+            <h3>Naver Map（네이버 지도）</h3>
+            <div class="role">地図・ナビ・交通</div>
+            <p>韓国ではGoogleマップが正確に機能しないため必須。徒歩・地下鉄・バスの経路検索、リアルタイム交通情報、ストリートビューに対応。日本語表示可。<br />※海外からのアカウント作成は弾かれることがあるが、ログインなしでも地図・ナビは使える。</p>
+            <div class="dl-row">
+              <a class="dl-btn" href="https://apps.apple.com/app/naver-map-navigation/id311867728" target="_blank" rel="noopener">App Store<small>iPhone / iPad</small></a>
+              <a class="dl-btn" href="https://play.google.com/store/apps/details?id=com.nhn.android.nmap" target="_blank" rel="noopener">Google Play<small>Android</small></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="tip">💡 あると便利な追加アプリ：<strong>KakaoTalk</strong>（連絡・店との予約）、<strong>Kakao T</strong>（タクシー配車・料金の事前見積り）、<strong>Papago</strong>（韓国語翻訳）。時間があれば併せて。</div>
+      </div>
+    </section>
+
+    <!-- DISTANCES -->
+    <section class="page" id="page-distances">
+      <div class="container">
+        <div class="phead">
+          <div class="kicker">Access from Gangnam</div>
+          <h1>江南（カンナム）からの移動距離・時間・タクシー代</h1>
+          <p>江南は漢江の「南」。観光・遊びの目的地の多くは漢江の「北」にあり、中心部までは概ね 10〜13km・車で25〜40分。近場（新沙・高速ターミナル・盤浦）は5〜15分圏内。イメージを掴むための早見表。</p>
+        </div>
+
+        <div class="note">
+          🚕 <strong>タクシー料金の目安</strong>：基本料金 ₩4,800（最初の1.6km）＋ 以降おおよそ ₩1,000/km。<strong>深夜（22時〜翌4時）は約20%割増</strong>（基本料金 ₩5,800）。<strong>渋滞時は時間もタクシー代も1.5倍前後</strong>まで伸びる。正確な額は <strong>Kakao T</strong> の事前見積りが確実。<br />
+          <span style="color:var(--text-sub)">※金額は日中・通常交通での概算（¥は ₩100≒¥11 換算の目安）。6人なら基本タクシー2台。</span>
+        </div>
+
+        <div class="grp-title"><span class="dot"></span>江南エリア内・近場（漢江の南）</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>エリア</th><th>距離(車)</th><th>時間(通常)</th><th>タクシー概算</th><th>地下鉄・備考</th></tr></thead>
+            <tbody>
+              <tr><td class="area">新論峴（シンノンヒョン）</td><td>約1km</td><td>3〜5分</td><td>₩4,800<span class="yen">≒¥530（基本料金）</span></td><td>2号線1駅・徒歩も可</td></tr>
+              <tr><td class="area">新沙・カロスキル</td><td>約2.5km</td><td>8〜12分</td><td>₩5,000〜7,000<span class="yen">≒¥550〜770</span></td><td>新盆唐線1駅（約3分）</td></tr>
+              <tr><td class="area">高速ターミナル（セントラルシティ）</td><td>約4km</td><td>12〜18分</td><td>₩7,000〜8,000<span class="yen">≒¥770〜880</span></td><td>3/7/9号線</td></tr>
+              <tr><td class="area">盤浦漢江公園（月光噴水）</td><td>約4.5km</td><td>12〜18分</td><td>₩7,000〜9,000<span class="yen">≒¥770〜990</span></td><td>駅から遠く、タクシー推奨</td></tr>
+              <tr><td class="area">蚕室（ロッテワールド/タワー）</td><td>約7km</td><td>15〜25分</td><td>₩9,000〜12,000<span class="yen">≒¥990〜1,320</span></td><td>2号線</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grp-title"><span class="dot"></span>漢江の北（中心部・観光の中心）</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>エリア</th><th>距離(車)</th><th>時間(通常)</th><th>タクシー概算</th><th>地下鉄・備考</th></tr></thead>
+            <tbody>
+              <tr><td class="area">漢南洞（ハンナムドン）</td><td>約6km</td><td>15〜25分</td><td>₩9,000〜11,000<span class="yen">≒¥990〜1,210</span></td><td>大人向けの食事・バー</td></tr>
+              <tr><td class="area">梨泰院（イテウォン）</td><td>約7.5km</td><td>20〜30分</td><td>₩10,000〜13,000<span class="yen">≒¥1,100〜1,430</span></td><td>地下鉄は乗換で約35分</td></tr>
+              <tr><td class="area">聖水洞（ソンスドン）</td><td>約9km</td><td>20〜30分</td><td>₩11,000〜14,000<span class="yen">≒¥1,210〜1,540</span></td><td>2号線</td></tr>
+              <tr><td class="area">Nソウルタワー / 南山</td><td>約9km</td><td>25〜35分</td><td>₩11,000〜14,000<span class="yen">≒¥1,210〜1,540</span></td><td>麓＋ケーブルカー</td></tr>
+              <tr><td class="area">明洞（ミョンドン）</td><td>約11km</td><td>25〜40分</td><td>₩13,000〜16,000<span class="yen">≒¥1,430〜1,760</span></td><td>地下鉄 約35分</td></tr>
+              <tr><td class="area">南大門市場</td><td>約10.5km</td><td>25〜40分</td><td>₩13,000〜16,000<span class="yen">≒¥1,430〜1,760</span></td><td>明洞と隣接</td></tr>
+              <tr><td class="area">広蔵市場 / 乙支路</td><td>約12km</td><td>30〜40分</td><td>₩14,000〜17,000<span class="yen">≒¥1,540〜1,870</span></td><td>食べ歩き・ポチャ</td></tr>
+              <tr><td class="area">仁寺洞 / 鍾路</td><td>約12km</td><td>30〜40分</td><td>₩14,000〜17,000<span class="yen">≒¥1,540〜1,870</span></td><td>1/3号線</td></tr>
+              <tr><td class="area">東大門（タッカンマリ横丁）</td><td>約13km</td><td>30〜45分</td><td>₩15,000〜18,000<span class="yen">≒¥1,650〜1,980</span></td><td>夜通し営業のエリア</td></tr>
+              <tr><td class="area">景福宮 / 北村 / 西村</td><td>約13km</td><td>30〜45分</td><td>₩15,000〜18,000<span class="yen">≒¥1,650〜1,980</span></td><td>地下鉄 約45分</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grp-title"><span class="dot"></span>漢江の西</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>エリア</th><th>距離(車)</th><th>時間(通常)</th><th>タクシー概算</th><th>地下鉄・備考</th></tr></thead>
+            <tbody>
+              <tr><td class="area">汝矣島（ヨイド）漢江公園</td><td>約12km</td><td>25〜35分</td><td>₩14,000〜17,000<span class="yen">≒¥1,540〜1,870</span></td><td>夜景・ピクニック</td></tr>
+              <tr><td class="area">弘大（ホンデ）</td><td>約13km</td><td>25〜40分</td><td>₩15,000〜19,000<span class="yen">≒¥1,650〜2,090</span></td><td><strong>2号線で乗換なし・約35分</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grp-title"><span class="dot"></span>空港（往復の参考）</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>エリア</th><th>距離(車)</th><th>時間(通常)</th><th>タクシー概算</th><th>地下鉄・備考</th></tr></thead>
+            <tbody>
+              <tr><td class="area">金浦空港（GMP）</td><td>約20km</td><td>30〜45分</td><td>₩22,000〜28,000<span class="yen">≒¥2,400〜3,100</span></td><td>地下鉄・リムジンバス</td></tr>
+              <tr><td class="area">仁川空港（ICN）</td><td>約55〜60km</td><td>60〜80分</td><td>₩60,000〜75,000<span class="yen">≒¥6,600〜8,300（+高速通行料）</span></td><td>リムジンバス約70分・AREX</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 class="block">移動手段の使い分け</h2>
+        <div class="apps" style="grid-template-columns:1fr;">
+          <div class="app-card">
+            <p style="margin:0;color:var(--text)">
+              <strong>🚇 地下鉄</strong>：2号線が江南・弘大・乙支路など主要エリアを直結。安くて渋滞なし。移動の基本。T-money（交通カード）を全員分用意。<br /><br />
+              <strong>🚕 タクシー</strong>：6人なら2台に分乗。深夜・大荷物・雨の日・地下鉄が遠い目的地（盤浦など）で有効。Kakao T で配車＆料金見積り。<br /><br />
+              <strong>🍺 遊び拠点の考え方</strong>：飲み・ノレバンは<strong>江南／新論峴で徒歩圏完結</strong>が最も楽。中心部観光（明洞・景福宮・広蔵市場）は片道25〜40分なので、<strong>午前〜午後にまとめて北側を回り、夜は江南に戻る</strong>のが動きやすい。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESTAURANTS -->
+    <section class="page" id="page-rests">
+      <div class="container">
+        <div class="phead">
+          <div class="kicker">Picked Restaurants</div>
+          <h1>ピックアップ済みの気になる店</h1>
+          <p>事前に見つけた候補。営業時間・定休日・予約可否は出発前にリンク先で最終確認する。</p>
+        </div>
+
+        <div class="rests">
+          <div class="rest">
+            <div class="badge">🥩</div>
+            <div>
+              <h3>金豚食堂（クムテジシクタン）</h3>
+              <div class="meta">サムギョプサル / 熟成豚肉の名店</div>
+              <a class="link" href="https://tabelog.com/southkorea/A5301/A530102/53002651/dtlphotolst/?smp=2&sby=D&srt=normal&PG=3" target="_blank" rel="noopener">食べログで写真・情報を見る →</a>
+            </div>
+          </div>
+          <div class="rest">
+            <div class="badge">🥟</div>
+            <div>
+              <h3>明洞餃子（ミョンドンギョジャ）</h3>
+              <div class="meta">カルグクス / マンドゥの老舗（明洞）</div>
+              <a class="link" href="http://www.mdkj.co.kr/jp/" target="_blank" rel="noopener">公式サイト（日本語）を見る →</a>
+            </div>
+          </div>
+          <div class="rest">
+            <div class="badge">🔥</div>
+            <div>
+              <h3>영동원삼겹살（ヨンドンウォン・サムギョプサル）</h3>
+              <div class="meta">サムギョプサル</div>
+              <a class="link" href="https://ameblo.jp/reomaron218/entry-12423851787.html" target="_blank" rel="noopener">紹介ブログを見る →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOD -->
+    <section class="page" id="page-food">
+      <div class="container">
+        <div class="phead">
+          <div class="kicker">Food Map</div>
+          <h1>韓国グルメの全体マップ</h1>
+          <p>「今日は何系を食べるか」を決めるための分類表。旅程に合わせてジャンルが被らないように配分する。</p>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>大カテゴリ</th><th>主な料理</th></tr></thead>
+            <tbody>
+              <tr><td class="cat">🥩 焼肉・肉料理</td><td>サムギョプサル、韓牛、カルビ、ホルモン</td></tr>
+              <tr><td class="cat">🍲 鍋・大皿料理</td><td>タッカンマリ、カムジャタン、ナッコプセ</td></tr>
+              <tr><td class="cat">🥣 スープ・クッパ・チゲ</td><td>ソルロンタン、テジクッパ、スンドゥブ</td></tr>
+              <tr><td class="cat">🍚 ご飯・定食</td><td>ビビンバ、ペッパン、韓定食、釜飯</td></tr>
+              <tr><td class="cat">🍜 麺料理</td><td>冷麺、カルグクス、ミルミョン、チャジャンミョン</td></tr>
+              <tr><td class="cat">🍢 粉食・軽食</td><td>トッポッキ、キンパ、スンデ、マンドゥ</td></tr>
+              <tr><td class="cat">🦀 海鮮料理</td><td>ケジャン、刺身、貝焼き、タコ、魚料理</td></tr>
+              <tr><td class="cat">🍗 チキン・揚げ物</td><td>韓国チキン、タッカンジョン、トンカス</td></tr>
+              <tr><td class="cat">🍶 酒場・夜食</td><td>ポチャ、チヂミ、マッコリ、二軒目</td></tr>
+              <tr><td class="cat">🍰 カフェ・スイーツ</td><td>ピンス、パン、韓屋カフェ、大型カフェ</td></tr>
+              <tr><td class="cat">🏮 市場・食べ歩き</td><td>市場、夜市、屋台、地下街</td></tr>
+              <tr><td class="cat">🗺️ 地方名物</td><td>釜山、済州、全州、大邱などの地域料理</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCES -->
+    <section class="page" id="page-exp">
+      <div class="container">
+        <div class="phead">
+          <div class="kicker">Experiences</div>
+          <h1>やりたい体験 優先順位ランキング</h1>
+          <p>男6人の旅行向けに優先度をつけた体験リスト。上位から旅程に組み込んでいく。</p>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>優先</th><th>体験</th><th>おすすめエリア・内容</th></tr></thead>
+            <tbody>
+              <tr><td class="rank rank-top">1</td><td><strong>サムギョプサルを6人で囲む</strong></td><td>江南・新論峴。肉、キムチ、ニンニクを焼き、サンチュで包んで焼酎と一緒に</td></tr>
+              <tr><td class="rank rank-top">2</td><td><strong>韓国式の焼酎宴会をする</strong></td><td>サムギョプサル、コプチャン、刺身などと。焼酎と肉・汁物の組合せが定番</td></tr>
+              <tr><td class="rank rank-top">3</td><td><strong>本場の韓国チキン＆ビール</strong></td><td>江南、新論峴、漢江。フライド・ヤンニョム・醤油を食べ比べ</td></tr>
+              <tr><td class="rank">4</td><td>漢江で夜景を見ながら飲食</td><td>盤浦漢江公園 or 汝矣島漢江公園。コンビニラーメンやチキンを持ち込む</td></tr>
+              <tr><td class="rank">5</td><td>韓国の市場で食べ歩く</td><td>広蔵市場。ユッケ、ピンデトッ、キンパ、マンドゥ、スンデを少量ずつシェア</td></tr>
+              <tr><td class="rank">6</td><td>景福宮と北村・西村を歩く</td><td>宮殿・韓屋・路地をまとめて。西村では市場の軽食も</td></tr>
+              <tr><td class="rank">7</td><td>チムジルバン・韓国式サウナ</td><td>男6名と相性抜群。入浴・サウナ・休憩・食事までまとめて</td></tr>
+              <tr><td class="rank">8</td><td>コプチャン or マクチャン</td><td>江南、新沙、弘大。脂のあるホルモンを焼酎と</td></tr>
+              <tr><td class="rank">9</td><td>韓国式カラオケ「ノレバン」</td><td>江南駅・新論峴。二次会として1〜2時間</td></tr>
+              <tr><td class="rank">10</td><td>江南・新論峴の深夜街を体験</td><td>宿から近く、飲食・居酒屋・ノレバンを徒歩圏で</td></tr>
+              <tr><td class="rank">11</td><td>聖水洞で最新のソウルを見る</td><td>カフェ、ファッション、ポップアップ、倉庫リノベ</td></tr>
+              <tr><td class="rank">12</td><td>梨泰院 or 漢南洞で夜を過ごす</td><td>多国籍レストラン、バー、パブ。深夜まで遊べる</td></tr>
+              <tr><td class="rank">13</td><td>韓国式ポチャで飲む</td><td>鍾路、乙支路、江南。チヂミ、ケランマリ、炒め物、鍋</td></tr>
+              <tr><td class="rank">14</td><td>タッカンマリ or カムジャタン</td><td>東大門ならタッカンマリ、江南周辺ならカムジャタン。大鍋は6人向き</td></tr>
+              <tr><td class="rank">15</td><td>ソルロンタン・クッパで朝食</td><td>江南駅周辺。飲んだ翌日の朝食に</td></tr>
+              <tr><td class="rank">16</td><td>Nソウルタワー/南山から夜景</td><td>ソウルの地形と規模を把握。初回旅行なら一度は</td></tr>
+              <tr><td class="rank">17</td><td>乙支路の古い路地で飲む</td><td>工業街と新しいバーが混在。江南とは違う雰囲気</td></tr>
+              <tr><td class="rank">18</td><td>コンビニ・スーパーで買い出し</td><td>ラーメン、キムチ、マッコリ、焼酎、菓子で部屋飲み</td></tr>
+              <tr><td class="rank">19</td><td>韓国式マッサージ・アカスリ</td><td>旅行後半に。料金は店舗差大、口コミと料金表を事前確認</td></tr>
+              <tr><td class="rank">20</td><td>弘大の若者文化と深夜の街</td><td>ストリート、音楽、ゲーム、クラブ。カジュアルで若者向け</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ITINERARY -->
+    <section class="page" id="page-plan">
+      <div class="container">
+        <div class="phead">
+          <div class="kicker">Itinerary</div>
+          <h1>モデル行程</h1>
+          <p>初日は移動を最小化し、江南周辺で完結させる構成。</p>
+        </div>
+        <div class="timeline">
+          <div class="day">
+            <h3>1日目：江南を楽しむ日</h3>
+            <div class="sub">到着後は遠くまで移動せず、江南周辺で完結させる。</div>
+            <div class="slot">
+              <span class="label">夕方</span>
+              <div class="chips">
+                <span class="chip">Airbnbにチェックイン</span>
+                <span class="chip">近隣のコンビニ・スーパー確認</span>
+                <span class="chip">江南駅・新論峴駅周辺を散策</span>
+              </div>
+            </div>
+            <div class="slot">
+              <span class="label">夜</span>
+              <div class="chips">
+                <span class="chip">🥩 サムギョプサル</span>
+                <span class="chip">🍶 焼酎</span>
+                <span class="chip">🎤 ノレバン</span>
+                <span class="chip">🏪 コンビニで買い出し</span>
+                <span class="chip">🏠 Airbnbで部屋飲み</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="day">
+            <h3>別日の夜プラン（2択）</h3>
+            <div class="sub">その日の気分でエリアを選ぶ。</div>
+            <div class="plan-split">
+              <div class="plan-card a">
+                <h4>A：大人寄り</h4>
+                <div class="chips"><span class="chip">漢南洞・梨泰院で食事</span><span class="chip">バー</span></div>
+              </div>
+              <div class="plan-card b">
+                <h4>B：にぎやか寄り</h4>
+                <div class="chips"><span class="chip">弘大で食事</span><span class="chip">ノレバン</span><span class="chip">クラブ・バー</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+<script>
+  (function () {
+    var titles = {
+      home: "ソウル旅行ガイド",
+      apps: "必携アプリ",
+      distances: "江南からの移動",
+      rests: "気になる店",
+      food: "グルメ分類",
+      exp: "体験ランキング",
+      plan: "モデル行程"
+    };
+    var navLinks = document.querySelectorAll("[data-target]");
+    var pages = document.querySelectorAll(".page");
+    var sidebar = document.getElementById("sidebar");
+    var backdrop = document.getElementById("backdrop");
+    var topTitle = document.getElementById("topTitle");
+
+    function closeSidebar() {
+      sidebar.classList.remove("open");
+      backdrop.classList.remove("show");
+    }
+
+    function show(target) {
+      if (!titles[target]) target = "home";
+      pages.forEach(function (p) { p.classList.toggle("active", p.id === "page-" + target); });
+      document.querySelectorAll(".nav a").forEach(function (a) {
+        a.classList.toggle("active", a.getAttribute("data-target") === target);
+      });
+      topTitle.textContent = titles[target];
+      if (history.replaceState) history.replaceState(null, "", "#" + target);
+      else location.hash = target;
+      window.scrollTo(0, 0);
+      closeSidebar();
+    }
+
+    navLinks.forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        show(a.getAttribute("data-target"));
+      });
+    });
+
+    document.getElementById("menuBtn").addEventListener("click", function () {
+      sidebar.classList.toggle("open");
+      backdrop.classList.toggle("show");
+    });
+    backdrop.addEventListener("click", closeSidebar);
+    window.addEventListener("hashchange", function () {
+      show((location.hash || "#home").slice(1));
+    });
+
+    show((location.hash || "#home").slice(1));
+  })();
+</script>
+</body>
+</html>
