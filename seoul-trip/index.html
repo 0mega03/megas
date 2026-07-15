@@ -218,6 +218,20 @@
   .plan-card.a h4 { color: #c9a7ff; }
   .plan-card.b h4 { color: #ffab7a; }
 
+  /* ---------- Itinerary patterns ---------- */
+  .ptn { margin-bottom: 30px; }
+  .ptn-head {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
+    padding: 12px 16px; border-radius: 12px;
+    background: var(--bg-card); border: 1px solid var(--line);
+    border-left: 4px solid var(--c); margin-bottom: 14px;
+  }
+  .ptn-head .tag { font-size: 11px; font-weight: 800; color: #fff; background: var(--c); padding: 3px 9px; border-radius: 999px; }
+  .ptn-head b { font-size: 16px; }
+  .ptn-head .desc { color: var(--text-sub); font-size: 12.5px; }
+  .ptn .day h3 { font-size: 15px; margin-bottom: 8px; }
+  .chip b { color: #fff; font-weight: 700; }
+
   /* ---------- Mobile ---------- */
   .topbar { display: none; }
   .backdrop { display: none; }
@@ -250,6 +264,7 @@
       <a data-target="apps"><span class="ic">📱</span>必携アプリ</a>
       <a data-target="distances"><span class="ic">🚕</span>江南からの移動</a>
       <a data-target="rests"><span class="ic">🍽️</span>気になる店</a>
+      <a data-target="eats"><span class="ic">🍜</span>飯屋リスト</a>
       <a data-target="food"><span class="ic">🍲</span>グルメ分類</a>
       <a data-target="exp"><span class="ic">⭐</span>体験ランキング</a>
       <a data-target="plan"><span class="ic">🗓️</span>モデル行程</a>
@@ -275,9 +290,10 @@
           <a class="home-tile" data-target="apps"><div class="ic">📱</div><b>必携アプリ</b><span>CATCHTABLE / Naver Map のDL</span></a>
           <a class="home-tile" data-target="distances"><div class="ic">🚕</div><b>江南からの移動</b><span>各エリアの距離・時間・タクシー代</span></a>
           <a class="home-tile" data-target="rests"><div class="ic">🍽️</div><b>気になる店</b><span>ピックアップ済みの候補3店</span></a>
+          <a class="home-tile" data-target="eats"><div class="ic">🍜</div><b>飯屋リスト</b><span>ジャンル別の名店調査</span></a>
           <a class="home-tile" data-target="food"><div class="ic">🍲</div><b>グルメ分類</b><span>韓国料理の全体マップ</span></a>
           <a class="home-tile" data-target="exp"><div class="ic">⭐</div><b>体験ランキング</b><span>やりたい体験 優先順位20</span></a>
-          <a class="home-tile" data-target="plan"><div class="ic">🗓️</div><b>モデル行程</b><span>1日目＋夜プラン2択</span></a>
+          <a class="home-tile" data-target="plan"><div class="ic">🗓️</div><b>モデル行程</b><span>複数パターン（3泊4日ほか）</span></a>
         </div>
       </div>
     </section>
@@ -439,6 +455,99 @@
       </div>
     </section>
 
+    <!-- EATS / 飯屋リスト -->
+    <section class="page" id="page-eats">
+      <div class="container">
+        <div class="phead">
+          <div class="kicker">Restaurant Research</div>
+          <h1>飯屋リスト（調査）</h1>
+          <p>江南拠点で回りやすい店＋ソウルの定番名店をジャンル別に整理。人気店は行列必至なので、CATCHTABLE Global での事前予約かピーク（19〜21時）回避を推奨。★＝特におすすめ。</p>
+        </div>
+
+        <div class="grp-title"><span class="dot"></span>🥩 サムギョプサル・豚焼肉（江南・新論峴）</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>店名</th><th>エリア</th><th>特徴・メモ</th></tr></thead>
+          <tbody>
+            <tr><td class="area">江南豚商会 ★<span class="yen">강남돼지상회</span></td><td>江南駅11番出口 徒歩4分</td><td>花サムギョプサル。店員が焼いてくれる／日本語タッチパネル。11:30–23:30・要ウェイティング</td></tr>
+            <tr><td class="area">肉典食堂 ★<span class="yen">육전식당</span></td><td>江南・新論峴</td><td>ステーキ級に分厚いサムギョプサル＆モクサル。日本のTVでも紹介、日本人客が多く安心</td></tr>
+            <tr><td class="area">モックモン 新論峴<span class="yen">목구멍</span></td><td>新論峴</td><td>江南3大ミナリサムギョプサル。釜蓋グリルで専門スタッフが焼く。会食向き・年末は要予約</td></tr>
+            <tr><td class="area">ボンウ二階家<span class="yen">봉우이층집</span></td><td>江南駅近く</td><td>熟成サムギョプサル＆モクサル。研修済み店員が焼く。会食・団体向き</td></tr>
+            <tr><td class="area">クッタン<span class="yen">꿉당</span></td><td>新沙</td><td>熟成モクサルが絶品。名物トリュフチャパゲティ。2人以上・要ウェイティング</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="grp-title"><span class="dot"></span>🐂 韓牛・牛焼肉（会食・接待）</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>店名</th><th>エリア</th><th>特徴・メモ</th></tr></thead>
+          <tbody>
+            <tr><td class="area">倉庫43 江南店 ★<span class="yen">창고43</span></td><td>江南</td><td>韓牛専門。コルキジフリー（持込可）・個室団体席。接待・会食に最適</td></tr>
+            <tr><td class="area">ケナリ会館<span class="yen">개나리회관</span></td><td>狎鴎亭 徒歩1分</td><td>韓牛盛り合わせが名物。韓牛にウニのせの食べ方も</td></tr>
+            <tr><td class="area">映東塩焼き<span class="yen">영동소금구이</span></td><td>論峴洞</td><td>韓牛特殊部位のコスパ老舗。ドラム缶テーブルのディープな雰囲気</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="grp-title"><span class="dot"></span>🔥 コプチャン・ホルモン</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>店名</th><th>エリア</th><th>特徴・メモ</th></tr></thead>
+          <tbody>
+            <tr><td class="area">江南コプ ★<span class="yen">강남곱</span></td><td>江南駅</td><td>ブルーリボン。下焼き提供で焼く手間なし・席広め。会食1次会の定番</td></tr>
+            <tr><td class="area">コムバウィ 本店<span class="yen">곰바위</span></td><td>三成（COEX近く）</td><td>ヤン・大腸でミシュランビブグルマン常連。〆の전골も必食</td></tr>
+            <tr><td class="area">往十里コプチャン横丁</td><td>往十里</td><td>横丁で地元の熱気。〆はポックンパ。匂いつくのでラフな服装で</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="grp-title"><span class="dot"></span>🍲 タッカンマリ（鶏一羽鍋）</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>店名</th><th>エリア</th><th>特徴・メモ</th></tr></thead>
+          <tbody>
+            <tr><td class="area">陳玉華ハルメ 元祖タッカンマリ ★<span class="yen">진옥화할매</span></td><td>東大門 横丁</td><td>タッカンマリ通りの代表格。観光客対応にも慣れる</td></tr>
+            <tr><td class="area">巨成タッカンマリ<span class="yen">거성닭한마리</span></td><td>東大門 横丁</td><td>創業20年、丁寧な仕事で地元評価</td></tr>
+            <tr><td class="area">ソムンナン元祖タッカンマリ<span class="yen">소문난닭한마리</span></td><td>東大門 横丁</td><td>1970年代創業・約250席と広く6人でも入りやすい。韓方だし</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="grp-title"><span class="dot"></span>🥣 ソルロンタン・スープ（朝食・〆）</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>店名</th><th>エリア</th><th>特徴・メモ</th></tr></thead>
+          <tbody>
+            <tr><td class="area">李門ソルロンタン ★<span class="yen">이문설농탕</span></td><td>鍾路（光化門近く）</td><td>ソウル最古参クラスの名店。飲んだ翌朝に最適</td></tr>
+            <tr><td class="area">豊年屋<span class="yen">풍년옥</span></td><td>光化門</td><td>すっきり旨みのソルロンタン。浅漬けキムチも評判</td></tr>
+            <tr><td class="area">神仙ソルロンタン<span class="yen">신선설농탕</span></td><td>江南ほか各所</td><td>チェーンで入りやすい。江南でも朝食に便利</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="grp-title"><span class="dot"></span>🍜 冷麺・プルコギ（名店）</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>店名</th><th>エリア</th><th>特徴・メモ</th></tr></thead>
+          <tbody>
+            <tr><td class="area">又来屋 ★<span class="yen">우래옥</span></td><td>乙支路4街</td><td>平壌冷麺＆プルコギの超有名老舗。焼肉の〆にも</td></tr>
+            <tr><td class="area">乙密台<span class="yen">을밀대</span></td><td>麻浦</td><td>濃厚スープの平壌冷麺の名店</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="grp-title"><span class="dot"></span>🏮 市場・食べ歩き</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>店名</th><th>エリア</th><th>特徴・メモ</th></tr></thead>
+          <tbody>
+            <tr><td class="area">広蔵市場 ★<span class="yen">광장시장</span></td><td>鍾路（東大門寄り）</td><td>ユッケ通り・ピンデトク・麻薬キンパ・スンデを少量シェア。昼〜夕方</td></tr>
+            <tr><td class="area">通仁市場<span class="yen">통인시장</span></td><td>西村</td><td>コインでお弁当を作る食べ歩き。景福宮観光とセット</td></tr>
+            <tr><td class="area">明洞屋台</td><td>明洞</td><td>チーズ系・海鮮串など。夜の食べ歩きに</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="grp-title"><span class="dot"></span>🍗 チキン・チメク（漢江）</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>店名</th><th>エリア</th><th>特徴・メモ</th></tr></thead>
+          <tbody>
+            <tr><td class="area">漢江公園でチメク ★</td><td>盤浦／汝矣島</td><td>デリバリー or コンビニでチキン＋ビール。夜景と一緒に。旅のハイライト</td></tr>
+            <tr><td class="area">人気チキンチェーン</td><td>江南・全域</td><td>キョチョン(교촌)／BBQ／クプネ(굽네)でヤンニョム＆フライド食べ比べ</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="tip">💡 <strong>予約・注文のコツ</strong>：人気焼肉・熟成店は CATCHTABLE で事前予約 or ピークを外す。焼肉は基本2人前〜、6人なら各種を少量ずつ頼んで食べ比べが◎。</div>
+      </div>
+    </section>
+
     <!-- FOOD -->
     <section class="page" id="page-food">
       <div class="container">
@@ -512,47 +621,57 @@
       <div class="container">
         <div class="phead">
           <div class="kicker">Itinerary</div>
-          <h1>モデル行程</h1>
-          <p>初日は移動を最小化し、江南周辺で完結させる構成。</p>
+          <h1>モデル行程（複数パターン）</h1>
+          <p>ベースは3泊4日で作成（弾丸2泊3日版も併記）。初日は移動最小・江南完結が鉄則。<strong>太字＝その日のハイライト</strong>。日数や到着時刻に合わせて前後を入れ替えて使う。</p>
         </div>
-        <div class="timeline">
-          <div class="day">
-            <h3>1日目：江南を楽しむ日</h3>
-            <div class="sub">到着後は遠くまで移動せず、江南周辺で完結させる。</div>
-            <div class="slot">
-              <span class="label">夕方</span>
-              <div class="chips">
-                <span class="chip">Airbnbにチェックイン</span>
-                <span class="chip">近隣のコンビニ・スーパー確認</span>
-                <span class="chip">江南駅・新論峴駅周辺を散策</span>
-              </div>
-            </div>
-            <div class="slot">
-              <span class="label">夜</span>
-              <div class="chips">
-                <span class="chip">🥩 サムギョプサル</span>
-                <span class="chip">🍶 焼酎</span>
-                <span class="chip">🎤 ノレバン</span>
-                <span class="chip">🏪 コンビニで買い出し</span>
-                <span class="chip">🏠 Airbnbで部屋飲み</span>
-              </div>
-            </div>
-          </div>
 
-          <div class="day">
-            <h3>別日の夜プラン（2択）</h3>
-            <div class="sub">その日の気分でエリアを選ぶ。</div>
-            <div class="plan-split">
-              <div class="plan-card a">
-                <h4>A：大人寄り</h4>
-                <div class="chips"><span class="chip">漢南洞・梨泰院で食事</span><span class="chip">バー</span></div>
-              </div>
-              <div class="plan-card b">
-                <h4>B：にぎやか寄り</h4>
-                <div class="chips"><span class="chip">弘大で食事</span><span class="chip">ノレバン</span><span class="chip">クラブ・バー</span></div>
-              </div>
-            </div>
+        <!-- Pattern A -->
+        <div class="ptn">
+          <div class="ptn-head" style="--c:#ff5a4d"><span class="tag">パターンA</span><b>王道グルメ満喫型（3泊4日）</b><span class="desc">名物を一通り制覇。初ソウルの鉄板</span></div>
+          <div class="timeline">
+            <div class="day"><h3>Day1｜到着・江南</h3><div class="chips"><span class="chip">夕方 チェックイン＆買い出し確認</span><span class="chip">🥩 <b>江南でサムギョプサル＋焼酎</b></span><span class="chip">🎤 ノレバン</span><span class="chip">🏠 部屋飲み</span></div></div>
+            <div class="day"><h3>Day2｜中心部観光＋市場</h3><div class="chips"><span class="chip">朝 ソルロンタンで整える</span><span class="chip">昼 景福宮・北村</span><span class="chip">🏮 <b>広蔵市場で食べ歩き</b></span><span class="chip">夜 乙支路ポチャ or 東大門タッカンマリ</span></div></div>
+            <div class="day"><h3>Day3｜今のソウル＋漢江</h3><div class="chips"><span class="chip">昼 弘大 or 聖水を散策</span><span class="chip">🍗 <b>漢江でチメク（夜景）</b></span><span class="chip">🔥 江南/往十里でコプチャン→〆ポックンパ</span></div></div>
+            <div class="day"><h3>Day4｜〆・出発</h3><div class="chips"><span class="chip">朝 クッパで〆</span><span class="chip">☕ カフェ</span><span class="chip">🛍️ 買い出し</span><span class="chip">✈️ 空港へ</span></div></div>
           </div>
+        </div>
+
+        <!-- Pattern B -->
+        <div class="ptn">
+          <div class="ptn-head" style="--c:#f0b429"><span class="tag">パターンB</span><b>江南拠点・飲み中心型（3泊4日）</b><span class="desc">移動最小。肉ローテ＆二次会でとことん遊ぶ</span></div>
+          <div class="timeline">
+            <div class="day"><h3>Day1｜サムギョプサル</h3><div class="chips"><span class="chip">🥩 <b>豚焼肉（江南豚商会/肉典食堂）</b></span><span class="chip">🎤 ノレバン</span><span class="chip">🏠 部屋飲み</span></div></div>
+            <div class="day"><h3>Day2｜コプチャン＆ポチャ</h3><div class="chips"><span class="chip">昼 新沙カロスキル散策</span><span class="chip">🔥 <b>江南コプでホルモン</b></span><span class="chip">🍶 ポチャで二次会</span></div></div>
+            <div class="day"><h3>Day3｜韓牛＆チメク</h3><div class="chips"><span class="chip">昼 チムジルバン（サウナ）</span><span class="chip">🐂 <b>韓牛（倉庫43）で会食</b></span><span class="chip">🍗 漢江チメク or チキン</span></div></div>
+            <div class="day"><h3>Day4｜〆・出発</h3><div class="chips"><span class="chip">朝 ソルロンタン</span><span class="chip">🛍️ 買い出し</span><span class="chip">✈️ 空港へ</span></div></div>
+          </div>
+        </div>
+
+        <!-- Pattern C -->
+        <div class="ptn">
+          <div class="ptn-head" style="--c:#4da6ff"><span class="tag">パターンC</span><b>観光バランス型（3泊4日）</b><span class="desc">宮殿・夜景・市場も。食は1日1名店を確実に</span></div>
+          <div class="timeline">
+            <div class="day"><h3>Day1｜到着・江南</h3><div class="chips"><span class="chip">夕方 チェックイン</span><span class="chip">🥩 江南で焼肉＋焼酎</span></div></div>
+            <div class="day"><h3>Day2｜古都ソウル</h3><div class="chips"><span class="chip">景福宮・北村・西村</span><span class="chip">昼 通仁市場</span><span class="chip">🌃 <b>Nソウルタワーで夜景</b></span><span class="chip">夜 明洞グルメ</span></div></div>
+            <div class="day"><h3>Day3｜市場＆漢江</h3><div class="chips"><span class="chip">🏮 広蔵市場</span><span class="chip">昼 聖水カフェ</span><span class="chip">🍗 <b>漢江チメク</b></span><span class="chip">夜 コプチャン</span></div></div>
+            <div class="day"><h3>Day4｜〆・出発</h3><div class="chips"><span class="chip">朝 クッパ</span><span class="chip">🛍️ 買い出し</span><span class="chip">✈️ 空港へ</span></div></div>
+          </div>
+        </div>
+
+        <!-- Pattern D -->
+        <div class="ptn">
+          <div class="ptn-head" style="--c:#35c46b"><span class="tag">パターンD</span><b>弾丸 2泊3日型</b><span class="desc">短期でも要点だけ濃く</span></div>
+          <div class="timeline">
+            <div class="day"><h3>Day1｜到着・江南</h3><div class="chips"><span class="chip">🥩 <b>江南で焼肉＋焼酎</b></span><span class="chip">🎤 ノレバン→部屋飲み</span></div></div>
+            <div class="day"><h3>Day2｜観光＋漢江</h3><div class="chips"><span class="chip">景福宮 or 明洞</span><span class="chip">🏮 広蔵市場</span><span class="chip">🍗 <b>漢江チメク</b>→コプチャン</span></div></div>
+            <div class="day"><h3>Day3｜〆・出発</h3><div class="chips"><span class="chip">朝 ソルロンタン</span><span class="chip">🛍️ 買い出し</span><span class="chip">✈️ 空港へ</span></div></div>
+          </div>
+        </div>
+
+        <h2 class="block">夜の遊び：2つの方向性</h2>
+        <div class="plan-split">
+          <div class="plan-card a"><h4>A：大人寄り</h4><div class="chips"><span class="chip">漢南洞・梨泰院で食事</span><span class="chip">バー</span></div></div>
+          <div class="plan-card b"><h4>B：にぎやか寄り</h4><div class="chips"><span class="chip">弘大で食事</span><span class="chip">ノレバン</span><span class="chip">クラブ・バー</span></div></div>
         </div>
       </div>
     </section>
@@ -566,6 +685,7 @@
       apps: "必携アプリ",
       distances: "江南からの移動",
       rests: "気になる店",
+      eats: "飯屋リスト",
       food: "グルメ分類",
       exp: "体験ランキング",
       plan: "モデル行程"
