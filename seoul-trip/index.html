@@ -329,6 +329,24 @@
   .tl-item h4 .dn { display: inline-block; min-width: 44px; color: var(--c, var(--accent)); font-weight: 800; }
   .tl-item h4 .dd { color: var(--text-sub); font-weight: 600; font-size: 12px; margin-left: 4px; }
 
+  /* ---------- Conclusion / checklist ---------- */
+  .concl {
+    background:
+      radial-gradient(600px 200px at 100% -30%, var(--accent-soft), transparent),
+      var(--bg-card);
+    border: 1px solid var(--accent); border-left: 4px solid var(--accent);
+    border-radius: var(--radius); padding: 20px 22px; box-shadow: var(--shadow);
+  }
+  .concl h3 { font-size: 17px; font-weight: 800; margin-bottom: 10px; }
+  .concl p { font-size: 14px; color: var(--text); margin-bottom: 10px; }
+  .concl p:last-child { margin-bottom: 0; }
+  .concl b { color: var(--accent); }
+  .concl .kbadges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .concl .kb { background: var(--bg-elev); border: 1px solid var(--line); border-radius: 8px; padding: 6px 11px; font-size: 12.5px; font-weight: 700; }
+  .rules { display: grid; gap: 9px; margin-top: 4px; counter-reset: r; }
+  .rules .r { display: grid; grid-template-columns: 24px 1fr; gap: 11px; align-items: start; font-size: 13.5px; line-height: 1.55; }
+  .rules .r::before { counter-increment: r; content: counter(r); background: var(--accent); color: #fff; width: 22px; height: 22px; border-radius: 999px; display: grid; place-items: center; font-size: 12px; font-weight: 800; margin-top: 1px; }
+
   /* ---------- Booking screenshots ---------- */
   .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   @media (max-width: 700px) { .shots { grid-template-columns: 1fr; } }
@@ -379,6 +397,7 @@
       <a data-target="food"><span class="ic">🍲</span>グルメ分類</a>
       <a data-target="exp"><span class="ic">⭐</span>体験ランキング</a>
       <a data-target="casino"><span class="ic">🎰</span>カジノ</a>
+      <a data-target="tobacco"><span class="ic">🚬</span>タバコ</a>
       <a data-target="plan"><span class="ic">🗓️</span>モデル行程</a>
     </nav>
     <button class="theme-toggle" id="themeToggle" type="button" aria-label="テーマ切替">
@@ -411,6 +430,7 @@
           <a class="home-tile" data-target="food"><div class="ic">🍲</div><b>グルメ分類</b><span>韓国料理の全体マップ</span></a>
           <a class="home-tile" data-target="exp"><div class="ic">⭐</div><b>体験ランキング</b><span>やりたい体験 優先順位20</span></a>
           <a class="home-tile" data-target="casino"><div class="ic">🎰</div><b>カジノ</b><span>外国人専用・江南最寄り情報</span></a>
+          <a class="home-tile" data-target="tobacco"><div class="ic">🚬</div><b>タバコ</b><span>持込・機内ルール・喫煙所マップ</span></a>
           <a class="home-tile" data-target="plan"><div class="ic">🗓️</div><b>モデル行程</b><span>複数パターン（3泊4日ほか）</span></a>
         </div>
       </div>
@@ -961,6 +981,140 @@
       </div>
     </section>
 
+    <!-- TOBACCO -->
+    <section class="page" id="page-tobacco">
+      <div class="container">
+        <div class="phead">
+          <div class="kicker">Smoking</div>
+          <h1>タバコ（持ち込み・機内・喫煙所）</h1>
+          <p>紙タバコ・電子タバコの韓国持ち込みと機内ルール、そして「どこで吸えるか」を整理。江南（駅三洞）拠点の喫煙所マップも調査済み。</p>
+        </div>
+
+        <div class="concl">
+          <h3>🎯 結論</h3>
+          <p><b>紙・電子とも韓国へ持ち込みは可能</b>。ただし電子タバコは「入国の免税枠」と「機内での積み方」が別ルールで、種類ごとに扱いが変わる。<b>電子タバコ本体は必ず機内持込</b>（預け入れ不可）。</p>
+          <p>喫煙環境は<b>「店内は日本以上に吸えない。屋外もどこでも吸えるわけではなく、指定喫煙所を探すのが基本」</b>と考えるのが安全。</p>
+          <div class="kbadges">
+            <span class="kb">紙巻き 200本まで</span>
+            <span class="kb">リキッド 20ml・濃度1%未満</span>
+            <span class="kb">本体は機内持込のみ</span>
+            <span class="kb">CBD・THCは厳禁</span>
+            <span class="kb">店内・室内は原則禁煙</span>
+          </div>
+        </div>
+
+        <h2 class="block">これだけ守れば大きく外さない（10の鉄則）</h2>
+        <div class="app-card">
+          <div class="rules">
+            <div class="r"><span>電子タバコ本体は<strong>手荷物（機内持込）</strong>に入れる</span></div>
+            <div class="r"><span>紙タバコは<strong>1人1カートン（200本）以内</strong></span></div>
+            <div class="r"><span>ニコチンリキッドは<strong>合計20ml以内</strong></span></div>
+            <div class="r"><span><strong>CBD・THC入り製品は持っていかない</strong></span></div>
+            <div class="r"><span>店内・ホテル・Airbnb室内では吸わない</span></div>
+            <div class="r"><span>屋外でも禁煙表示・駅・バス停・公園周辺では吸わない</span></div>
+            <div class="r"><span>「<strong>흡연실</strong>」「<strong>흡연구역</strong>」の表示がある場所を使う</span></div>
+            <div class="r"><span>Airbnbの屋外喫煙場所をホストに事前確認する</span></div>
+            <div class="r"><span>「電子タバコだから例外」とは考えない</span></div>
+            <div class="r"><span>迷ったら店員・警備員に「담배 어디서 피워요？」と聞く</span></div>
+          </div>
+        </div>
+        <div class="warn">🚨 <strong>最優先</strong>：今回の江南の一軒家（Airbnb）は、出発前にホストへ「喫煙可能な場所」を確認しておく。6人のうち複数が喫煙するなら滞在中の快適さがかなり変わる。</div>
+
+        <h2 class="block">① 持ち込み・免税枠（韓国入国）</h2>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>品目</th><th>免税枠の目安</th><th>メモ</th></tr></thead>
+          <tbody>
+            <tr><td class="area">紙巻きタバコ</td><td><strong>200本</strong>（1カートン）</td><td>20本×10箱=枠内／11箱=超過。超過は申告。自主申告で軽減、無申告は追徴</td></tr>
+            <tr><td class="area">ニコチンリキッド</td><td><strong>20ml</strong>（濃度1%未満）</td><td>10ml×2本=目安内／30ml=超過。超過は原則「申告・課税」の問題。大量NG</td></tr>
+            <tr><td class="area">加熱式スティック<span class="yen">IQOS/glo/Ploom</span></td><td>紙巻きに準じ最低限</td><td>本体1〜2台＋数箱なら個人使用として自然。多くても1カートン相当まで</td></tr>
+            <tr><td class="area">使い捨てVAPE</td><td>リキッド量に注意</td><td>1本に10〜15ml入ることも。合計20ml超に注意し1〜2本。パッケージ・容量表示を残す</td></tr>
+            <tr><td class="area">CBD・THC・大麻由来 ★</td><td class="rank-top">持込厳禁</td><td>日本で合法のCBDでもNG。成分不明品も避ける。絶対に持っていかない</td></tr>
+          </tbody>
+        </table></div>
+        <div class="note">🧾 免税枠は<strong>種類ごと</strong>。「紙1カートン＋スティック1カートン＋リキッド20ml」を全部別枠で免税、と単純加算しない方が安全。<strong>自分が普段使う1種類に絞る</strong>のが確実。</div>
+
+        <h2 class="block">② 飛行機のルール（重要）</h2>
+        <div class="kv">
+          <div class="k">本体の積み方</div><div class="v">IQOS/glo/Ploom/VAPE/使い捨て すべて<strong>機内持込のみ・預け入れ不可</strong>（バッテリー内蔵のため。仁川空港公式）。</div>
+          <div class="k">機内での使用</div><div class="v"><strong>吸う・電源ON・充電はいずれも禁止</strong>。電源OFF＋ケース＋金属と接触させない＋誤作動防止。</div>
+          <div class="k">リキッド</div><div class="v">液体物ルール適用：<strong>1容器100ml以下／透明袋にまとめ1L以下／1人1袋</strong>。基準は<strong>容器の容量</strong>（中身が少なくても容器が大きいとNG）。</div>
+          <div class="k">液漏れ対策</div><div class="v">気圧変化で漏れることがある。<strong>タンクを満タンにせず</strong>、ジップ袋に入れておく。</div>
+        </div>
+
+        <h2 class="block">③ どこで吸える？（韓国は店内NGが基本）</h2>
+        <div class="grp-title"><span class="dot"></span>店内は原則 全面禁煙</div>
+        <div class="chips">
+          <span class="chip">焼肉・サムギョプサル</span><span class="chip">居酒屋・ポチャ</span><span class="chip">カフェ・レストラン</span><span class="chip">フードコート</span><span class="chip">バー・クラブ</span><span class="chip">ノレバン</span>
+        </div>
+        <div class="note" style="margin-top:14px;">🚭 <strong>電子タバコも紙タバコと同じ扱い</strong>。禁煙場所ではIQOS/glo/Ploom/VAPEも吸えない。「煙じゃなく蒸気」「臭いが少ない」は免責にならない。ホテルのトイレ・浴室は<strong>火災報知器・煙感知器・臭気センサー</strong>が反応する。</div>
+
+        <div class="grp-title"><span class="dot"></span>屋外も禁煙区域が多い</div>
+        <div class="chips">
+          <span class="chip">地下鉄駅の出入口</span><span class="chip">バス停周辺</span><span class="chip">公園・広場</span><span class="chip">学校・病院周辺</span><span class="chip">大型ビルの敷地</span><span class="chip">人通りの多い歩道</span><span class="chip">横断歩道周辺</span><span class="chip">集合住宅の共用部</span>
+        </div>
+        <div class="warn">💸 <strong>江南駅周辺は特に注意</strong>。人通りが多く駅出入口・バス停・大通りが禁煙区域。喫煙者が固まっていても正式な喫煙所とは限らない。違反の過料は<strong>数万〜10万ウォン</strong>、取締員が巡回。「知らなかった／外国人だから」は免責されない。<strong>黄・青の喫煙所マーク、흡연구역／흡연실の表示</strong>がある場所を使う。</div>
+
+        <h2 class="block">④ 喫煙所の探し方＋マップ（調査結果）</h2>
+        <div class="apps" style="grid-template-columns:1fr;">
+          <div class="app-card">
+            <h3>🚬 江南駅：ソチョ開放型 制煙喫煙施設 <span style="font-size:13px;color:var(--gold);">서초 개방형 제연 흡연시설</span></h3>
+            <div class="role">エアカーテン式・最大20人・臭い拡散少なめ</div>
+            <p>瑞草区が<strong>江南駅裏手（서초대로78길 一帯）</strong>に設置した、全国初のエアカーテン付き開放型喫煙施設（2.4m×7.2m×3.4m）。3面のエアカーテン＋屋根の制煙浄化装置で煙の拡散を抑える構造。江南駅で吸うならまずここが目印。<br />
+            <span style="color:var(--text-sub)">※駅三洞は江南区、江南駅一帯は瑞草区にまたがる。区ごとに条例・マップが異なる点に注意。</span></p>
+          </div>
+        </div>
+        <div class="grp-title"><span class="dot"></span>マップ・アプリ（現地でブックマーク推奨）</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>サービス</th><th>種別</th><th>メモ</th></tr></thead>
+          <tbody>
+            <tr><td class="area">NAVER Map / KakaoMap</td><td>地図アプリ</td><td>Googleより情報量多い。検索語「흡연구역」「강남역 흡연구역」「강남역 흡연실」「smoking area」</td></tr>
+            <tr><td class="area">smoking-map.com</td><td>喫煙所マップ</td><td>흡연맵。周辺の喫煙区域・コンビニ・ベイプ店</td></tr>
+            <tr><td class="area">smokingarea.site</td><td>喫煙所マップ</td><td>江南・弘大・鍾路・梨泰院など主要都心＋京畿</td></tr>
+            <tr><td class="area">pioom.cloud</td><td>喫煙所マップ</td><td>여기서피움。江南駅周辺ガイドあり・現在地から最寄りを検索</td></tr>
+            <tr><td class="area">seochomap.qrcode.or.kr</td><td>瑞草区 公式</td><td>金/禁煙区域・喫煙ブースをQR案内。江南駅一帯（瑞草区）に有効</td></tr>
+          </tbody>
+        </table></div>
+        <div class="note">📍 喫煙所は<strong>閉鎖・移設</strong>されることがあり、地図に出ていても現地でなくなっている場合がある。最も確実なのは<strong>商業施設の案内所・ホテルフロント・店員・ビル警備員に聞く</strong>こと。現地の案内板QRコードも活用。</div>
+
+        <div class="grp-title"><span class="dot"></span>覚えておくと便利な韓国語</div>
+        <div class="tbl-wrap"><table style="min-width:auto;">
+          <thead><tr><th>韓国語</th><th>読み方</th><th>意味</th></tr></thead>
+          <tbody>
+            <tr><td class="area">흡연실</td><td>フビョンシル</td><td>喫煙室</td></tr>
+            <tr><td class="area">흡연구역</td><td>フビョングヨク</td><td>喫煙区域</td></tr>
+            <tr><td class="area">흡연장</td><td>フビョンジャン</td><td>喫煙場所</td></tr>
+            <tr><td class="area">금연 / 금연구역</td><td>クミョン / クミョングヨク</td><td>禁煙 / 禁煙区域</td></tr>
+            <tr><td class="area">담배</td><td>タンベ</td><td>タバコ</td></tr>
+            <tr><td class="area">재떨이</td><td>チェットリ</td><td>灰皿</td></tr>
+          </tbody>
+        </table></div>
+        <div class="tip">🗣️ <strong>使えるフレーズ</strong>：「담배 어디서 피워요？（タンベ オディソ ピウォヨ＝どこで吸えますか）」／「흡연실 있어요？（フビョンシル イッソヨ＝喫煙室ありますか）」</div>
+
+        <h2 class="block">⑤ ホテル・Airbnb・空港</h2>
+        <div class="kv">
+          <div class="k">ホテル</div><div class="v">全館または客室禁煙が一般的。禁煙室で吸うと特別清掃・消臭・デポジット没収などで<strong>数十万ウォン</strong>請求も。電子も同じ。<strong>バルコニーも要確認</strong>（발코니에서 담배 피워도 돼요？）。</div>
+          <div class="k">今回のAirbnb</div><div class="v">一軒家でも<strong>室内可とは限らない</strong>。ハウスルールの喫煙可否を確認し、記載がなくてもホストに事前確認。6人が一斉に家の前で吸うと近隣苦情の恐れ→分散＆携帯灰皿。<br /><span style="color:var(--text-sub)">ホスト確認：숙소 내부는 금연인가요？ 흡연 가능한 장소가 있으면 알려주세요.</span></div>
+          <div class="k">空港</div><div class="v">成田・仁川とも指定喫煙室あり（保安検査 前/後・到着/出発でフロアが分かれる）。<strong>仁川は入国・受取・税関を抜けるまで移動制限</strong>で到着後すぐ吸えるとは限らない。「Smoking Room／흡연실」を探す。トイレ・非常階段は不可。</div>
+        </div>
+
+        <h2 class="block">⑥ 持ち方チェック（タイプ別）</h2>
+        <div class="apps">
+          <div class="app-card">
+            <h3 style="font-size:16px;">🔥 IQOS / glo / Ploom</h3>
+            <p style="margin:0;color:var(--text)">・本体＆充電器は機内持込<br />・スティックは必要量のみ（多くても1カートン相当）<br />・電源OFF＋ケース<br />・預け荷物に本体を入れない／機内で充電しない</p>
+          </div>
+          <div class="app-card">
+            <h3 style="font-size:16px;">💨 リキッドVAPE</h3>
+            <p style="margin:0;color:var(--text)">・本体＆予備バッテリーは機内持込<br />・リキッド合計20ml以内・各容器100ml以下・透明袋<br />・CBD/THCなし、成分表示のパッケージを残す<br />・満タンにせず液漏れ対策</p>
+          </div>
+          <div class="app-card">
+            <h3 style="font-size:16px;">🚬 紙巻きタバコ</h3>
+            <p style="margin:0;color:var(--text)">・1人200本以内<br />・ライターは航空会社・空港の規則を確認<br />・他人の分をまとめて1人が持たない<br />・免税店購入分も韓国入国時の総量に含める</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ITINERARY -->
     <section class="page" id="page-plan">
       <div class="container">
@@ -1035,6 +1189,7 @@
       food: "グルメ分類",
       exp: "体験ランキング",
       casino: "カジノ",
+      tobacco: "タバコ",
       plan: "モデル行程"
     };
     var navLinks = document.querySelectorAll("[data-target]");
