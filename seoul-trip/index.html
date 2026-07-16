@@ -165,6 +165,8 @@
   }
   .icon-ct { background: linear-gradient(135deg, #ff5a4d, #ff8a3d); color: #fff; }
   .icon-nm { background: linear-gradient(135deg, #2db400, #1f8f00); color: #fff; }
+  .icon-kt { background: #fee500; color: #191919; }
+  .icon-pp { background: linear-gradient(135deg, #10cfb0, #0a9e88); color: #fff; }
   .app-card h3 { font-size: 19px; margin-bottom: 4px; }
   .app-card .role { color: var(--gold); font-size: 13px; font-weight: 700; margin-bottom: 10px; }
   .app-card p { color: var(--text-sub); font-size: 14px; margin-bottom: 18px; }
@@ -347,6 +349,14 @@
   .rules .r { display: grid; grid-template-columns: 24px 1fr; gap: 11px; align-items: start; font-size: 13.5px; line-height: 1.55; }
   .rules .r::before { counter-increment: r; content: counter(r); background: var(--accent); color: #fff; width: 22px; height: 22px; border-radius: 999px; display: grid; place-items: center; font-size: 12px; font-weight: 800; margin-top: 1px; }
 
+  /* ---------- Copy box (souvenir) ---------- */
+  .copybox {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12px; line-height: 1.7; white-space: pre-wrap; word-break: break-all;
+    background: var(--bg-elev); border: 1px solid var(--line); border-radius: 10px;
+    padding: 14px 16px; color: var(--text-sub); overflow-x: auto;
+  }
+
   /* ---------- Booking screenshots ---------- */
   .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   @media (max-width: 700px) { .shots { grid-template-columns: 1fr; } }
@@ -392,12 +402,14 @@
       <a data-target="flight"><span class="ic">✈️</span>フライト・宿泊</a>
       <a data-target="apps"><span class="ic">📱</span>必携アプリ</a>
       <a data-target="distances"><span class="ic">🚕</span>江南からの移動</a>
+      <a data-target="spots"><span class="ic">📍</span>スポット移動</a>
       <a data-target="rests"><span class="ic">🍽️</span>気になる店</a>
       <a data-target="eats"><span class="ic">🍜</span>飯屋リスト</a>
       <a data-target="food"><span class="ic">🍲</span>グルメ分類</a>
       <a data-target="exp"><span class="ic">⭐</span>体験ランキング</a>
       <a data-target="casino"><span class="ic">🎰</span>カジノ</a>
       <a data-target="tobacco"><span class="ic">🚬</span>タバコ</a>
+      <a data-target="gift"><span class="ic">🎁</span>お土産リスト</a>
       <a data-target="plan"><span class="ic">🗓️</span>モデル行程</a>
     </nav>
     <button class="theme-toggle" id="themeToggle" type="button" aria-label="テーマ切替">
@@ -425,13 +437,15 @@
           <a class="home-tile" data-target="flight"><div class="ic">✈️</div><b>フライト・宿泊</b><span>往復便・宿・空港⇄江南の移動</span></a>
           <a class="home-tile" data-target="apps"><div class="ic">📱</div><b>必携アプリ</b><span>CATCHTABLE / Naver Map のDL</span></a>
           <a class="home-tile" data-target="distances"><div class="ic">🚕</div><b>江南からの移動</b><span>各エリアの距離・時間・タクシー代</span></a>
+          <a class="home-tile" data-target="spots"><div class="ic">📍</div><b>スポット移動</b><span>スポットA〜Cへの行き方・時間・料金</span></a>
           <a class="home-tile" data-target="rests"><div class="ic">🍽️</div><b>気になる店</b><span>ピックアップ済みの候補3店</span></a>
           <a class="home-tile" data-target="eats"><div class="ic">🍜</div><b>飯屋リスト</b><span>ジャンル別の名店調査</span></a>
           <a class="home-tile" data-target="food"><div class="ic">🍲</div><b>グルメ分類</b><span>韓国料理の全体マップ</span></a>
           <a class="home-tile" data-target="exp"><div class="ic">⭐</div><b>体験ランキング</b><span>やりたい体験 優先順位20</span></a>
           <a class="home-tile" data-target="casino"><div class="ic">🎰</div><b>カジノ</b><span>外国人専用・江南最寄り情報</span></a>
           <a class="home-tile" data-target="tobacco"><div class="ic">🚬</div><b>タバコ</b><span>持込・機内ルール・喫煙所マップ</span></a>
-          <a class="home-tile" data-target="plan"><div class="ic">🗓️</div><b>モデル行程</b><span>複数パターン（3泊4日ほか）</span></a>
+          <a class="home-tile" data-target="gift"><div class="ic">🎁</div><b>お土産リスト</b><span>Aさん依頼の7商品と間違え注意</span></a>
+          <a class="home-tile" data-target="plan"><div class="ic">🗓️</div><b>モデル行程</b><span>確定版（スポットA〜C・カジノ土曜）</span></a>
         </div>
       </div>
     </section>
@@ -511,13 +525,17 @@
           </div>
         </div>
 
-        <h2 class="block">宿泊施設</h2>
+        <h2 class="block">宿泊施設｜Casa Luce（一軒家・メゾネット）</h2>
         <div class="kv">
-          <div class="k">エリア</div><div class="v">ソウル特別市 江南区 駅三洞（ヨクサムドン）<span style="color:var(--text-sub);"> ／ 地下鉄2号線・駅三（ヨクサム）駅周辺</span></div>
+          <div class="k">施設</div><div class="v"><strong>Casa Luce</strong>｜江南の12名用プレミアムデュプレックス（一軒家・メゾネット）。<a href="https://www.airbnb.jp/rooms/1635399122818487791" target="_blank" rel="noopener" style="color:var(--accent-2);">Airbnbリスティング →</a></div>
+          <div class="k">立地</div><div class="v">역삼（駅三）駅【2号線】徒歩3分／江南駅【2号線・新盆唐線】徒歩10分／<strong>空港バス6020番</strong>まで徒歩5分</div>
+          <div class="k">構成</div><div class="v">4階：寝室2・バス2・リビング・キッチン／5階：寝室2・バス1・簡易キッチン・<strong>屋上</strong>。クイーンベッド6台（最大12名）。<strong>エレベーターなし</strong>（内階段で4→5階）</div>
           <div class="k">チェックイン</div><div class="v">2026年7月17日（金）<strong> 16:00〜</strong></div>
           <div class="k">チェックアウト</div><div class="v">2026年7月20日（月）<strong> 正午（12:00）</strong></div>
-          <div class="k">立地メモ</div><div class="v">江南の中心。飲み・焼肉・ノレバンが徒歩圏。COEX（カジノ）へも近い。詳しくは「江南からの移動」タブ参照。</div>
+          <div class="k">主なルール</div><div class="v"><strong>屋内外すべて禁煙</strong>／深夜の騒音・大声厳禁（静かな住宅街）／玄関に防犯カメラ／ペット不可／予約人数以外の入室不可／臭い・煙の強い料理は不可</div>
+          <div class="k">登録</div><div class="v">외국인관광도시민박업（外国人観光都市民泊業）許可番号 제2026-77호（発行：서울특별시 강남구）</div>
         </div>
+        <div class="note">🛏️ ベッドは<strong>クイーン6台で6人ならゆったり</strong>。屋上から夜景を見ながら部屋飲みも可。ただし<strong>禁煙・騒音厳禁</strong>のルールは厳守（近隣苦情・ペナルティに注意）。喫煙は「タバコ」タブ参照。</div>
         <div class="warn">⚠️ <strong>復路フライトが7/20 10:20発</strong>のため、実際は<strong>チェックアウト可能時刻（正午）を待たず、7/20 早朝6:30〜7:00にはホテルを出発</strong>して直接空港へ向かう必要がある。前夜に精算・荷造りを済ませておく。</div>
 
         <h2 class="block">当日の動き（ドアtoドア）</h2>
@@ -559,7 +577,7 @@
         <div class="kv">
           <div class="k">到着</div><div class="v">19:40着 → 入国・受託手荷物で<strong>20:30〜21:00頃</strong>に到着ロビー。夜間到着。</div>
           <div class="k">推奨（夜・荷物あり）</div><div class="v"><strong>タクシー2台に分乗</strong>（Kakao Tで配車）。1台₩60,000〜75,000・60〜80分。楽で確実。</div>
-          <div class="k">安さ重視</div><div class="v">空港リムジンバス<strong>6009番（江南方面：新論峴・駅三・宣陵）</strong>。約₩17,000・70〜90分。駅三洞近くに停車。最終便の時刻を要確認。</div>
+          <div class="k">安さ重視</div><div class="v">空港リムジンバス<strong>6020番</strong>（宿の最寄り＝Casa Luceから徒歩5分に停留所）。約₩17,000・70〜90分。最終便の時刻を要確認。</div>
           <div class="k">ホテル着</div><div class="v">概ね<strong>22:00前後</strong>。初日はチェックイン後、江南で軽く一杯が現実的。</div>
         </div>
 
@@ -613,9 +631,31 @@
               <a class="dl-btn" href="https://play.google.com/store/apps/details?id=com.nhn.android.nmap" target="_blank" rel="noopener">Google Play<small>Android</small></a>
             </div>
           </div>
+
+          <div class="app-card">
+            <div class="icon icon-kt">T</div>
+            <h3>KAKAO T（카카오 T）</h3>
+            <div class="role">タクシー配車・料金の事前見積り</div>
+            <p>韓国の定番タクシー配車アプリ。地図から呼べてぼったくりを回避でき、料金も乗る前に見える。<strong>6人なら2台に分けて配車</strong>。空港⇄ホテルやスポット間の夜間移動に必須。カード登録で降車もスムーズ。</p>
+            <div class="dl-row">
+              <a class="dl-btn" href="https://apps.apple.com/app/id981110422" target="_blank" rel="noopener">App Store<small>iPhone / iPad</small></a>
+              <a class="dl-btn" href="https://play.google.com/store/apps/details?id=com.kakao.taxi" target="_blank" rel="noopener">Google Play<small>Android</small></a>
+            </div>
+          </div>
+
+          <div class="app-card">
+            <div class="icon icon-pp">P</div>
+            <h3>Papago（파파고）</h3>
+            <div class="role">韓国語翻訳（音声・カメラ対応）</div>
+            <p>Naver製の翻訳アプリで韓⇄日の精度が高い。メニューや看板は<strong>カメラ翻訳</strong>、店員との会話は<strong>音声翻訳</strong>。喫煙所やスポットの場所を尋ねるときにも役立つ。</p>
+            <div class="dl-row">
+              <a class="dl-btn" href="https://apps.apple.com/app/id1147874834" target="_blank" rel="noopener">App Store<small>iPhone / iPad</small></a>
+              <a class="dl-btn" href="https://play.google.com/store/apps/details?id=com.naver.labs.translator" target="_blank" rel="noopener">Google Play<small>Android</small></a>
+            </div>
+          </div>
         </div>
 
-        <div class="tip">💡 あると便利な追加アプリ：<strong>KakaoTalk</strong>（連絡・店との予約）、<strong>Kakao T</strong>（タクシー配車・料金の事前見積り）、<strong>Papago</strong>（韓国語翻訳）。時間があれば併せて。</div>
+        <div class="tip">💡 さらにあると便利：<strong>KakaoTalk</strong>（連絡・店との予約）。時間があれば併せて。</div>
       </div>
     </section>
 
@@ -701,6 +741,40 @@
       </div>
     </section>
 
+    <!-- SPOTS -->
+    <section class="page" id="page-spots">
+      <div class="container">
+        <div class="phead">
+          <div class="kicker">Spots Access</div>
+          <h1>スポットA〜Cへの移動</h1>
+          <p>起点は宿泊先 <strong>Casa Luce（地下鉄2号線・역삼＝駅三駅 徒歩3分）</strong>。スポットA〜Cはいずれも江南区内で近距離。夜の移動が中心なので、6人なら<strong>Kakao Tでタクシー2台</strong>に分乗が基本。</p>
+        </div>
+
+        <div class="note">📍 以下は<strong>住所ベースの概算</strong>（番地は洞ベース表記のため、正確な位置と経路は <strong>Naver Map / Kakao Map</strong> で、料金は <strong>Kakao T</strong> の事前見積りで確認）。タクシー概算は日中・通常交通の目安（₩100≒¥11）。深夜は約20%割増。</div>
+
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>スポット</th><th>住所・エリア</th><th>営業・入店目安</th><th>宿（역삼）からの移動</th><th>概算</th></tr></thead>
+          <tbody>
+            <tr><td class="rank">A</td><td class="area">三成洞21<span class="yen">Samseong-dong, 江南区</span></td><td>22:30〜24:30ごろ<span class="yen">営業〜26時</span></td><td>2号線 역삼→삼성 約6分／タクシー10〜13分</td><td>₩6,000〜8,000<span class="yen">≒¥660〜880</span></td></tr>
+            <tr><td class="rank">B</td><td class="area">論峴路645<span class="yen">Nonhyeon-ro, 江南区</span></td><td>19:30〜22:00<span class="yen">20時までに入店</span></td><td>タクシー約10分／地下鉄＋徒歩</td><td>₩5,000〜7,000<span class="yen">≒¥550〜770</span></td></tr>
+            <tr><td class="rank">C</td><td class="area">テヘラン路223<span class="yen">Teheran-ro, 江南区</span></td><td>19:30〜22:00<span class="yen">20時までに入店</span></td><td>徒歩15分圏 or タクシー約5分</td><td>₩4,800前後<span class="yen">≒¥530（基本料金）</span></td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="grp-title"><span class="dot"></span>スポット別メモ</div>
+        <div class="apps" style="grid-template-columns:1fr;">
+          <div class="app-card">
+            <p style="margin:0;color:var(--text)">
+              <strong>🅰 スポットA（三成洞）</strong>：初日（7/17）は<strong>22:30に迎えの車</strong>あり。フルーツ盛り合わせ・乾き物・ピザなどの軽食が食べられる（イメージはキャバクラのつまみ程度／by Tanaka）。ガッツリ食べたい場合は<strong>ホテル到着前にコンビニで軽食・酒を購入</strong>しておくと安心。<br /><br />
+              <strong>🅱 スポットB（論峴路）</strong>：19:30〜22:00。<strong>20:00までに入店推奨</strong>。それ以降は交渉次第（交渉したい by Tanaka）。<br /><br />
+              <strong>🅲 スポットC（テヘラン路）</strong>：19:30〜22:00。<strong>20:00までに入店推奨</strong>。宿（역삼）から最も近く、徒歩圏 or タクシー数分。
+            </p>
+          </div>
+        </div>
+        <div class="tip">💡 スポットB・Cは同じ時間帯（19:30〜22:00）なので<strong>別々の日</strong>に。行程では B・C を Day2/Day3 の夕方に振り分け、20時までに入店 → その後カジノ、の流れが動きやすい（「モデル行程」タブ参照）。</div>
+      </div>
+    </section>
+
     <!-- RESTAURANTS -->
     <section class="page" id="page-rests">
       <div class="container">
@@ -733,6 +807,54 @@
               <h3>영동원삼겹살（ヨンドンウォン・サムギョプサル）</h3>
               <div class="meta">サムギョプサル</div>
               <a class="link" href="https://ameblo.jp/reomaron218/entry-12423851787.html" target="_blank" rel="noopener">紹介ブログを見る →</a>
+            </div>
+          </div>
+          <div class="rest">
+            <div class="badge">🥩</div>
+            <div>
+              <h3>釜豚肉 弘大店</h3>
+              <div class="meta">豚焼肉 / 麻浦区 西橋洞 395-13（弘大）</div>
+              <a class="link" href="https://naver.me/539gAgOh" target="_blank" rel="noopener">Naver Map で見る →</a>
+            </div>
+          </div>
+          <div class="rest">
+            <div class="badge">🍢</div>
+            <div>
+              <h3>キットゥル 弘大本店</h3>
+              <div class="meta">麻浦区 西橋洞 395-20（弘大）</div>
+              <a class="link" href="https://naver.me/FXnl9lLM" target="_blank" rel="noopener">Naver Map で見る →</a>
+            </div>
+          </div>
+          <div class="rest">
+            <div class="badge">🛍️</div>
+            <div>
+              <h3>ザ・現代ソウル（The Hyundai Seoul）</h3>
+              <div class="meta">大型百貨店・フードホール / 永登浦区 汝矣島洞 22</div>
+              <a class="link" href="https://naver.me/5LQqFqez" target="_blank" rel="noopener">Naver Map で見る →</a>
+            </div>
+          </div>
+          <div class="rest">
+            <div class="badge">🏮</div>
+            <div>
+              <h3>広蔵市場（クァンジャン市場）</h3>
+              <div class="meta">市場・食べ歩き / 鍾路区 礼智洞 2-1</div>
+              <a class="link" href="https://naver.me/5xg8XDj1" target="_blank" rel="noopener">Naver Map で見る →</a>
+            </div>
+          </div>
+          <div class="rest">
+            <div class="badge">🥩</div>
+            <div>
+              <h3>イムグムテジ 蚕室店</h3>
+              <div class="meta">サムギョプサル / 蚕室（チャムシル）</div>
+              <a class="link" href="https://www.konest.com/contents/gourmet_mise_detail.html?id=36357" target="_blank" rel="noopener">コネストで情報を見る →</a>
+            </div>
+          </div>
+          <div class="rest">
+            <div class="badge">🍶</div>
+            <div>
+              <h3>ウォルファ食堂 麻浦本店（월화식당）</h3>
+              <div class="meta">韓国式居酒屋・ポチャ / 麻浦</div>
+              <a class="link" href="https://ameblo.jp/momonoricopin/entry-12802543107.html" target="_blank" rel="noopener">紹介ブログを見る →</a>
             </div>
           </div>
         </div>
@@ -1115,63 +1237,113 @@
       </div>
     </section>
 
+    <!-- GIFT -->
+    <section class="page" id="page-gift">
+      <div class="container">
+        <div class="phead">
+          <div class="kicker">Souvenirs</div>
+          <h1>お土産リスト（Aさん依頼）</h1>
+          <p>画像から読み取った<strong>7商品</strong>。容量・セット内容まで画像に合わせて記載。<strong>オリーブヤング（올리브영）</strong>中心で、菓子はコンビニ・スーパーでも入手可。</p>
+        </div>
+
+        <div class="warn">🚨 <strong>間違えやすい3点</strong>：③ Dr.Gは<strong>通常70ml と 企画セット</strong>、⑤ Torridenトナーは<strong>300ml と 500ml</strong>、⑥ベーグルチップ と ⑦アーモンドは<strong>別商品</strong>。ここだけ要注意。</div>
+
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>#</th><th>商品</th><th>容量・セット</th><th>メモ</th></tr></thead>
+          <tbody>
+            <tr><td class="rank">1</td><td class="area">MEDIHEAL マデカッソシド エッセンシャルマスク<span class="yen">MADECASSOSIDE ESSENTIAL MASK</span></td><td>1枚〜（各種セット）</td><td>7種のうち<strong>マデカッソシド／青緑パッケージ</strong>が画像に最も忠実</td></tr>
+            <tr><td class="rank">2</td><td class="area">ma:nyo（魔女工場）ピュリファイング クレンジング ソーダフォーム<span class="yen">Purifying Cleansing Soda Foam</span></td><td>150ml</td><td>ソーダ洗顔料。販売者により日本語表記が異なる</td></tr>
+            <tr><td class="rank">3</td><td class="area">Dr.G レッドブレミッシュ クリアスージングクリーム EX ★<span class="yen">R.E.D BLEMISH Clear Soothing Cream EX</span></td><td>70ml <strong>企画セット</strong><span class="yen">クリーム計100ml＋セラム20ml</span></td><td class="rank-top">通常70ml単品と間違えない。オリーブヤング限定の増量企画</td></tr>
+            <tr><td class="rank">4</td><td class="area">Torriden ダイブイン 低分子ヒアルロン酸マスク<span class="yen">DIVE IN Mask</span></td><td>10＋2枚（計12枚）</td><td>ダイブイン11枚＋バランスフル1枚の企画</td></tr>
+            <tr><td class="rank">5</td><td class="area">Torriden ダイブイン 低分子ヒアルロン酸トナー ★<span class="yen">DIVE IN Toner</span></td><td><strong>500ml</strong>＋のびるコットン60枚</td><td class="rank-top">300mlと間違えない。500mlの大容量企画</td></tr>
+            <tr><td class="rank">6</td><td class="area">Delight Project ハニーバター ベーグルチップ ★<span class="yen">HONEY BUTTER BAGEL CHIP</span></td><td>60g</td><td class="rank-top">ベーグルを焼いたチップス。⑦アーモンドと別物</td></tr>
+            <tr><td class="rank">7</td><td class="area">HBAF ハニーバターアーモンド<span class="yen">HONEY BUTTER ALMOND</span></td><td>35g小袋 or 190g前後</td><td>指定なければ小袋か通常袋が選びやすい</td></tr>
+          </tbody>
+        </table></div>
+
+        <h2 class="block">コピペ用リスト（検索リンク）</h2>
+        <div class="copybox">1. MEDIHEAL マデカッソシド エッセンシャルマスク
+   https://www.amazon.co.jp/s?k=MEDIHEAL+マデカッソシド+エッセンシャルマスク
+
+2. ma:nyo ピュリファイング クレンジング ソーダフォーム 150ml
+   https://www.amazon.co.jp/dp/B01CKL1ZF0
+
+3. Dr.G レッドブレミッシュ クリアスージングクリーム EX 70ml 企画セット
+   https://www.amazon.co.jp/s?k=Dr.G+レッドブレミッシュ+クリアスージングクリーム+EX+企画セット
+
+4. Torriden ダイブイン 低分子ヒアルロン酸マスク 10＋2枚企画
+   https://www.amazon.co.jp/s?k=Torriden+ダイブイン+低分子ヒアルロン酸マスク+10枚
+
+5. Torriden ダイブイン 低分子ヒアルロン酸トナー 500ml＋コットン60枚
+   https://www.amazon.co.jp/s?k=Torriden+ダイブイン+トナー+500ml
+
+6. Delight Project ハニーバター ベーグルチップ 60g
+   https://www.amazon.co.jp/s?k=Delight+Project+ハニーバター+ベーグルチップ
+
+7. HBAF ハニーバターアーモンド
+   https://www.amazon.co.jp/s?k=HBAF+ハニーバターアーモンド</div>
+
+        <div class="note">🛒 コスメ①〜⑤は<strong>現地オリーブヤング</strong>で箱の容量・セット内容を確認して買うのが確実（免税・割引も狙える）。菓子⑥⑦は<strong>コンビニ／マートやロッテ免税店</strong>でも入手可。上のリンクは帰国後の買い直し・照合用。</div>
+      </div>
+    </section>
+
     <!-- ITINERARY -->
     <section class="page" id="page-plan">
       <div class="container">
         <div class="phead">
           <div class="kicker">Itinerary</div>
-          <h1>モデル行程（複数パターン）</h1>
-          <p>ベースは3泊4日で作成（弾丸2泊3日版も併記）。初日は移動最小・江南完結が鉄則。<strong>太字＝その日のハイライト</strong>。日数や到着時刻に合わせて前後を入れ替えて使う。</p>
+          <h1>モデル行程（確定版）</h1>
+          <p>スポットA〜C訪問は確定、カジノは<strong>土曜（Day2）中心・日曜（Day3）も可能性あり</strong>。初日はホテル22時着 → 22:30にスポットA（迎えの車）。<strong>太字＝確定の予定</strong>。B・Cの日は当日調整可。</p>
         </div>
 
-        <!-- Pattern A -->
+        <div class="concl" style="margin-bottom:20px;">
+          <h3>✅ 確定していること</h3>
+          <p><b>Day1 夜</b>＝スポットA（22:30 迎えの車・三成洞）／<b>Day2（土）</b>＝カジノ（セブンラック江南COEX）。スポットB・Cは<b>Day2・Day3の夕方</b>に振り分け（19:30〜22:00・20時までに入店）。日曜（Day3）もカジノ再訪の可能性あり。</p>
+        </div>
+
+        <!-- Day 1 -->
         <div class="ptn" style="--c:#03c75a">
-          <div class="ptn-head"><span class="tag">パターンA</span><b>王道グルメ満喫型（3泊4日）</b><span class="desc">名物を一通り制覇。初ソウルの鉄板</span></div>
+          <div class="ptn-head"><span class="tag">Day 1</span><b>到着 ＆ スポットA</b><span class="desc">7/17（金）・ホテル22時着 → 迎えの車</span></div>
           <div class="tl">
-            <div class="tl-item"><h4><span class="dn">Day1</span>到着・江南<span class="dd">7/17（金）</span></h4><div class="chips"><span class="chip">夜 チェックイン（21〜22時着）</span><span class="chip">🥩 <b>江南でサムギョプサル＋焼酎</b></span><span class="chip">🎤 ノレバン</span><span class="chip">🏠 部屋飲み</span></div></div>
-            <div class="tl-item"><h4><span class="dn">Day2</span>中心部観光＋市場<span class="dd">7/18（土）</span></h4><div class="chips"><span class="chip">朝 ソルロンタンで整える</span><span class="chip">昼 景福宮・北村</span><span class="chip">🏮 <b>広蔵市場で食べ歩き</b></span><span class="chip">夜 乙支路ポチャ or 東大門タッカンマリ</span></div></div>
-            <div class="tl-item"><h4><span class="dn">Day3</span>今のソウル＋漢江<span class="dd">7/19（日）</span></h4><div class="chips"><span class="chip">昼 弘大 or 聖水を散策</span><span class="chip">🍗 <b>漢江でチメク（夜景）</b></span><span class="chip">🔥 江南/往十里でコプチャン→〆ポックンパ</span></div></div>
-            <div class="tl-item"><h4><span class="dn">Day4</span>出発<span class="dd">7/20（月・早朝）</span></h4><div class="chips"><span class="chip">6:30〜7:00 ホテル出発</span><span class="chip">✈️ 仁川 10:20発</span></div></div>
+            <div class="tl-item"><h4><span class="dn">〜21:00</span>入国・空港出発</h4><div class="chips"><span class="chip">16:50 成田T3発 → 19:40 仁川着</span><span class="chip">🚕 20:30頃 Kakao Tでタクシー2台 or 6020バス</span></div></div>
+            <div class="tl-item"><h4><span class="dn">22:00</span>ホテル着（Casa Luce）</h4><div class="chips"><span class="chip">🏪 <b>到着前にコンビニで酒・軽食を購入</b></span><span class="chip">チェックイン（역삼駅 徒歩3分）</span></div></div>
+            <div class="tl-item"><h4><span class="dn">22:30</span>スポットA（三成洞）</h4><div class="chips"><span class="chip">🚗 <b>迎えの車で移動 〜24:30頃</b>（営業〜26時）</span><span class="chip">軽食：フルーツ・乾き物・ピザ程度</span></div></div>
+            <div class="tl-item"><h4><span class="dn">以降</span>ホテルで部屋飲み</h4><div class="chips"><span class="chip">🏠 屋上で夜景＆一杯</span><span class="chip">⚠️ 禁煙・騒音厳禁（住宅街）</span></div></div>
           </div>
         </div>
 
-        <!-- Pattern B -->
-        <div class="ptn" style="--c:#2f7fff">
-          <div class="ptn-head"><span class="tag">パターンB</span><b>江南拠点・飲み中心型（3泊4日）</b><span class="desc">移動最小。肉ローテ＆二次会でとことん遊ぶ</span></div>
+        <!-- Day 2 -->
+        <div class="ptn" style="--c:#f0b429">
+          <div class="ptn-head"><span class="tag">Day 2 ★</span><b>スポットB/C ＋ カジノ</b><span class="desc">7/18（土）・カジノの日</span></div>
           <div class="tl">
-            <div class="tl-item"><h4><span class="dn">Day1</span>サムギョプサル<span class="dd">7/17（金）</span></h4><div class="chips"><span class="chip">🥩 <b>豚焼肉（江南豚商会/肉典食堂）</b></span><span class="chip">🎤 ノレバン</span><span class="chip">🏠 部屋飲み</span></div></div>
-            <div class="tl-item"><h4><span class="dn">Day2</span>コプチャン＆ポチャ<span class="dd">7/18（土）</span></h4><div class="chips"><span class="chip">昼 新沙カロスキル散策</span><span class="chip">🔥 <b>江南コプでホルモン</b></span><span class="chip">🍶 ポチャで二次会</span></div></div>
-            <div class="tl-item"><h4><span class="dn">Day3</span>韓牛＆チメク<span class="dd">7/19（日）</span></h4><div class="chips"><span class="chip">昼 チムジルバン（サウナ）</span><span class="chip">🐂 <b>韓牛（倉庫43）で会食</b></span><span class="chip">🍗 漢江チメク or チキン</span></div></div>
-            <div class="tl-item"><h4><span class="dn">Day4</span>出発<span class="dd">7/20（月・早朝）</span></h4><div class="chips"><span class="chip">6:30〜7:00 ホテル出発</span><span class="chip">✈️ 仁川 10:20発</span></div></div>
+            <div class="tl-item"><h4><span class="dn">昼</span>グルメ</h4><div class="chips"><span class="chip">🥩 気になる店で焼肉ランチ</span><span class="chip">二日酔いは神仙ソルロンタンで整える</span></div></div>
+            <div class="tl-item"><h4><span class="dn">〜20:00</span>スポットB or C</h4><div class="chips"><span class="chip"><b>スポット（論峴路 or テヘラン路）</b></span><span class="chip">⏰ 20時までに入店</span></div></div>
+            <div class="tl-item"><h4><span class="dn">22:00〜</span>カジノ</h4><div class="chips"><span class="chip">🎰 <b>セブンラック江南COEX</b>（24h・駅三→三成すぐ）</span><span class="chip">パスポート必須</span></div></div>
+            <div class="tl-item"><h4><span class="dn">〆</span>江南で軽く</h4><div class="chips"><span class="chip">🍜 江南/新論峴で〆</span><span class="chip">🎤 ノレバンも可</span></div></div>
           </div>
         </div>
 
-        <!-- Pattern C -->
-        <div class="ptn" style="--c:#8b5cf6">
-          <div class="ptn-head"><span class="tag">パターンC</span><b>観光バランス型（3泊4日）</b><span class="desc">宮殿・夜景・市場も。食は1日1名店を確実に</span></div>
+        <!-- Day 3 -->
+        <div class="ptn" style="--c:#4da6ff">
+          <div class="ptn-head"><span class="tag">Day 3</span><b>観光 ＋ スポットC/B（＋カジノ再訪も）</b><span class="desc">7/19（日）</span></div>
           <div class="tl">
-            <div class="tl-item"><h4><span class="dn">Day1</span>到着・江南<span class="dd">7/17（金）</span></h4><div class="chips"><span class="chip">夜 チェックイン（21〜22時着）</span><span class="chip">🥩 江南で焼肉＋焼酎</span></div></div>
-            <div class="tl-item"><h4><span class="dn">Day2</span>古都ソウル<span class="dd">7/18（土）</span></h4><div class="chips"><span class="chip">景福宮・北村・西村</span><span class="chip">昼 通仁市場</span><span class="chip">🌃 <b>Nソウルタワーで夜景</b></span><span class="chip">夜 明洞グルメ</span></div></div>
-            <div class="tl-item"><h4><span class="dn">Day3</span>市場＆漢江<span class="dd">7/19（日）</span></h4><div class="chips"><span class="chip">🏮 広蔵市場</span><span class="chip">昼 聖水カフェ</span><span class="chip">🍗 <b>漢江チメク</b></span><span class="chip">夜 コプチャン</span></div></div>
-            <div class="tl-item"><h4><span class="dn">Day4</span>出発<span class="dd">7/20（月・早朝）</span></h4><div class="chips"><span class="chip">6:30〜7:00 ホテル出発</span><span class="chip">✈️ 仁川 10:20発</span></div></div>
+            <div class="tl-item"><h4><span class="dn">昼</span>観光・食べ歩き</h4><div class="chips"><span class="chip">🏮 広蔵市場</span><span class="chip">🛍️ ザ・現代ソウル（汝矣島）</span><span class="chip">聖水/弘大 散策</span></div></div>
+            <div class="tl-item"><h4><span class="dn">〜20:00</span>スポットC or B</h4><div class="chips"><span class="chip"><b>Day2で行かなかった方</b></span><span class="chip">⏰ 20時までに入店</span></div></div>
+            <div class="tl-item"><h4><span class="dn">夜</span>グルメ or カジノ再訪</h4><div class="chips"><span class="chip">🍶 弘大（釜豚肉/ウォルファ食堂）</span><span class="chip">🎰 <b>カジノ再訪も可</b></span></div></div>
           </div>
         </div>
 
-        <!-- Pattern D -->
-        <div class="ptn" style="--c:#f59e0b">
-          <div class="ptn-head"><span class="tag">パターンD</span><b>弾丸 2泊3日型（短縮時の代替案）</b><span class="desc">今回は3泊4日だが、短縮する場合の参考</span></div>
+        <!-- Day 4 -->
+        <div class="ptn" style="--c:#ff5a4d">
+          <div class="ptn-head"><span class="tag">Day 4</span><b>出発（早朝）</b><span class="desc">7/20（月）・仁川 10:20発</span></div>
           <div class="tl">
-            <div class="tl-item"><h4><span class="dn">Day1</span>到着・江南</h4><div class="chips"><span class="chip">🥩 <b>江南で焼肉＋焼酎</b></span><span class="chip">🎤 ノレバン→部屋飲み</span></div></div>
-            <div class="tl-item"><h4><span class="dn">Day2</span>観光＋漢江</h4><div class="chips"><span class="chip">景福宮 or 明洞</span><span class="chip">🏮 広蔵市場</span><span class="chip">🍗 <b>漢江チメク</b>→コプチャン</span></div></div>
-            <div class="tl-item"><h4><span class="dn">Day3</span>〆・出発</h4><div class="chips"><span class="chip">朝 ソルロンタン</span><span class="chip">🛍️ 買い出し</span><span class="chip">✈️ 空港へ</span></div></div>
+            <div class="tl-item"><h4><span class="dn">前夜</span>精算・荷造り</h4><div class="chips"><span class="chip">チェックアウトは正午だが早朝出発</span></div></div>
+            <div class="tl-item"><h4><span class="dn">6:30〜7:00</span>ホテル出発</h4><div class="chips"><span class="chip">🚕 タクシー2台で仁川へ（早朝50〜60分）</span></div></div>
+            <div class="tl-item"><h4><span class="dn">10:20</span>仁川 T1 発</h4><div class="chips"><span class="chip">✈️ TW243 → 12:55 成田T2着</span></div></div>
           </div>
         </div>
 
-        <h2 class="block">夜の遊び：2つの方向性</h2>
-        <div class="plan-split">
-          <div class="plan-card a"><h4>A：大人寄り</h4><div class="chips"><span class="chip">漢南洞・梨泰院で食事</span><span class="chip">バー</span></div></div>
-          <div class="plan-card b"><h4>B：にぎやか寄り</h4><div class="chips"><span class="chip">弘大で食事</span><span class="chip">ノレバン</span><span class="chip">クラブ・バー</span></div></div>
-        </div>
+        <div class="tip">💡 <strong>調整メモ</strong>：スポットB・Cは同じ時間帯なので<strong>別々の日</strong>に（どちらをDay2/Day3にするかは当日調整）。カジノは土曜（Day2）確定、日曜（Day3）も任意で再訪可。スポットAは軽食中心なので、初日の夕食が軽い場合は<strong>到着前のコンビニで酒・つまみを確保</strong>。各スポットの移動・料金は「スポット移動」タブ参照。</div>
       </div>
     </section>
 
@@ -1184,12 +1356,14 @@
       flight: "フライト・宿泊",
       apps: "必携アプリ",
       distances: "江南からの移動",
+      spots: "スポット移動",
       rests: "気になる店",
       eats: "飯屋リスト",
       food: "グルメ分類",
       exp: "体験ランキング",
       casino: "カジノ",
       tobacco: "タバコ",
+      gift: "お土産リスト",
       plan: "モデル行程"
     };
     var navLinks = document.querySelectorAll("[data-target]");
