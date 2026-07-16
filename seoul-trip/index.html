@@ -5,21 +5,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, nofollow" />
 <title>ソウル旅行 事前キャッチアップガイド</title>
+<script>try{document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||"light")}catch(e){document.documentElement.setAttribute("data-theme","light")}</script>
 <style>
   :root {
+    /* Light — Naver-inspired（デフォルト） */
+    --bg: #f5f6f7;
+    --bg-elev: #ffffff;
+    --bg-card: #ffffff;
+    --line: #e5e8eb;
+    --text: #1a1c20;
+    --text-sub: #6b7684;
+    --accent: #03c75a;            /* Naver green */
+    --accent-soft: rgba(3, 199, 90, 0.12);
+    --accent-2: #2f7fff;
+    --accent-3: #03c75a;
+    --gold: #c98a00;
+    --radius: 14px;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 10px 24px rgba(0, 0, 0, 0.06);
+    --sidebar-w: 248px;
+    --topbar-bg: rgba(255, 255, 255, 0.9);
+    --tip-bg: #fff8e6; --tip-bd: #f0d68a; --tip-tx: #8a6a00;
+    --note-bg: #eaf3ff; --note-bd: #b9d6ff; --note-tx: #1957b8;
+    --warn-bg: #fdecea; --warn-bd: #f4b5ad; --warn-tx: #c0392b;
+  }
+  html[data-theme="dark"] {
     --bg: #0f1115;
     --bg-elev: #171a21;
     --bg-card: #1c2029;
     --line: #2a2f3a;
     --text: #e8eaed;
     --text-sub: #9aa0ac;
-    --accent: #ff5a4d;
+    --accent: #05d477;            /* Naver green（ダークで視認性UP） */
+    --accent-soft: rgba(5, 212, 119, 0.16);
     --accent-2: #4da6ff;
     --accent-3: #35c46b;
     --gold: #f0b429;
-    --radius: 14px;
     --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
-    --sidebar-w: 248px;
+    --topbar-bg: rgba(15, 17, 21, 0.9);
+    --tip-bg: rgba(240, 180, 41, 0.08); --tip-bd: rgba(240, 180, 41, 0.3); --tip-tx: #f4d488;
+    --note-bg: rgba(77, 166, 255, 0.08); --note-bd: rgba(77, 166, 255, 0.28); --note-tx: #bcdcff;
+    --warn-bg: rgba(255, 90, 77, 0.09); --warn-bd: rgba(255, 90, 77, 0.32); --warn-tx: #ffb3ab;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,6 +58,7 @@
     color: var(--text);
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
+    transition: background 0.25s ease, color 0.25s ease;
   }
 
   a { color: inherit; }
@@ -69,7 +95,7 @@
   }
   .nav a .ic { width: 20px; text-align: center; font-size: 16px; flex: none; }
   .nav a:hover { background: var(--bg-card); color: var(--text); }
-  .nav a.active { background: rgba(255, 90, 77, 0.14); color: #fff; }
+  .nav a.active { background: var(--accent-soft); color: var(--accent); }
   .nav a.active .ic { filter: none; }
 
   .nav .divider { height: 1px; background: var(--line); margin: 12px 8px; }
@@ -93,8 +119,8 @@
   /* ---------- Home hero ---------- */
   .hero-card {
     background:
-      radial-gradient(700px 260px at 20% -10%, rgba(255, 90, 77, 0.22), transparent),
-      radial-gradient(600px 240px at 100% 120%, rgba(77, 166, 255, 0.16), transparent),
+      radial-gradient(700px 260px at 20% -10%, rgba(3, 199, 90, 0.20), transparent),
+      radial-gradient(600px 240px at 100% 120%, rgba(3, 199, 90, 0.10), transparent),
       var(--bg-card);
     border: 1px solid var(--line);
     border-radius: 18px;
@@ -148,20 +174,20 @@
     padding: 11px 14px; border-radius: 10px; font-size: 13px; font-weight: 700;
     border: 1px solid var(--line); color: var(--text); background: var(--bg-elev); transition: 0.15s;
   }
-  .dl-btn:hover { border-color: var(--accent-2); color: #fff; transform: translateY(-1px); }
+  .dl-btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
   .dl-btn small { display: block; font-size: 11px; color: var(--text-sub); font-weight: 500; }
 
   .tip {
     margin-top: 18px;
-    background: rgba(240, 180, 41, 0.08);
-    border: 1px solid rgba(240, 180, 41, 0.3);
-    border-radius: 10px; padding: 14px 16px; font-size: 13.5px; color: #f4d488;
+    background: var(--tip-bg);
+    border: 1px solid var(--tip-bd);
+    border-radius: 10px; padding: 14px 16px; font-size: 13.5px; color: var(--tip-tx);
   }
   .note {
     margin-top: 18px;
-    background: rgba(77, 166, 255, 0.08);
-    border: 1px solid rgba(77, 166, 255, 0.28);
-    border-radius: 10px; padding: 14px 16px; font-size: 13.5px; color: #bcdcff;
+    background: var(--note-bg);
+    border: 1px solid var(--note-bd);
+    border-radius: 10px; padding: 14px 16px; font-size: 13.5px; color: var(--note-tx);
   }
 
   /* ---------- Restaurants ---------- */
@@ -193,7 +219,7 @@
   td.cat, td.area { font-weight: 700; white-space: nowrap; }
   td.rank { font-weight: 800; color: var(--accent); text-align: center; width: 44px; font-size: 15px; }
   .rank-top { color: var(--gold) !important; }
-  td strong { color: #fff; }
+  td strong { color: var(--text); }
   td .yen { color: var(--text-sub); font-size: 12px; display: block; }
   .grp-title { font-size: 15px; font-weight: 800; margin: 26px 0 12px; display: flex; align-items: center; gap: 8px; }
   .grp-title .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--accent); }
@@ -215,8 +241,8 @@
   @media (max-width: 600px) { .plan-split { grid-template-columns: 1fr; } }
   .plan-card { background: var(--bg-elev); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
   .plan-card h4 { font-size: 15px; margin-bottom: 8px; }
-  .plan-card.a h4 { color: #c9a7ff; }
-  .plan-card.b h4 { color: #ffab7a; }
+  .plan-card.a h4 { color: #8b5cf6; }
+  .plan-card.b h4 { color: #e0783a; }
 
   /* ---------- Itinerary patterns ---------- */
   .ptn { margin-bottom: 30px; }
@@ -230,7 +256,78 @@
   .ptn-head b { font-size: 16px; }
   .ptn-head .desc { color: var(--text-sub); font-size: 12.5px; }
   .ptn .day h3 { font-size: 15px; margin-bottom: 8px; }
-  .chip b { color: #fff; font-weight: 700; }
+  .chip b { color: var(--text); font-weight: 700; }
+
+  /* ---------- Flight & Stay ---------- */
+  .sumcard {
+    background:
+      radial-gradient(500px 200px at 100% -20%, rgba(53,196,107,0.18), transparent),
+      var(--bg-card);
+    border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 22px 24px; box-shadow: var(--shadow);
+    display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+  }
+  .sumcard .lbl { font-size: 13px; color: var(--text-sub); font-weight: 700; }
+  .sumcard .amt { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; }
+  .sumcard .amt small { font-size: 15px; color: var(--text-sub); font-weight: 700; margin-left: 4px; }
+
+  .fcard { background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; }
+  .fcard .fhead { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .fcard .dir { font-size: 12px; font-weight: 800; color: #fff; padding: 3px 10px; border-radius: 999px; }
+  .dir-go { background: linear-gradient(135deg,#03c75a,#04a94b); }
+  .dir-back { background: linear-gradient(135deg,#4da6ff,#2b7fd6); }
+  .fcard .fhead b { font-size: 16px; }
+  .fcard .fhead .air { color: var(--text-sub); font-size: 12.5px; }
+  .fleg { display: flex; gap: 14px; }
+  .fleg .times { flex: none; text-align: right; min-width: 62px; }
+  .fleg .times .t { font-size: 18px; font-weight: 800; }
+  .fleg .times .d { font-size: 11px; color: var(--text-sub); }
+  .fleg .rail { flex: none; width: 14px; display: flex; flex-direction: column; align-items: center; padding-top: 6px; }
+  .fleg .rail .o { width: 10px; height: 10px; border-radius: 999px; border: 2px solid var(--accent-2); }
+  .fleg .rail .ln { flex: 1; width: 2px; background: var(--line); margin: 3px 0; }
+  .fleg .rail .o.fill { background: var(--accent-2); }
+  .fleg .places { flex: 1; }
+  .fleg .places .p { font-weight: 700; font-size: 14.5px; margin-bottom: 2px; }
+  .fleg .places .p:last-child { margin-bottom: 0; margin-top: auto; }
+  .fleg .places .gap { color: var(--text-sub); font-size: 12px; padding: 6px 0; }
+
+  .kv { display: grid; grid-template-columns: 140px 1fr; gap: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .kv .k, .kv .v { padding: 11px 15px; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+  .kv .k { background: var(--bg-elev); color: var(--text-sub); font-weight: 700; }
+  .kv .k:nth-last-child(2), .kv .v:last-child { border-bottom: none; }
+  @media (max-width: 480px) { .kv { grid-template-columns: 108px 1fr; } }
+
+  .warn {
+    margin-top: 18px; background: var(--warn-bg);
+    border: 1px solid var(--warn-bd); border-radius: 10px;
+    padding: 14px 16px; font-size: 13.5px; color: var(--warn-tx);
+  }
+
+  /* ---------- Theme toggle ---------- */
+  .theme-toggle {
+    margin-top: 16px; width: 100%;
+    display: flex; align-items: center; gap: 11px;
+    background: var(--bg-card); border: 1px solid var(--line); color: var(--text-sub);
+    padding: 10px 12px; border-radius: 10px; font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: 0.15s; font-family: inherit;
+  }
+  .theme-toggle:hover { color: var(--text); border-color: var(--accent); }
+  .theme-toggle .ti { font-size: 16px; width: 20px; text-align: center; flex: none; }
+  .tt-btn {
+    margin-left: auto; background: var(--bg-card); border: 1px solid var(--line);
+    color: var(--text); border-radius: 9px; padding: 8px 11px; font-size: 16px; cursor: pointer; line-height: 1;
+  }
+
+  /* ---------- Timeline (itinerary) ---------- */
+  .tl { background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px 24px 20px; box-shadow: var(--shadow); }
+  .tl-item { position: relative; padding-left: 30px; padding-bottom: 22px; }
+  .tl-item:last-child { padding-bottom: 2px; }
+  .tl-item::before { content: ""; position: absolute; left: 0; top: 4px; width: 14px; height: 14px; border-radius: 999px; background: var(--bg-card); border: 3px solid var(--c, var(--accent)); z-index: 1; }
+  .tl-item::after { content: ""; position: absolute; left: 9px; top: 22px; bottom: -2px; width: 2px; background: var(--line); }
+  .tl-item:last-child::after { display: none; }
+  .tl-item h4 { font-size: 15.5px; font-weight: 800; margin-bottom: 11px; letter-spacing: -0.01em; }
+  .tl-item h4 .dn { display: inline-block; min-width: 44px; color: var(--c, var(--accent)); font-weight: 800; }
+  .tl-item h4 .dd { color: var(--text-sub); font-weight: 600; font-size: 12px; margin-left: 4px; }
 
   /* ---------- Mobile ---------- */
   .topbar { display: none; }
@@ -241,7 +338,7 @@
     .main { margin-left: 0; }
     .topbar {
       display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 30;
-      background: rgba(15,17,21,0.9); backdrop-filter: blur(8px);
+      background: var(--topbar-bg); backdrop-filter: blur(8px);
       border-bottom: 1px solid var(--line); padding: 12px 16px;
     }
     .topbar button { background: var(--bg-card); border: 1px solid var(--line); color: var(--text); border-radius: 9px; padding: 8px 12px; font-size: 18px; cursor: pointer; }
@@ -261,14 +358,19 @@
     </div>
     <nav class="nav" id="nav">
       <a data-target="home"><span class="ic">🏠</span>ホーム</a>
+      <a data-target="flight"><span class="ic">✈️</span>フライト・宿泊</a>
       <a data-target="apps"><span class="ic">📱</span>必携アプリ</a>
       <a data-target="distances"><span class="ic">🚕</span>江南からの移動</a>
       <a data-target="rests"><span class="ic">🍽️</span>気になる店</a>
       <a data-target="eats"><span class="ic">🍜</span>飯屋リスト</a>
       <a data-target="food"><span class="ic">🍲</span>グルメ分類</a>
       <a data-target="exp"><span class="ic">⭐</span>体験ランキング</a>
+      <a data-target="casino"><span class="ic">🎰</span>カジノ</a>
       <a data-target="plan"><span class="ic">🗓️</span>モデル行程</a>
     </nav>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="テーマ切替">
+      <span class="ti">🌙</span><span class="tlabel">ダークモード</span>
+    </button>
   </aside>
   <div class="backdrop" id="backdrop"></div>
 
@@ -276,6 +378,7 @@
     <div class="topbar">
       <button id="menuBtn" aria-label="メニュー">☰</button>
       <b id="topTitle">ソウル旅行ガイド</b>
+      <button id="themeToggleTop" class="tt-btn" type="button" aria-label="テーマ切替">🌙</button>
     </div>
 
     <!-- HOME -->
@@ -287,14 +390,126 @@
           <p>男6人・江南（カンナム）拠点のソウル旅行に向けて、出発前に押さえるべきアプリ・移動・グルメ・体験・行程を1サイトに集約。左メニューから各ページへ。</p>
         </div>
         <div class="home-grid">
+          <a class="home-tile" data-target="flight"><div class="ic">✈️</div><b>フライト・宿泊</b><span>往復便・宿・空港⇄江南の移動</span></a>
           <a class="home-tile" data-target="apps"><div class="ic">📱</div><b>必携アプリ</b><span>CATCHTABLE / Naver Map のDL</span></a>
           <a class="home-tile" data-target="distances"><div class="ic">🚕</div><b>江南からの移動</b><span>各エリアの距離・時間・タクシー代</span></a>
           <a class="home-tile" data-target="rests"><div class="ic">🍽️</div><b>気になる店</b><span>ピックアップ済みの候補3店</span></a>
           <a class="home-tile" data-target="eats"><div class="ic">🍜</div><b>飯屋リスト</b><span>ジャンル別の名店調査</span></a>
           <a class="home-tile" data-target="food"><div class="ic">🍲</div><b>グルメ分類</b><span>韓国料理の全体マップ</span></a>
           <a class="home-tile" data-target="exp"><div class="ic">⭐</div><b>体験ランキング</b><span>やりたい体験 優先順位20</span></a>
+          <a class="home-tile" data-target="casino"><div class="ic">🎰</div><b>カジノ</b><span>外国人専用・江南最寄り情報</span></a>
           <a class="home-tile" data-target="plan"><div class="ic">🗓️</div><b>モデル行程</b><span>複数パターン（3泊4日ほか）</span></a>
         </div>
+      </div>
+    </section>
+
+    <!-- FLIGHT & STAY -->
+    <section class="page" id="page-flight">
+      <div class="container">
+        <div class="phead">
+          <div class="kicker">Flight &amp; Stay</div>
+          <h1>フライト・宿泊・空港⇄江南の移動</h1>
+          <p>2026年7月17日（金）〜7月20日（月）の3泊4日。往路チェジュ航空・復路ティーウェイ航空、宿は江南区・駅三洞（ヨクサムドン）。出発地・空港・ホテル間の動きをまとめる。</p>
+        </div>
+
+        <div class="sumcard">
+          <div><div class="lbl">航空券 支払い合計（6人分ではなく予約単位の金額）</div><div class="amt">402,360<small>円</small></div></div>
+        </div>
+        <div class="tbl-wrap" style="margin-top:12px;">
+          <table style="min-width:auto;">
+            <thead><tr><th>内訳</th><th style="text-align:right;">金額</th></tr></thead>
+            <tbody>
+              <tr><td>運賃</td><td style="text-align:right;">231,420円</td></tr>
+              <tr><td>税金・燃油サーチャージ</td><td style="text-align:right;">140,160円</td></tr>
+              <tr><td>海外利用手数料</td><td style="text-align:right;">7,500円</td></tr>
+              <tr><td>座席指定</td><td style="text-align:right;">23,280円</td></tr>
+              <tr><td><strong>合計</strong></td><td style="text-align:right;"><strong>402,360円</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 class="block">往復フライト</h2>
+        <div class="apps">
+          <div class="fcard">
+            <div class="fhead"><span class="dir dir-go">往路</span><b>東京 → ソウル</b><span class="air">チェジュ航空 7C1106・エコノミー</span></div>
+            <div class="fleg">
+              <div class="times">
+                <div class="t">16:50</div><div class="d">7/17（金）</div>
+                <div style="height:26px;"></div>
+                <div class="t">19:40</div><div class="d">7/17（金）</div>
+              </div>
+              <div class="rail"><span class="o fill"></span><span class="ln"></span><span class="o"></span></div>
+              <div class="places">
+                <div class="p">成田国際空港 <span style="color:var(--text-sub);font-weight:600;">第3ターミナル（T3）</span></div>
+                <div class="gap">約2時間50分・現地時間表示</div>
+                <div class="p">仁川国際空港 <span style="color:var(--text-sub);font-weight:600;">第1ターミナル（T1）</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fcard">
+            <div class="fhead"><span class="dir dir-back">復路</span><b>ソウル → 東京</b><span class="air">ティーウェイ航空 TW243・エコノミー</span></div>
+            <div class="fleg">
+              <div class="times">
+                <div class="t">10:20</div><div class="d">7/20（月）</div>
+                <div style="height:26px;"></div>
+                <div class="t">12:55</div><div class="d">7/20（月）</div>
+              </div>
+              <div class="rail"><span class="o fill"></span><span class="ln"></span><span class="o"></span></div>
+              <div class="places">
+                <div class="p">仁川国際空港 <span style="color:var(--text-sub);font-weight:600;">第1ターミナル（T1）</span></div>
+                <div class="gap">約2時間35分・現地時間表示</div>
+                <div class="p">成田国際空港 <span style="color:var(--text-sub);font-weight:600;">第2ターミナル（T2）</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="note">✈️ <strong>ターミナル注意</strong>：往路チェジュ航空は<strong>成田 T3（LCC専用）</strong>発。復路ティーウェイ航空は<strong>成田 T2</strong>着で、往路と到着ターミナルが違う。仁川はどちらも<strong>T1</strong>。LCCは出発の<strong>2.5〜3時間前</strong>にはチェックイン開始を目安に。</div>
+
+        <h2 class="block">宿泊施設</h2>
+        <div class="kv">
+          <div class="k">エリア</div><div class="v">ソウル特別市 江南区 駅三洞（ヨクサムドン）<span style="color:var(--text-sub);"> ／ 地下鉄2号線・駅三（ヨクサム）駅周辺</span></div>
+          <div class="k">チェックイン</div><div class="v">2026年7月17日（金）<strong> 16:00〜</strong></div>
+          <div class="k">チェックアウト</div><div class="v">2026年7月20日（月）<strong> 正午（12:00）</strong></div>
+          <div class="k">立地メモ</div><div class="v">江南の中心。飲み・焼肉・ノレバンが徒歩圏。COEX（カジノ）へも近い。詳しくは「江南からの移動」タブ参照。</div>
+        </div>
+        <div class="warn">⚠️ <strong>復路フライトが7/20 10:20発</strong>のため、実際は<strong>チェックアウト可能時刻（正午）を待たず、7/20 早朝6:30〜7:00にはホテルを出発</strong>して直接空港へ向かう必要がある。前夜に精算・荷造りを済ませておく。</div>
+
+        <h2 class="block">当日の動き（ドアtoドア）</h2>
+
+        <div class="grp-title"><span class="dot"></span>① 7/17 出発地 → 成田 T3（京成スカイライナー）</div>
+        <div class="kv">
+          <div class="k">出発地</div><div class="v">東京都千代田区 岩本町2-11-9 IT2 5階<span style="color:var(--text-sub);"> ／ 最寄：岩本町駅（都営新宿線）・秋葉原駅</span></div>
+          <div class="k">ルート</div><div class="v">岩本町/秋葉原 → <strong>日暮里</strong>（JR山手・京浜東北線で約5〜6分）→ <strong>京成スカイライナー</strong>で<strong>空港第2ビル駅</strong>（約45分）→ T3へは無料ターミナルシャトル or 連絡通路で徒歩約15〜20分。</div>
+          <div class="k">料金</div><div class="v">スカイライナー 日暮里→空港第2ビル <strong>2,580円</strong>（運賃1,280＋ライナー券1,300）＋ 日暮里までのJR運賃。</div>
+          <div class="k">出発目安</div><div class="v">16:50発 → <strong>T3着14:00を目標</strong>。日暮里<strong>13:00頃発</strong>のスカイライナー → 岩本町を<strong>12:20頃</strong>に出発。</div>
+          <div class="k">予約</div><div class="v">スカイライナーは全席指定。京成公式サイト（Skyliner e-ticket）・アプリ or 券売機で<strong>6席まとめて事前確保</strong>が安心。</div>
+        </div>
+
+        <div class="grp-title"><span class="dot"></span>② 7/17 仁川 T1 → ホテル（駅三洞）</div>
+        <div class="kv">
+          <div class="k">到着</div><div class="v">19:40着 → 入国・受託手荷物で<strong>20:30〜21:00頃</strong>に到着ロビー。夜間到着。</div>
+          <div class="k">推奨（夜・荷物あり）</div><div class="v"><strong>タクシー2台に分乗</strong>（Kakao Tで配車）。1台₩60,000〜75,000・60〜80分。楽で確実。</div>
+          <div class="k">安さ重視</div><div class="v">空港リムジンバス<strong>6009番（江南方面：新論峴・駅三・宣陵）</strong>。約₩17,000・70〜90分。駅三洞近くに停車。最終便の時刻を要確認。</div>
+          <div class="k">ホテル着</div><div class="v">概ね<strong>22:00前後</strong>。初日はチェックイン後、江南で軽く一杯が現実的。</div>
+        </div>
+
+        <div class="grp-title"><span class="dot"></span>③ 7/20 ホテル → 仁川 T1（早朝）</div>
+        <div class="kv">
+          <div class="k">出発</div><div class="v">10:20発に間に合わせるため、<strong>6:30〜7:00にホテル出発</strong>（空港着8:00〜8:20目標）。</div>
+          <div class="k">推奨（早朝）</div><div class="v"><strong>タクシー2台</strong>。早朝は道が空き50〜60分・₩60,000〜70,000/台。Kakao Tで事前予約が安心。</div>
+          <div class="k">代替</div><div class="v">空港リムジンバス6009（早朝始発の時刻を前夜に確認）。荷物が少なければAREXも可だが乗換が多い。</div>
+        </div>
+
+        <div class="grp-title"><span class="dot"></span>④ 7/20 成田 T2 → 出発地（京成スカイライナー）</div>
+        <div class="kv">
+          <div class="k">到着</div><div class="v">復路 TW243 は<strong>成田 T2</strong>着 12:55。入国・手荷物受取で<strong>13:40頃</strong>に到着ロビー。</div>
+          <div class="k">ルート</div><div class="v">T2直結の<strong>空港第2ビル駅</strong> → <strong>京成スカイライナー</strong>で<strong>日暮里</strong>（約45分）→ 秋葉原/岩本町へ。T2着なので駅が近く乗り換えが楽。</div>
+          <div class="k">料金</div><div class="v">スカイライナー 空港第2ビル→日暮里 <strong>2,580円</strong>。</div>
+          <div class="k">帰宅目安</div><div class="v">14:00台のスカイライナー → 日暮里<strong>14:45頃</strong> → 岩本町<strong>15:00頃</strong>着。</div>
+        </div>
+
+        <div class="tip">💡 <strong>事前準備</strong>：京成スカイライナーは<strong>往復とも全席指定・事前予約推奨</strong>（各6席）。韓国側の移動用に<strong>Kakao T</strong>（配車・料金見積り）を全員インストール。往路T3・復路T2でターミナルが違う点、7/20は早朝出発になる点をグループで共有。T-money（交通カード）は到着後コンビニで人数分購入。</div>
       </div>
     </section>
 
@@ -616,6 +831,87 @@
       </div>
     </section>
 
+    <!-- CASINO -->
+    <section class="page" id="page-casino">
+      <div class="container">
+        <div class="phead">
+          <div class="kicker">Casino</div>
+          <h1>ソウルのカジノ（外国人専用）</h1>
+          <p>韓国のカジノは<strong>外国人専用</strong>が基本。韓国籍は入場不可、日本人は<strong>パスポート持参で入場無料</strong>。江南拠点なら三成（サムソン）COEXの<strong>セブンラック江南COEX店</strong>が最寄り。24時間営業で夜遊びの二次会にも組み込みやすい。</p>
+        </div>
+
+        <div class="note">
+          🪪 <strong>入場ルール（全店共通）</strong>：<strong>パスポート原本が必須</strong>（コピー不可）。<strong>満19歳以上</strong>の外国人のみ。入場料は無料。初回は受付で<strong>メンバーシップカード</strong>を無料作成（ポイントで飲食無料などの特典）。多くの店に<strong>日本語対応スタッフ</strong>あり。<br />
+          <span style="color:var(--text-sub)">※両替所・ATMは館内にあり日本円→ウォン可。ゲーム後のチップ再両替も両替所で。</span>
+        </div>
+
+        <div class="grp-title"><span class="dot"></span>🥇 最寄り・第一候補</div>
+        <div class="apps" style="grid-template-columns:1fr;">
+          <div class="app-card">
+            <h3>セブンラックカジノ 江南COEX店 <span style="font-size:13px;color:var(--gold);">세븐럭 강남코엑스</span></h3>
+            <div class="role">駅三洞から最も近い・24時間営業</div>
+            <p>韓国観光公社系（GKL）が運営する外国人専用カジノ。<strong>COEX（三成）内</strong>で駅三洞から地下鉄2号線でわずか数駅・車で10分程度。<strong>バカラが充実（テーブル63卓）</strong>で、電子テーブル（ETG）も多く初心者が少額で練習しやすい。日本語スタッフ在籍。<br />
+            <span style="color:var(--text-sub)">住所：江南区 テヘラン路87-58 COEXセンター／地下鉄2号線・三成（Samseong）駅5番出口 徒歩約400m、9号線・奉恩寺（Bongeunsa）駅7番出口 徒歩約200m。TEL +82-2-3466-6000</span></p>
+            <div class="tip" style="margin-top:6px;">💡 江南の夜遊び（焼肉→ノレバン）の流れで寄れる立地。まずはETGでバカラ/ルーレットを少額から。</div>
+          </div>
+        </div>
+
+        <div class="grp-title"><span class="dot"></span>🛬 空港隣接（到着・出発日に）</div>
+        <div class="apps" style="grid-template-columns:1fr;">
+          <div class="app-card">
+            <h3>パラダイスシティ <span style="font-size:13px;color:var(--gold);">Paradise City・仁川</span></h3>
+            <div class="role">韓国最大級のIR・仁川空港から無料シャトル5分</div>
+            <p>仁川空港（T1）隣接の統合型リゾート。カジノ＋ホテル＋スパ＋モール。<strong>セガサミー系で日本人向けサービスが手厚い</strong>。24時間営業、最低ベット₩5,000〜。空港T1から<strong>無料シャトルバス（約5分・5:05〜23:05／30分間隔）</strong>。<br />
+            <span style="color:var(--text-sub)">今回は往路到着が7/17 19:40（夜）、復路は7/20 10:20発（早朝）のため時間は取りにくいが、到着後に立ち寄る選択肢としてはアリ。TEL +82-32-729-3000</span></p>
+          </div>
+        </div>
+
+        <div class="grp-title"><span class="dot"></span>🏙️ ソウル最大級・老舗</div>
+        <div class="apps" style="grid-template-columns:1fr;">
+          <div class="app-card">
+            <h3>パラダイスカジノ ウォーカーヒル <span style="font-size:13px;color:var(--gold);">Walkerhill・広津区</span></h3>
+            <div class="role">1968年開業・ソウル最大級／漢江ビュー</div>
+            <p>グランドウォーカーヒルソウル B1F。テーブル79卓＋スロット160台超のラスベガス型。江南からは<strong>2号線・江辺（カンビョン）駅からホテル無料シャトル約8分</strong>（6:20〜23:00・10分間隔）。江南からは車で30〜40分とやや遠い。<br />
+            <span style="color:var(--text-sub)">住所：広津区 ウォーカーヒル路177／TEL +82-2-450-4830</span></p>
+          </div>
+        </div>
+
+        <h2 class="block">3施設 早見比較</h2>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>施設</th><th>場所</th><th>駅三洞から</th><th>特徴</th></tr></thead>
+          <tbody>
+            <tr><td class="area">セブンラック 江南COEX ★</td><td>三成・COEX</td><td>2号線 約3駅／車10分<span class="yen">最寄り</span></td><td>バカラ充実・ETG多数・日本語対応。夜遊びの流れで寄れる</td></tr>
+            <tr><td class="area">パラダイスシティ</td><td>仁川空港隣</td><td>到着/出発日のみ現実的<span class="yen">無料シャトル5分</span></td><td>韓国最大級IR・日本人向けサービス最強</td></tr>
+            <tr><td class="area">ウォーカーヒル</td><td>広津区</td><td>車30〜40分<span class="yen">江辺駅からシャトル8分</span></td><td>ソウル最大級・老舗・漢江ビュー</td></tr>
+          </tbody>
+        </table></div>
+
+        <h2 class="block">初心者の遊び方（4ステップ）</h2>
+        <div class="apps" style="grid-template-columns:1fr;">
+          <div class="app-card">
+            <p style="margin:0;color:var(--text)">
+              <strong>① 入場・登録</strong>：パスポートを提示して入場、受付で無料のメンバーシップカードを作る。<br /><br />
+              <strong>② 両替</strong>：館内の両替所で日本円→ウォン。<strong>使う上限額を先に決める</strong>（例：1人1〜3万円）。<br /><br />
+              <strong>③ ETGで練習</strong>：電子テーブル（ETG）は<strong>₩10,000程度から</strong>・画面を日本語に切替可。まずはバカラかルーレットで雰囲気を掴む。<br /><br />
+              <strong>④ テーブルへ</strong>：慣れたらディーラーのテーブルへ。<strong>バカラ</strong>は「プレイヤー/バンカー/引分」に賭けるだけでルールは自動進行。バンカーが統計的にやや有利（多くの店で勝ち時5%手数料）。引分（配当8〜9倍）は初心者非推奨。
+            </p>
+          </div>
+        </div>
+        <div class="tbl-wrap" style="margin-top:8px;"><table style="min-width:auto;">
+          <thead><tr><th>ゲーム</th><th>最低ベットの目安</th><th>初心者向き</th></tr></thead>
+          <tbody>
+            <tr><td class="cat">ETG（電子テーブル）</td><td>₩10,000〜</td><td>◎ 少額・日本語表示</td></tr>
+            <tr><td class="cat">ルーレット</td><td>₩5,000〜</td><td>◎ 直感的</td></tr>
+            <tr><td class="cat">バカラ（テーブル）</td><td>₩30,000前後〜</td><td>○ ルール自動進行</td></tr>
+            <tr><td class="cat">ブラックジャック</td><td>₩30,000前後〜</td><td>○ 基本戦略を覚えると◎</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="tip">👕 <strong>服装・マナー</strong>：ドレスコードは厳しくないが、<strong>短パン・サンダル・スポーツウェアは避ける</strong>のが無難（スマートカジュアル）。館内は基本撮影禁止。ETGの会員カード<strong>差し忘れ・取り忘れ</strong>に注意。<strong>予算の上限を決めて</strong>健全に楽しむ。</div>
+        <div class="warn">⚠️ 営業時間・最低ベット・シャトル時刻・入場要件は変更されることがある。訪問前に各公式サイト（7luck.com／p-city.com／paradisecasino.co.kr）で最新情報を確認する。</div>
+      </div>
+    </section>
+
     <!-- ITINERARY -->
     <section class="page" id="page-plan">
       <div class="container">
@@ -626,45 +922,45 @@
         </div>
 
         <!-- Pattern A -->
-        <div class="ptn">
-          <div class="ptn-head" style="--c:#ff5a4d"><span class="tag">パターンA</span><b>王道グルメ満喫型（3泊4日）</b><span class="desc">名物を一通り制覇。初ソウルの鉄板</span></div>
-          <div class="timeline">
-            <div class="day"><h3>Day1｜到着・江南</h3><div class="chips"><span class="chip">夕方 チェックイン＆買い出し確認</span><span class="chip">🥩 <b>江南でサムギョプサル＋焼酎</b></span><span class="chip">🎤 ノレバン</span><span class="chip">🏠 部屋飲み</span></div></div>
-            <div class="day"><h3>Day2｜中心部観光＋市場</h3><div class="chips"><span class="chip">朝 ソルロンタンで整える</span><span class="chip">昼 景福宮・北村</span><span class="chip">🏮 <b>広蔵市場で食べ歩き</b></span><span class="chip">夜 乙支路ポチャ or 東大門タッカンマリ</span></div></div>
-            <div class="day"><h3>Day3｜今のソウル＋漢江</h3><div class="chips"><span class="chip">昼 弘大 or 聖水を散策</span><span class="chip">🍗 <b>漢江でチメク（夜景）</b></span><span class="chip">🔥 江南/往十里でコプチャン→〆ポックンパ</span></div></div>
-            <div class="day"><h3>Day4｜〆・出発</h3><div class="chips"><span class="chip">朝 クッパで〆</span><span class="chip">☕ カフェ</span><span class="chip">🛍️ 買い出し</span><span class="chip">✈️ 空港へ</span></div></div>
+        <div class="ptn" style="--c:#03c75a">
+          <div class="ptn-head"><span class="tag">パターンA</span><b>王道グルメ満喫型（3泊4日）</b><span class="desc">名物を一通り制覇。初ソウルの鉄板</span></div>
+          <div class="tl">
+            <div class="tl-item"><h4><span class="dn">Day1</span>到着・江南<span class="dd">7/17（金）</span></h4><div class="chips"><span class="chip">夜 チェックイン（21〜22時着）</span><span class="chip">🥩 <b>江南でサムギョプサル＋焼酎</b></span><span class="chip">🎤 ノレバン</span><span class="chip">🏠 部屋飲み</span></div></div>
+            <div class="tl-item"><h4><span class="dn">Day2</span>中心部観光＋市場<span class="dd">7/18（土）</span></h4><div class="chips"><span class="chip">朝 ソルロンタンで整える</span><span class="chip">昼 景福宮・北村</span><span class="chip">🏮 <b>広蔵市場で食べ歩き</b></span><span class="chip">夜 乙支路ポチャ or 東大門タッカンマリ</span></div></div>
+            <div class="tl-item"><h4><span class="dn">Day3</span>今のソウル＋漢江<span class="dd">7/19（日）</span></h4><div class="chips"><span class="chip">昼 弘大 or 聖水を散策</span><span class="chip">🍗 <b>漢江でチメク（夜景）</b></span><span class="chip">🔥 江南/往十里でコプチャン→〆ポックンパ</span></div></div>
+            <div class="tl-item"><h4><span class="dn">Day4</span>出発<span class="dd">7/20（月・早朝）</span></h4><div class="chips"><span class="chip">6:30〜7:00 ホテル出発</span><span class="chip">✈️ 仁川 10:20発</span></div></div>
           </div>
         </div>
 
         <!-- Pattern B -->
-        <div class="ptn">
-          <div class="ptn-head" style="--c:#f0b429"><span class="tag">パターンB</span><b>江南拠点・飲み中心型（3泊4日）</b><span class="desc">移動最小。肉ローテ＆二次会でとことん遊ぶ</span></div>
-          <div class="timeline">
-            <div class="day"><h3>Day1｜サムギョプサル</h3><div class="chips"><span class="chip">🥩 <b>豚焼肉（江南豚商会/肉典食堂）</b></span><span class="chip">🎤 ノレバン</span><span class="chip">🏠 部屋飲み</span></div></div>
-            <div class="day"><h3>Day2｜コプチャン＆ポチャ</h3><div class="chips"><span class="chip">昼 新沙カロスキル散策</span><span class="chip">🔥 <b>江南コプでホルモン</b></span><span class="chip">🍶 ポチャで二次会</span></div></div>
-            <div class="day"><h3>Day3｜韓牛＆チメク</h3><div class="chips"><span class="chip">昼 チムジルバン（サウナ）</span><span class="chip">🐂 <b>韓牛（倉庫43）で会食</b></span><span class="chip">🍗 漢江チメク or チキン</span></div></div>
-            <div class="day"><h3>Day4｜〆・出発</h3><div class="chips"><span class="chip">朝 ソルロンタン</span><span class="chip">🛍️ 買い出し</span><span class="chip">✈️ 空港へ</span></div></div>
+        <div class="ptn" style="--c:#2f7fff">
+          <div class="ptn-head"><span class="tag">パターンB</span><b>江南拠点・飲み中心型（3泊4日）</b><span class="desc">移動最小。肉ローテ＆二次会でとことん遊ぶ</span></div>
+          <div class="tl">
+            <div class="tl-item"><h4><span class="dn">Day1</span>サムギョプサル<span class="dd">7/17（金）</span></h4><div class="chips"><span class="chip">🥩 <b>豚焼肉（江南豚商会/肉典食堂）</b></span><span class="chip">🎤 ノレバン</span><span class="chip">🏠 部屋飲み</span></div></div>
+            <div class="tl-item"><h4><span class="dn">Day2</span>コプチャン＆ポチャ<span class="dd">7/18（土）</span></h4><div class="chips"><span class="chip">昼 新沙カロスキル散策</span><span class="chip">🔥 <b>江南コプでホルモン</b></span><span class="chip">🍶 ポチャで二次会</span></div></div>
+            <div class="tl-item"><h4><span class="dn">Day3</span>韓牛＆チメク<span class="dd">7/19（日）</span></h4><div class="chips"><span class="chip">昼 チムジルバン（サウナ）</span><span class="chip">🐂 <b>韓牛（倉庫43）で会食</b></span><span class="chip">🍗 漢江チメク or チキン</span></div></div>
+            <div class="tl-item"><h4><span class="dn">Day4</span>出発<span class="dd">7/20（月・早朝）</span></h4><div class="chips"><span class="chip">6:30〜7:00 ホテル出発</span><span class="chip">✈️ 仁川 10:20発</span></div></div>
           </div>
         </div>
 
         <!-- Pattern C -->
-        <div class="ptn">
-          <div class="ptn-head" style="--c:#4da6ff"><span class="tag">パターンC</span><b>観光バランス型（3泊4日）</b><span class="desc">宮殿・夜景・市場も。食は1日1名店を確実に</span></div>
-          <div class="timeline">
-            <div class="day"><h3>Day1｜到着・江南</h3><div class="chips"><span class="chip">夕方 チェックイン</span><span class="chip">🥩 江南で焼肉＋焼酎</span></div></div>
-            <div class="day"><h3>Day2｜古都ソウル</h3><div class="chips"><span class="chip">景福宮・北村・西村</span><span class="chip">昼 通仁市場</span><span class="chip">🌃 <b>Nソウルタワーで夜景</b></span><span class="chip">夜 明洞グルメ</span></div></div>
-            <div class="day"><h3>Day3｜市場＆漢江</h3><div class="chips"><span class="chip">🏮 広蔵市場</span><span class="chip">昼 聖水カフェ</span><span class="chip">🍗 <b>漢江チメク</b></span><span class="chip">夜 コプチャン</span></div></div>
-            <div class="day"><h3>Day4｜〆・出発</h3><div class="chips"><span class="chip">朝 クッパ</span><span class="chip">🛍️ 買い出し</span><span class="chip">✈️ 空港へ</span></div></div>
+        <div class="ptn" style="--c:#8b5cf6">
+          <div class="ptn-head"><span class="tag">パターンC</span><b>観光バランス型（3泊4日）</b><span class="desc">宮殿・夜景・市場も。食は1日1名店を確実に</span></div>
+          <div class="tl">
+            <div class="tl-item"><h4><span class="dn">Day1</span>到着・江南<span class="dd">7/17（金）</span></h4><div class="chips"><span class="chip">夜 チェックイン（21〜22時着）</span><span class="chip">🥩 江南で焼肉＋焼酎</span></div></div>
+            <div class="tl-item"><h4><span class="dn">Day2</span>古都ソウル<span class="dd">7/18（土）</span></h4><div class="chips"><span class="chip">景福宮・北村・西村</span><span class="chip">昼 通仁市場</span><span class="chip">🌃 <b>Nソウルタワーで夜景</b></span><span class="chip">夜 明洞グルメ</span></div></div>
+            <div class="tl-item"><h4><span class="dn">Day3</span>市場＆漢江<span class="dd">7/19（日）</span></h4><div class="chips"><span class="chip">🏮 広蔵市場</span><span class="chip">昼 聖水カフェ</span><span class="chip">🍗 <b>漢江チメク</b></span><span class="chip">夜 コプチャン</span></div></div>
+            <div class="tl-item"><h4><span class="dn">Day4</span>出発<span class="dd">7/20（月・早朝）</span></h4><div class="chips"><span class="chip">6:30〜7:00 ホテル出発</span><span class="chip">✈️ 仁川 10:20発</span></div></div>
           </div>
         </div>
 
         <!-- Pattern D -->
-        <div class="ptn">
-          <div class="ptn-head" style="--c:#35c46b"><span class="tag">パターンD</span><b>弾丸 2泊3日型</b><span class="desc">短期でも要点だけ濃く</span></div>
-          <div class="timeline">
-            <div class="day"><h3>Day1｜到着・江南</h3><div class="chips"><span class="chip">🥩 <b>江南で焼肉＋焼酎</b></span><span class="chip">🎤 ノレバン→部屋飲み</span></div></div>
-            <div class="day"><h3>Day2｜観光＋漢江</h3><div class="chips"><span class="chip">景福宮 or 明洞</span><span class="chip">🏮 広蔵市場</span><span class="chip">🍗 <b>漢江チメク</b>→コプチャン</span></div></div>
-            <div class="day"><h3>Day3｜〆・出発</h3><div class="chips"><span class="chip">朝 ソルロンタン</span><span class="chip">🛍️ 買い出し</span><span class="chip">✈️ 空港へ</span></div></div>
+        <div class="ptn" style="--c:#f59e0b">
+          <div class="ptn-head"><span class="tag">パターンD</span><b>弾丸 2泊3日型（短縮時の代替案）</b><span class="desc">今回は3泊4日だが、短縮する場合の参考</span></div>
+          <div class="tl">
+            <div class="tl-item"><h4><span class="dn">Day1</span>到着・江南</h4><div class="chips"><span class="chip">🥩 <b>江南で焼肉＋焼酎</b></span><span class="chip">🎤 ノレバン→部屋飲み</span></div></div>
+            <div class="tl-item"><h4><span class="dn">Day2</span>観光＋漢江</h4><div class="chips"><span class="chip">景福宮 or 明洞</span><span class="chip">🏮 広蔵市場</span><span class="chip">🍗 <b>漢江チメク</b>→コプチャン</span></div></div>
+            <div class="tl-item"><h4><span class="dn">Day3</span>〆・出発</h4><div class="chips"><span class="chip">朝 ソルロンタン</span><span class="chip">🛍️ 買い出し</span><span class="chip">✈️ 空港へ</span></div></div>
           </div>
         </div>
 
@@ -682,12 +978,14 @@
   (function () {
     var titles = {
       home: "ソウル旅行ガイド",
+      flight: "フライト・宿泊",
       apps: "必携アプリ",
       distances: "江南からの移動",
       rests: "気になる店",
       eats: "飯屋リスト",
       food: "グルメ分類",
       exp: "体験ランキング",
+      casino: "カジノ",
       plan: "モデル行程"
     };
     var navLinks = document.querySelectorAll("[data-target]");
@@ -729,6 +1027,29 @@
     window.addEventListener("hashchange", function () {
       show((location.hash || "#home").slice(1));
     });
+
+    // Theme (Light / Dark) toggle
+    var root = document.documentElement;
+    function applyTheme(t) {
+      root.setAttribute("data-theme", t);
+      var dark = t === "dark";
+      var tg = document.getElementById("themeToggle");
+      if (tg) {
+        tg.querySelector(".ti").textContent = dark ? "☀️" : "🌙";
+        tg.querySelector(".tlabel").textContent = dark ? "ライトモード" : "ダークモード";
+      }
+      var tt = document.getElementById("themeToggleTop");
+      if (tt) tt.textContent = dark ? "☀️" : "🌙";
+      try { localStorage.setItem("theme", t); } catch (e) {}
+    }
+    function toggleTheme() {
+      applyTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark");
+    }
+    applyTheme(root.getAttribute("data-theme") || "light");
+    var tgBtn = document.getElementById("themeToggle");
+    var ttBtn = document.getElementById("themeToggleTop");
+    if (tgBtn) tgBtn.addEventListener("click", toggleTheme);
+    if (ttBtn) ttBtn.addEventListener("click", toggleTheme);
 
     show((location.hash || "#home").slice(1));
   })();
