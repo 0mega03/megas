@@ -329,6 +329,12 @@
   .tl-item h4 .dn { display: inline-block; min-width: 44px; color: var(--c, var(--accent)); font-weight: 800; }
   .tl-item h4 .dd { color: var(--text-sub); font-weight: 600; font-size: 12px; margin-left: 4px; }
 
+  /* ---------- Schedule rows ---------- */
+  .sched { display: grid; gap: 9px; margin-top: 6px; }
+  .sched .row { display: grid; grid-template-columns: 56px 1fr; gap: 10px; align-items: baseline; font-size: 13px; }
+  .sched .row .tm { font-weight: 800; color: var(--accent); font-size: 13px; white-space: nowrap; }
+  .sched .row .ev { color: var(--text); }
+
   /* ---------- Mobile ---------- */
   .topbar { display: none; }
   .backdrop { display: none; }
@@ -479,11 +485,35 @@
 
         <div class="grp-title"><span class="dot"></span>① 7/17 出発地 → 成田 T3（京成スカイライナー）</div>
         <div class="kv">
-          <div class="k">出発地</div><div class="v">東京都千代田区 岩本町2-11-9 IT2 5階<span style="color:var(--text-sub);"> ／ 最寄：岩本町駅（都営新宿線）・秋葉原駅</span></div>
-          <div class="k">ルート</div><div class="v">岩本町/秋葉原 → <strong>日暮里</strong>（JR山手・京浜東北線で約5〜6分）→ <strong>京成スカイライナー</strong>で<strong>空港第2ビル駅</strong>（約45分）→ T3へは無料ターミナルシャトル or 連絡通路で徒歩約15〜20分。</div>
-          <div class="k">料金</div><div class="v">スカイライナー 日暮里→空港第2ビル <strong>2,580円</strong>（運賃1,280＋ライナー券1,300）＋ 日暮里までのJR運賃。</div>
-          <div class="k">出発目安</div><div class="v">16:50発 → <strong>T3着14:00を目標</strong>。日暮里<strong>13:00頃発</strong>のスカイライナー → 岩本町を<strong>12:20頃</strong>に出発。</div>
-          <div class="k">予約</div><div class="v">スカイライナーは全席指定。京成公式サイト（Skyliner e-ticket）・アプリ or 券売機で<strong>6席まとめて事前確保</strong>が安心。</div>
+          <div class="k">出発地</div><div class="v">〒101-0032 東京都千代田区 岩本町2-11-9 IT2ビル 5階</div>
+          <div class="k">最寄り</div><div class="v">秋葉原駅まで徒歩約8〜10分／日暮里方面まで徒歩約12〜15分。<strong>一番スムーズなのは 秋葉原 → JR → 日暮里 → スカイライナー</strong>。</div>
+          <div class="k">ルート</div><div class="v">会社 → 秋葉原（徒歩）→ <strong>日暮里</strong>（JRで約10分）→ <strong>京成スカイライナー</strong>で<strong>空港第2ビル駅</strong>（約45分）→ 第3ターミナルへ<strong>徒歩約13分</strong>（アクセス通路）。</div>
+          <div class="k">料金</div><div class="v">スカイライナー 日暮里→空港第2ビル <strong>2,580円</strong>（運賃1,280＋ライナー券1,300）＋ 日暮里までのJR運賃。全席指定なので<strong>6席まとめて事前予約</strong>推奨。</div>
+        </div>
+
+        <div class="note">🧑‍💻 <strong>空港で仕事ができる</strong>ので、時間に余裕を持たせるのが正解。6人だと集合・改札・荷物預けで時間を使い、LCC（チェジュ航空）はチェックインカウンターも混みやすい。<strong>13:20〜13:30 会社出発</strong>がおすすめ。</div>
+
+        <div class="plan-split" style="margin-top:14px;">
+          <div class="plan-card" style="border-color:var(--accent);">
+            <h4 style="color:var(--accent);">✅ 推奨：余裕あり（13:30 会社発）</h4>
+            <div class="sched">
+              <div class="row"><span class="tm">13:30</span><span class="ev">会社出発 → 秋葉原へ徒歩</span></div>
+              <div class="row"><span class="tm">〜</span><span class="ev">JRで日暮里へ（約10分）</span></div>
+              <div class="row"><span class="tm">14:16</span><span class="ev">日暮里発 スカイライナー（〜14:20頃）</span></div>
+              <div class="row"><span class="tm">15:00</span><span class="ev">空港第2ビル駅着 → T3へ徒歩約13分</span></div>
+              <div class="row"><span class="tm">15:15</span><span class="ev">チェックイン（空港で仕事も可）</span></div>
+              <div class="row"><span class="tm">16:50</span><span class="ev"><strong>成田T3 出発</strong></span></div>
+            </div>
+          </div>
+          <div class="plan-card">
+            <h4>現実的：ギリギリ（14:00 会社発）</h4>
+            <div class="sched">
+              <div class="row"><span class="tm">14:00</span><span class="ev">会社出発</span></div>
+              <div class="row"><span class="tm">14:46</span><span class="ev">日暮里発 スカイライナー（〜14:50頃）</span></div>
+              <div class="row"><span class="tm">15:25</span><span class="ev">空港着（〜15:30頃）</span></div>
+              <div class="row"><span class="tm">16:50</span><span class="ev"><strong>成田T3 出発</strong></span></div>
+            </div>
+          </div>
         </div>
 
         <div class="grp-title"><span class="dot"></span>② 7/17 仁川 T1 → ホテル（駅三洞）</div>
