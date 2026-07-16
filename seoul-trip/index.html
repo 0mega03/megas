@@ -349,6 +349,23 @@
   .rules .r { display: grid; grid-template-columns: 24px 1fr; gap: 11px; align-items: start; font-size: 13.5px; line-height: 1.55; }
   .rules .r::before { counter-increment: r; content: counter(r); background: var(--accent); color: #fff; width: 22px; height: 22px; border-radius: 999px; display: grid; place-items: center; font-size: 12px; font-weight: 800; margin-top: 1px; }
 
+  /* ---------- Phrasebook (sticky nav + search) ---------- */
+  .phrase-tools { position: sticky; top: 0; z-index: 20; background: var(--bg); padding: 10px 0; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
+  .phrase-search { width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg-elev); color: var(--text); font-size: 14px; font-family: inherit; outline: none; }
+  .phrase-search:focus { border-color: var(--accent); }
+  .chips-nav { display: flex; gap: 7px; overflow-x: auto; padding: 10px 1px 2px; -webkit-overflow-scrolling: touch; }
+  .chips-nav::-webkit-scrollbar { height: 6px; }
+  .chips-nav::-webkit-scrollbar-thumb { background: var(--line); border-radius: 999px; }
+  .chips-nav .cn { flex: none; white-space: nowrap; font-size: 12.5px; font-weight: 700; color: var(--text-sub); background: var(--bg-elev); border: 1px solid var(--line); padding: 7px 12px; border-radius: 999px; cursor: pointer; transition: 0.15s; user-select: none; }
+  .chips-nav .cn:hover { color: var(--text); border-color: var(--accent); }
+  .chips-nav .cn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .cat-sec { scroll-margin-top: 120px; }
+  .pc-empty { display: none; color: var(--text-sub); font-size: 14px; padding: 20px 4px; }
+  .showcard { background: var(--bg-card); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 10px; padding: 13px 15px; margin-bottom: 10px; }
+  .showcard .ko { font-size: 15.5px; font-weight: 700; line-height: 1.5; }
+  .showcard .ja { font-size: 12.5px; color: var(--text-sub); margin-top: 5px; }
+  @media (max-width: 860px) { .phrase-tools { top: 48px; } }
+
   /* ---------- First-to-do (home) ---------- */
   .firsttodo {
     background:
@@ -425,6 +442,7 @@
       <a data-target="flight"><span class="ic">✈️</span>フライト・宿泊</a>
       <a data-target="esim"><span class="ic">📶</span>eSIM設定</a>
       <a data-target="apps"><span class="ic">📱</span>必携アプリ</a>
+      <a data-target="phrases"><span class="ic">💬</span>会話フレーズ</a>
       <a data-target="distances"><span class="ic">🚕</span>江南からの移動</a>
       <a data-target="spots"><span class="ic">📍</span>スポット移動</a>
       <a data-target="rests"><span class="ic">🍽️</span>気になる店</a>
@@ -469,6 +487,7 @@
           <a class="home-tile" data-target="flight"><div class="ic">✈️</div><b>フライト・宿泊</b><span>往復便・宿・空港⇄江南の移動</span></a>
           <a class="home-tile" data-target="esim"><div class="ic">📶</div><b>eSIM設定</b><span>出発前に各自で購入・設定（必須）</span></a>
           <a class="home-tile" data-target="apps"><div class="ic">📱</div><b>必携アプリ</b><span>CATCHTABLE / Naver Map のDL</span></a>
+          <a class="home-tile" data-target="phrases"><div class="ic">💬</div><b>会話フレーズ</b><span>検索＆カテゴリ即ジャンプの韓国語集</span></a>
           <a class="home-tile" data-target="distances"><div class="ic">🚕</div><b>江南からの移動</b><span>各エリアの距離・時間・タクシー代</span></a>
           <a class="home-tile" data-target="spots"><div class="ic">📍</div><b>スポット移動</b><span>スポットA〜Cへの行き方・時間・料金</span></a>
           <a class="home-tile" data-target="rests"><div class="ic">🍽️</div><b>気になる店</b><span>ピックアップ済みの候補3店</span></a>
@@ -1565,6 +1584,719 @@
       </div>
     </section>
 
+    <!-- PHRASES -->
+    <section class="page" id="page-phrases">
+      <div class="container">
+        <div class="phead">
+          <div class="kicker">Phrasebook</div>
+          <h1>会話フレーズ集（韓国語）</h1>
+          <p>そのまま見せる・読み上げる・コピペするための実用フレーズ。カタカナは目安。基本は語尾を<strong>「ヨ」まで付けた丁寧語</strong>ならまず失礼にならない。上の<strong>検索</strong>か<strong>カテゴリのチップ</strong>で目的の場所へすぐ飛べる。</p>
+        </div>
+
+        <div class="phrase-tools">
+          <input class="phrase-search" id="phraseSearch" type="search" autocomplete="off" placeholder="🔎 日本語・韓国語・読みで検索（例：トイレ / 카드 / いくら / タクシー）" />
+          <div class="chips-nav" id="chipsNav">
+            <a class="cn" data-scroll="pc-top">⭐最優先20</a>
+            <a class="cn" data-scroll="pc-greet">あいさつ</a>
+            <a class="cn" data-scroll="pc-thanks">感謝/謝罪/お願い</a>
+            <a class="cn" data-scroll="pc-again">聞き返す</a>
+            <a class="cn" data-scroll="pc-direction">道を聞く</a>
+            <a class="cn" data-scroll="pc-taxi">タクシー</a>
+            <a class="cn" data-scroll="pc-train">電車・バス</a>
+            <a class="cn" data-scroll="pc-food">飲食店</a>
+            <a class="cn" data-scroll="pc-shop">買い物</a>
+            <a class="cn" data-scroll="pc-hotel">ホテル/Airbnb</a>
+            <a class="cn" data-scroll="pc-sight">観光・カジノ</a>
+            <a class="cn" data-scroll="pc-emg">体調・緊急</a>
+            <a class="cn" data-scroll="pc-friend">友達日常</a>
+            <a class="cn" data-scroll="pc-meet">異性・初対面</a>
+            <a class="cn" data-scroll="pc-invite">誘う</a>
+            <a class="cn" data-scroll="pc-sns">SNS</a>
+            <a class="cn" data-scroll="pc-like">好意</a>
+            <a class="cn" data-scroll="pc-no">断る</a>
+            <a class="cn" data-scroll="pc-club">クラブ/バー</a>
+            <a class="cn" data-scroll="pc-num">数字・時間</a>
+            <a class="cn" data-scroll="pc-q">疑問詞</a>
+            <a class="cn" data-scroll="pc-verb">動詞</a>
+            <a class="cn" data-scroll="pc-form">文型</a>
+            <a class="cn" data-scroll="pc-aizuchi">相づち</a>
+            <a class="cn" data-scroll="pc-show">見せる文章</a>
+          </div>
+        </div>
+        <div class="pc-empty" id="pcEmpty">該当するフレーズが見つかりません。検索語を変えてみてください。</div>
+
+        <div class="cat-sec" id="pc-top">
+          <h2 class="block">⭐ まず最優先で覚える20</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>日本語</th><th>韓国語</th><th>読み方</th></tr></thead>
+            <tbody>
+              <tr><td>こんにちは</td><td class="area">안녕하세요</td><td>アンニョンハセヨ</td></tr>
+              <tr><td>ありがとうございます</td><td class="area">감사합니다</td><td>カムサハムニダ</td></tr>
+              <tr><td>すみません</td><td class="area">죄송합니다</td><td>チェソンハムニダ</td></tr>
+              <tr><td>ちょっといいですか</td><td class="area">잠시만요</td><td>チャムシマンニョ</td></tr>
+              <tr><td>お願いします</td><td class="area">부탁드립니다</td><td>プタクトゥリムニダ</td></tr>
+              <tr><td>大丈夫です</td><td class="area">괜찮아요</td><td>クェンチャナヨ</td></tr>
+              <tr><td>わかりません</td><td class="area">모르겠어요</td><td>モルゲッソヨ</td></tr>
+              <tr><td>韓国語ができません</td><td class="area">한국어를 못해요</td><td>ハングゴルル モッテヨ</td></tr>
+              <tr><td>日本人です</td><td class="area">일본 사람이에요</td><td>イルボン サラミエヨ</td></tr>
+              <tr><td>英語は話せますか</td><td class="area">영어 할 수 있어요?</td><td>ヨンオ ハル ス イッソヨ</td></tr>
+              <tr><td>ゆっくり話してください</td><td class="area">천천히 말해 주세요</td><td>チョンチョニ マレ ジュセヨ</td></tr>
+              <tr><td>もう一度お願いします</td><td class="area">다시 한번 말해 주세요</td><td>タシ ハンボン マレ ジュセヨ</td></tr>
+              <tr><td>これは何ですか</td><td class="area">이게 뭐예요?</td><td>イゲ ムォエヨ</td></tr>
+              <tr><td>いくらですか</td><td class="area">얼마예요?</td><td>オルマエヨ</td></tr>
+              <tr><td>これをください</td><td class="area">이거 주세요</td><td>イゴ ジュセヨ</td></tr>
+              <tr><td>トイレはどこですか</td><td class="area">화장실이 어디예요?</td><td>ファジャンシリ オディエヨ</td></tr>
+              <tr><td>ここへ行きたいです</td><td class="area">여기 가고 싶어요</td><td>ヨギ カゴ シポヨ</td></tr>
+              <tr><td>助けてください</td><td class="area">도와주세요</td><td>トワジュセヨ</td></tr>
+              <tr><td>カードは使えますか</td><td class="area">카드 돼요?</td><td>カドゥ デヨ</td></tr>
+              <tr><td>写真を撮ってもらえますか</td><td class="area">사진 찍어 주실 수 있어요?</td><td>サジン チゴ ジュシル ス イッソヨ</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="cat-sec" id="pc-greet">
+          <h2 class="block">1. あいさつ・基本会話</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>日本語</th><th>韓国語</th><th>読み方</th></tr></thead>
+            <tbody>
+              <tr><td>こんにちは</td><td class="area">안녕하세요</td><td>アンニョンハセヨ</td></tr>
+              <tr><td>はじめまして</td><td class="area">처음 뵙겠습니다</td><td>チョウム ペッケッスムニダ</td></tr>
+              <tr><td>お会いできてうれしいです</td><td class="area">만나서 반가워요</td><td>マンナソ パンガウォヨ</td></tr>
+              <tr><td>お元気ですか</td><td class="area">잘 지내세요?</td><td>チャル チネセヨ</td></tr>
+              <tr><td>元気です</td><td class="area">잘 지내요</td><td>チャル チネヨ</td></tr>
+              <tr><td>久しぶりです</td><td class="area">오랜만이에요</td><td>オレンマニエヨ</td></tr>
+              <tr><td>今日はよろしくお願いします</td><td class="area">오늘 잘 부탁드려요</td><td>オヌル チャル プタクトゥリョヨ</td></tr>
+              <tr><td>さようなら（相手が帰る）</td><td class="area">안녕히 가세요</td><td>アンニョンヒ カセヨ</td></tr>
+              <tr><td>さようなら（自分が帰る）</td><td class="area">안녕히 계세요</td><td>アンニョンヒ ケセヨ</td></tr>
+              <tr><td>また会いましょう</td><td class="area">또 만나요</td><td>ト マンナヨ</td></tr>
+              <tr><td>また連絡します</td><td class="area">또 연락할게요</td><td>ト ヨルラカルケヨ</td></tr>
+              <tr><td>気をつけて帰ってください</td><td class="area">조심해서 가세요</td><td>チョシメソ カセヨ</td></tr>
+              <tr><td>楽しかったです</td><td class="area">즐거웠어요</td><td>チュルゴウォッソヨ</td></tr>
+              <tr><td>今日はありがとうございました</td><td class="area">오늘 감사했어요</td><td>オヌル カムサヘッソヨ</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="cat-sec" id="pc-thanks">
+          <h2 class="block">2. 感謝・謝罪・お願い</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>日本語</th><th>韓国語</th><th>読み方</th></tr></thead>
+            <tbody>
+              <tr><td>ありがとうございます</td><td class="area">감사합니다</td><td>カムサハムニダ</td></tr>
+              <tr><td>本当にありがとうございます</td><td class="area">정말 감사합니다</td><td>チョンマル カムサハムニダ</td></tr>
+              <tr><td>助かりました</td><td class="area">도움이 됐어요</td><td>トウミ トェッソヨ</td></tr>
+              <tr><td>親切ですね</td><td class="area">친절하시네요</td><td>チンジョラシネヨ</td></tr>
+              <tr><td>ご配慮ありがとうございます</td><td class="area">배려해 주셔서 감사합니다</td><td>ペリョヘ ジュショソ カムサハムニダ</td></tr>
+              <tr><td>すみません（謝罪）</td><td class="area">죄송합니다</td><td>チェソンハムニダ</td></tr>
+              <tr><td>ごめんなさい</td><td class="area">미안해요</td><td>ミアネヨ</td></tr>
+              <tr><td>遅れてすみません</td><td class="area">늦어서 죄송합니다</td><td>ヌジョソ チェソンハムニダ</td></tr>
+              <tr><td>間違えました</td><td class="area">제가 잘못했어요</td><td>チェガ チャルモテッソヨ</td></tr>
+              <tr><td>失礼しました</td><td class="area">실례했습니다</td><td>シルレヘッスムニダ</td></tr>
+              <tr><td>わざとではありません</td><td class="area">일부러 그런 건 아니에요</td><td>イルブロ クロン ゴン アニエヨ</td></tr>
+              <tr><td>お願いします</td><td class="area">부탁드려요</td><td>プタクトゥリョヨ</td></tr>
+              <tr><td>ちょっと待ってください</td><td class="area">잠시만 기다려 주세요</td><td>チャムシマン キダリョ ジュセヨ</td></tr>
+              <tr><td>これを手伝ってください</td><td class="area">이것 좀 도와주세요</td><td>イゴッ チョム トワジュセヨ</td></tr>
+              <tr><td>見せてください</td><td class="area">보여 주세요</td><td>ポヨ ジュセヨ</td></tr>
+              <tr><td>教えてください</td><td class="area">알려 주세요</td><td>アルリョ ジュセヨ</td></tr>
+              <tr><td>書いてください</td><td class="area">써 주세요</td><td>ソ ジュセヨ</td></tr>
+              <tr><td>ここを押してください</td><td class="area">여기를 눌러 주세요</td><td>ヨギルル ヌルロ ジュセヨ</td></tr>
+              <tr><td>これを確認してください</td><td class="area">이것 좀 확인해 주세요</td><td>イゴッ チョム ファギネ ジュセヨ</td></tr>
+            </tbody>
+          </table></div>
+          <div class="tip">💡「좀（チョム）」＝直訳は「少し」だが、依頼を柔らかくする役割。頼みごとに付けると自然。</div>
+        </div>
+
+        <div class="cat-sec" id="pc-again">
+          <h2 class="block">3. 聞き返す・言葉が通じないとき</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>日本語</th><th>韓国語</th><th>読み方</th></tr></thead>
+            <tbody>
+              <tr><td>韓国語がわかりません</td><td class="area">한국어를 잘 몰라요</td><td>ハングゴルル チャル モルラヨ</td></tr>
+              <tr><td>韓国語が話せません</td><td class="area">한국어를 못해요</td><td>ハングゴルル モッテヨ</td></tr>
+              <tr><td>日本語は話せますか</td><td class="area">일본어 할 수 있어요?</td><td>イルボノ ハル ス イッソヨ</td></tr>
+              <tr><td>英語は話せますか</td><td class="area">영어 할 수 있어요?</td><td>ヨンオ ハル ス イッソヨ</td></tr>
+              <tr><td>ゆっくり話してください</td><td class="area">천천히 말해 주세요</td><td>チョンチョニ マレ ジュセヨ</td></tr>
+              <tr><td>もう一度言ってください</td><td class="area">다시 말해 주세요</td><td>タシ マレ ジュセヨ</td></tr>
+              <tr><td>何と言いましたか</td><td class="area">뭐라고 하셨어요?</td><td>ムォラゴ ハショッソヨ</td></tr>
+              <tr><td>どういう意味ですか</td><td class="area">무슨 뜻이에요?</td><td>ムスン トゥシエヨ</td></tr>
+              <tr><td>文字で書いてください</td><td class="area">글로 써 주세요</td><td>クルロ ソ ジュセヨ</td></tr>
+              <tr><td>翻訳機を使ってもいいですか</td><td class="area">번역기를 써도 돼요?</td><td>ポニョッキルル ソド デヨ</td></tr>
+              <tr><td>この画面を見てください</td><td class="area">이 화면을 봐 주세요</td><td>イ ファミョヌル パ ジュセヨ</td></tr>
+              <tr><td>合っていますか</td><td class="area">맞아요?</td><td>マジャヨ</td></tr>
+              <tr><td>違います</td><td class="area">아니에요</td><td>アニエヨ</td></tr>
+              <tr><td>理解しました</td><td class="area">이해했어요</td><td>イヘヘッソヨ</td></tr>
+              <tr><td>まだよくわかりません</td><td class="area">아직 잘 모르겠어요</td><td>アジク チャル モルゲッソヨ</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="cat-sec" id="pc-direction">
+          <h2 class="block">4. 道を聞く・場所を探す</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>日本語</th><th>韓国語</th><th>読み方</th></tr></thead>
+            <tbody>
+              <tr><td>ここはどこですか</td><td class="area">여기가 어디예요?</td><td>ヨギガ オディエヨ</td></tr>
+              <tr><td>○○はどこですか</td><td class="area">○○이 어디예요?</td><td>○○イ オディエヨ</td></tr>
+              <tr><td>○○へ行きたいです</td><td class="area">○○에 가고 싶어요</td><td>○○エ カゴ シポヨ</td></tr>
+              <tr><td>どうやって行きますか</td><td class="area">어떻게 가요?</td><td>オットケ カヨ</td></tr>
+              <tr><td>歩いて行けますか</td><td class="area">걸어서 갈 수 있어요?</td><td>コロソ カル ス イッソヨ</td></tr>
+              <tr><td>遠いですか</td><td class="area">멀어요?</td><td>モロヨ</td></tr>
+              <tr><td>近いですか</td><td class="area">가까워요?</td><td>カッカウォヨ</td></tr>
+              <tr><td>何分くらいかかりますか</td><td class="area">몇 분 정도 걸려요?</td><td>ミョッ プン チョンド コルリョヨ</td></tr>
+              <tr><td>この道で合っていますか</td><td class="area">이 길이 맞아요?</td><td>イ キリ マジャヨ</td></tr>
+              <tr><td>地図で示してください</td><td class="area">지도에서 보여 주세요</td><td>チドエソ ポヨ ジュセヨ</td></tr>
+              <tr><td>入口はどこですか</td><td class="area">입구가 어디예요?</td><td>イックガ オディエヨ</td></tr>
+              <tr><td>出口はどこですか</td><td class="area">출구가 어디예요?</td><td>チュルグガ オディエヨ</td></tr>
+              <tr><td>エレベーターはどこですか</td><td class="area">엘리베이터가 어디예요?</td><td>エルリベイトガ オディエヨ</td></tr>
+              <tr><td>地下ですか</td><td class="area">지하예요?</td><td>チハエヨ</td></tr>
+              <tr><td>何階ですか</td><td class="area">몇 층이에요?</td><td>ミョッ チュンイエヨ</td></tr>
+              <tr><td>左</td><td class="area">왼쪽</td><td>ウェンチョク</td></tr>
+              <tr><td>右</td><td class="area">오른쪽</td><td>オルンチョク</td></tr>
+              <tr><td>直進</td><td class="area">직진</td><td>チクチン</td></tr>
+              <tr><td>前 / 後ろ</td><td class="area">앞 / 뒤</td><td>アプ / トゥィ</td></tr>
+              <tr><td>向かい側</td><td class="area">건너편</td><td>コンノピョン</td></tr>
+              <tr><td>近く / 隣</td><td class="area">근처 / 옆</td><td>クンチョ / ヨプ</td></tr>
+              <tr><td>中 / 外</td><td class="area">안 / 밖</td><td>アン / パク</td></tr>
+              <tr><td>上 / 下</td><td class="area">위 / 아래</td><td>ウィ / アレ</td></tr>
+              <tr><td>まっすぐですか</td><td class="area">직진이에요?</td><td>チクチニエヨ</td></tr>
+              <tr><td>右ですか / 左ですか</td><td class="area">오른쪽이에요? / 왼쪽이에요?</td><td>オルンチョギエヨ / ウェンチョギエヨ</td></tr>
+              <tr><td>あの建物ですか</td><td class="area">저 건물이에요?</td><td>チョ コンムリエヨ</td></tr>
+              <tr><td>ここを渡りますか</td><td class="area">여기서 건너요?</td><td>ヨギソ コンノヨ</td></tr>
+              <tr><td>次の角ですか</td><td class="area">다음 모퉁이예요?</td><td>タウム モトゥンイエヨ</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="cat-sec" id="pc-taxi">
+          <h2 class="block">5. タクシーで使う言葉</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>日本語</th><th>韓国語</th><th>読み方</th></tr></thead>
+            <tbody>
+              <tr><td>ここまでお願いします</td><td class="area">여기까지 가 주세요</td><td>ヨギッカジ カ ジュセヨ</td></tr>
+              <tr><td>この住所までお願いします</td><td class="area">이 주소로 가 주세요</td><td>イ チュソロ カ ジュセヨ</td></tr>
+              <tr><td>このホテルまでお願いします</td><td class="area">이 호텔로 가 주세요</td><td>イ ホテルロ カ ジュセヨ</td></tr>
+              <tr><td>江南駅までお願いします</td><td class="area">강남역까지 가 주세요</td><td>カンナムニョッカジ カ ジュセヨ</td></tr>
+              <tr><td>この画面の場所までお願いします</td><td class="area">이 화면에 있는 곳으로 가 주세요</td><td>イ ファミョネ インヌン ゴスロ カ ジュセヨ</td></tr>
+              <tr><td>6人です</td><td class="area">여섯 명이에요</td><td>ヨソッ ミョンイエヨ</td></tr>
+              <tr><td>2台必要です</td><td class="area">두 대가 필요해요</td><td>トゥ デガ ピリョヘヨ</td></tr>
+              <tr><td>大型タクシーはありますか</td><td class="area">대형 택시 있어요?</td><td>テヒョン テクシ イッソヨ</td></tr>
+              <tr><td>トランクを開けてください</td><td class="area">트렁크를 열어 주세요</td><td>トゥロンクルル ヨロ ジュセヨ</td></tr>
+              <tr><td>荷物があります</td><td class="area">짐이 있어요</td><td>チミ イッソヨ</td></tr>
+              <tr><td>一番早い道でお願いします</td><td class="area">제일 빠른 길로 가 주세요</td><td>チェイル パルン キルロ カ ジュセヨ</td></tr>
+              <tr><td>高速道路を使ってください</td><td class="area">고속도로로 가 주세요</td><td>コソクトロロ カ ジュセヨ</td></tr>
+              <tr><td>高速道路を使わないでください</td><td class="area">고속도로는 이용하지 말아 주세요</td><td>コソクトロヌン イヨンハジ マラ ジュセヨ</td></tr>
+              <tr><td>急いでいます</td><td class="area">시간이 좀 촉박해요</td><td>シガニ チョム チョッパケヨ</td></tr>
+              <tr><td>ゆっくりで大丈夫です</td><td class="area">천천히 가셔도 괜찮아요</td><td>チョンチョニ カショド クェンチャナヨ</td></tr>
+              <tr><td>ここで待ってください</td><td class="area">여기서 기다려 주세요</td><td>ヨギソ キダリョ ジュセヨ</td></tr>
+              <tr><td>エアコンを弱く/強くしてください</td><td class="area">에어컨을 약하게/세게 해 주세요</td><td>エオコヌル ヤカゲ/セゲ ヘ ジュセヨ</td></tr>
+              <tr><td>音楽を少し小さくしてください</td><td class="area">음악을 조금 줄여 주세요</td><td>ウマグル チョグム チュリョ ジュセヨ</td></tr>
+              <tr><td>ここで降ります</td><td class="area">여기서 내릴게요</td><td>ヨギソ ネリルケヨ</td></tr>
+              <tr><td>ここで止めてください</td><td class="area">여기 세워 주세요</td><td>ヨギ セウォ ジュセヨ</td></tr>
+              <tr><td>建物の前でお願いします</td><td class="area">건물 앞에 세워 주세요</td><td>コンムル アペ セウォ ジュセヨ</td></tr>
+              <tr><td>カードで払います</td><td class="area">카드로 계산할게요</td><td>カドゥロ ケサナルケヨ</td></tr>
+              <tr><td>現金で払います</td><td class="area">현금으로 계산할게요</td><td>ヒョングムロ ケサナルケヨ</td></tr>
+              <tr><td>領収書をください</td><td class="area">영수증 주세요</td><td>ヨンスジュン ジュセヨ</td></tr>
+              <tr><td>お釣りをください</td><td class="area">거스름돈 주세요</td><td>コスルムトン ジュセヨ</td></tr>
+              <tr><td>忘れ物をしました</td><td class="area">물건을 두고 내렸어요</td><td>ムルゴヌル トゥゴ ネリョッソヨ</td></tr>
+              <tr><td>場所が違います</td><td class="area">장소가 달라요</td><td>チャンソガ タルラヨ</td></tr>
+              <tr><td>道が違うと思います</td><td class="area">길이 다른 것 같아요</td><td>キリ タルン ゴッ カタヨ</td></tr>
+              <tr><td>メーターを使ってください</td><td class="area">미터기를 켜 주세요</td><td>ミトギルル キョ ジュセヨ</td></tr>
+              <tr><td>料金が高すぎませんか</td><td class="area">요금이 너무 비싼 것 아니에요?</td><td>ヨグミ ノム ピッサン ゴッ アニエヨ</td></tr>
+              <tr><td>アプリの料金と違います</td><td class="area">앱에 나온 요금과 달라요</td><td>エベ ナオン ヨグムグァ タルラヨ</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="cat-sec" id="pc-train">
+          <h2 class="block">6. 電車・地下鉄・バス</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>日本語</th><th>韓国語</th><th>読み方</th></tr></thead>
+            <tbody>
+              <tr><td>この電車は江南へ行きますか</td><td class="area">이 전철은 강남에 가요?</td><td>イ チョンチョルン カンナメ カヨ</td></tr>
+              <tr><td>何番線ですか</td><td class="area">몇 번 승강장이에요?</td><td>ミョッ ポン スンガンジャンイエヨ</td></tr>
+              <tr><td>何番出口ですか</td><td class="area">몇 번 출구예요?</td><td>ミョッ ポン チュルグエヨ</td></tr>
+              <tr><td>乗り換えはありますか</td><td class="area">갈아타야 해요?</td><td>カラタヤ ヘヨ</td></tr>
+              <tr><td>どこで乗り換えますか</td><td class="area">어디서 갈아타요?</td><td>オディソ カラタヨ</td></tr>
+              <tr><td>このバスは○○へ行きますか</td><td class="area">이 버스는 ○○에 가요?</td><td>イ ボスヌン ○○エ カヨ</td></tr>
+              <tr><td>ここで降りればいいですか</td><td class="area">여기서 내리면 돼요?</td><td>ヨギソ ネリミョン デヨ</td></tr>
+              <tr><td>次の駅はどこですか</td><td class="area">다음 역이 어디예요?</td><td>タウム ヨギ オディエヨ</td></tr>
+              <tr><td>交通カードにチャージしたいです</td><td class="area">교통카드를 충전하고 싶어요</td><td>キョトンカドゥルル チュンジョナゴ シポヨ</td></tr>
+              <tr><td>T-moneyカードはありますか</td><td class="area">티머니 카드 있어요?</td><td>ティモニ カドゥ イッソヨ</td></tr>
+              <tr><td>残高はいくらですか</td><td class="area">잔액이 얼마예요?</td><td>チャネギ オルマエヨ</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="cat-sec" id="pc-food">
+          <h2 class="block">7. 飲食店で使う言葉</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>日本語</th><th>韓国語</th><th>読み方</th></tr></thead>
+            <tbody>
+              <tr><td>6人です</td><td class="area">여섯 명이에요</td><td>ヨソッ ミョンイエヨ</td></tr>
+              <tr><td>予約しています</td><td class="area">예약했어요</td><td>イェヤケッソヨ</td></tr>
+              <tr><td>○○の名前で予約しています</td><td class="area">○○ 이름으로 예약했어요</td><td>○○ イルムロ イェヤケッソヨ</td></tr>
+              <tr><td>予約していません</td><td class="area">예약 안 했어요</td><td>イェヤク アン ヘッソヨ</td></tr>
+              <tr><td>今入れますか</td><td class="area">지금 들어갈 수 있어요?</td><td>チグム トゥロガル ス イッソヨ</td></tr>
+              <tr><td>待ち時間はどれくらいですか</td><td class="area">얼마나 기다려야 해요?</td><td>オルマナ キダリョヤ ヘヨ</td></tr>
+              <tr><td>6人一緒に座れますか</td><td class="area">여섯 명이 같이 앉을 수 있어요?</td><td>ヨソッ ミョンイ カチ アンジュル ス イッソヨ</td></tr>
+              <tr><td>別々の席でも大丈夫です</td><td class="area">따로 앉아도 괜찮아요</td><td>タロ アンジャド クェンチャナヨ</td></tr>
+              <tr><td>個室はありますか</td><td class="area">룸이 있어요?</td><td>ルミ イッソヨ</td></tr>
+              <tr><td>メニューをください</td><td class="area">메뉴 주세요</td><td>メニュ ジュセヨ</td></tr>
+              <tr><td>日本語メニューはありますか</td><td class="area">일본어 메뉴 있어요?</td><td>イルボノ メニュ イッソヨ</td></tr>
+              <tr><td>人気メニューは何ですか</td><td class="area">인기 메뉴가 뭐예요?</td><td>インキ メニュガ ムォエヨ</td></tr>
+              <tr><td>おすすめは何ですか</td><td class="area">추천 메뉴가 뭐예요?</td><td>チュチョン メニュガ ムォエヨ</td></tr>
+              <tr><td>これは何人前ですか</td><td class="area">이건 몇 인분이에요?</td><td>イゴン ミョッ インブニエヨ</td></tr>
+              <tr><td>これを2つください</td><td class="area">이거 두 개 주세요</td><td>イゴ トゥ ゲ ジュセヨ</td></tr>
+              <tr><td>同じものをください</td><td class="area">같은 걸로 주세요</td><td>カトゥン ゴルロ ジュセヨ</td></tr>
+              <tr><td>まずこれをください</td><td class="area">일단 이거 주세요</td><td>イルタン イゴ ジュセヨ</td></tr>
+              <tr><td>追加で注文します</td><td class="area">추가 주문할게요</td><td>チュガ チュムナルケヨ</td></tr>
+              <tr><td>注文した料理がまだ来ません</td><td class="area">주문한 음식이 아직 안 나왔어요</td><td>チュムナン ウムシギ アジク アン ナワッソヨ</td></tr>
+              <tr><td>辛いですか</td><td class="area">매워요?</td><td>メウォヨ</td></tr>
+              <tr><td>とても辛いですか</td><td class="area">많이 매워요?</td><td>マニ メウォヨ</td></tr>
+              <tr><td>辛くしないでください</td><td class="area">안 맵게 해 주세요</td><td>アン メプケ ヘ ジュセヨ</td></tr>
+              <tr><td>少し辛くしてください</td><td class="area">조금만 맵게 해 주세요</td><td>チョグムマン メプケ ヘ ジュセヨ</td></tr>
+              <tr><td>にんにくを抜いてください</td><td class="area">마늘 빼 주세요</td><td>マヌル ペ ジュセヨ</td></tr>
+              <tr><td>パクチーを抜いてください</td><td class="area">고수 빼 주세요</td><td>コス ペ ジュセヨ</td></tr>
+              <tr><td>玉ねぎを抜いてください</td><td class="area">양파 빼 주세요</td><td>ヤンパ ペ ジュセヨ</td></tr>
+              <tr><td>生ものは食べられません</td><td class="area">날것을 못 먹어요</td><td>ナルゴスル モン モゴヨ</td></tr>
+              <tr><td>アレルギーがあります</td><td class="area">알레르기가 있어요</td><td>アルレルギガ イッソヨ</td></tr>
+              <tr><td>エビアレルギーです</td><td class="area">새우 알레르기가 있어요</td><td>セウ アルレルギガ イッソヨ</td></tr>
+              <tr><td>豚肉/牛肉/鶏肉は入っていますか</td><td class="area">돼지고기/소고기/닭고기가 들어가요?</td><td>トェジゴギ/ソゴギ/タッコギガ トゥロガヨ</td></tr>
+              <tr><td>アルコールは入っていますか</td><td class="area">술이 들어가요?</td><td>スリ トゥロガヨ</td></tr>
+              <tr><td>焼いてもらえますか</td><td class="area">구워 주실 수 있어요?</td><td>クウォ ジュシル ス イッソヨ</td></tr>
+              <tr><td>もう食べてもいいですか</td><td class="area">이제 먹어도 돼요?</td><td>イジェ モゴド デヨ</td></tr>
+              <tr><td>これは何につけますか</td><td class="area">이건 어디에 찍어 먹어요?</td><td>イゴン オディエ チゴ モゴヨ</td></tr>
+              <tr><td>サンチュを追加してください</td><td class="area">상추 더 주세요</td><td>サンチュ ト ジュセヨ</td></tr>
+              <tr><td>キムチを追加してください</td><td class="area">김치 더 주세요</td><td>キムチ ト ジュセヨ</td></tr>
+              <tr><td>おかずを追加してください</td><td class="area">반찬 더 주세요</td><td>パンチャン ト ジュセヨ</td></tr>
+              <tr><td>締めに炒飯できますか</td><td class="area">마지막에 볶음밥 가능해요?</td><td>マジマゲ ポックムパプ カヌンヘヨ</td></tr>
+              <tr><td>冷麺をください</td><td class="area">냉면 주세요</td><td>ネンミョン ジュセヨ</td></tr>
+              <tr><td>ご飯を追加してください</td><td class="area">공깃밥 하나 더 주세요</td><td>コンギッパプ ハナ ト ジュセヨ</td></tr>
+              <tr><td>お会計お願いします</td><td class="area">계산해 주세요</td><td>ケサネ ジュセヨ</td></tr>
+              <tr><td>まとめて払います</td><td class="area">같이 계산할게요</td><td>カチ ケサナルケヨ</td></tr>
+              <tr><td>別々に払えますか</td><td class="area">따로 계산할 수 있어요?</td><td>タロ ケサナル ス イッソヨ</td></tr>
+              <tr><td>3枚のカードに分けられますか</td><td class="area">카드 세 장으로 나눠서 결제할 수 있어요?</td><td>カドゥ セ ジャンウロ ナヌォソ キョルジェハル ス イッソヨ</td></tr>
+              <tr><td>カードは使えますか</td><td class="area">카드 돼요?</td><td>カドゥ デヨ</td></tr>
+              <tr><td>現金だけですか</td><td class="area">현금만 돼요?</td><td>ヒョングムマン デヨ</td></tr>
+              <tr><td>レシートをください</td><td class="area">영수증 주세요</td><td>ヨンスジュン ジュセヨ</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="cat-sec" id="pc-shop">
+          <h2 class="block">8. コンビニ・買い物</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>日本語</th><th>韓国語</th><th>読み方</th></tr></thead>
+            <tbody>
+              <tr><td>これはいくらですか</td><td class="area">이거 얼마예요?</td><td>イゴ オルマエヨ</td></tr>
+              <tr><td>これをください</td><td class="area">이거 주세요</td><td>イゴ ジュセヨ</td></tr>
+              <tr><td>他の色はありますか</td><td class="area">다른 색 있어요?</td><td>タルン セク イッソヨ</td></tr>
+              <tr><td>他のサイズはありますか</td><td class="area">다른 사이즈 있어요?</td><td>タルン サイジュ イッソヨ</td></tr>
+              <tr><td>大きい/小さいサイズはありますか</td><td class="area">큰/작은 사이즈 있어요?</td><td>クン/チャグン サイジュ イッソヨ</td></tr>
+              <tr><td>試着できますか</td><td class="area">입어 봐도 돼요?</td><td>イボ パド デヨ</td></tr>
+              <tr><td>免税できますか</td><td class="area">택스 리펀드 돼요?</td><td>テクス リポンドゥ デヨ</td></tr>
+              <tr><td>袋をください</td><td class="area">봉투 주세요</td><td>ポントゥ ジュセヨ</td></tr>
+              <tr><td>袋はいりません</td><td class="area">봉투는 필요 없어요</td><td>ポントゥヌン ピリョ オプソヨ</td></tr>
+              <tr><td>温めてください</td><td class="area">데워 주세요</td><td>テウォ ジュセヨ</td></tr>
+              <tr><td>箸をください</td><td class="area">젓가락 주세요</td><td>チョッカラク ジュセヨ</td></tr>
+              <tr><td>スプーンをください</td><td class="area">숟가락 주세요</td><td>スッカラク ジュセヨ</td></tr>
+              <tr><td>水をください</td><td class="area">물 주세요</td><td>ムル ジュセヨ</td></tr>
+              <tr><td>充電器はありますか</td><td class="area">충전기 있어요?</td><td>チュンジョンギ イッソヨ</td></tr>
+              <tr><td>モバイルバッテリーはありますか</td><td class="area">보조 배터리 있어요?</td><td>ポジョ ベトリ イッソヨ</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="cat-sec" id="pc-hotel">
+          <h2 class="block">9. ホテル・Airbnb</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>日本語</th><th>韓国語</th><th>読み方</th></tr></thead>
+            <tbody>
+              <tr><td>チェックインしたいです</td><td class="area">체크인하고 싶어요</td><td>チェクインハゴ シポヨ</td></tr>
+              <tr><td>予約しています</td><td class="area">예약했어요</td><td>イェヤケッソヨ</td></tr>
+              <tr><td>予約名は○○です</td><td class="area">예약자 이름은 ○○예요</td><td>イェヤクチャ イルムン ○○エヨ</td></tr>
+              <tr><td>パスポートはこちらです</td><td class="area">여권 여기 있어요</td><td>ヨックォン ヨギ イッソヨ</td></tr>
+              <tr><td>荷物を預けられますか</td><td class="area">짐을 맡길 수 있어요?</td><td>チムル マッキル ス イッソヨ</td></tr>
+              <tr><td>部屋は何階ですか</td><td class="area">방은 몇 층이에요?</td><td>パンウン ミョッ チュンイエヨ</td></tr>
+              <tr><td>Wi-Fiのパスワードは何ですか</td><td class="area">와이파이 비밀번호가 뭐예요?</td><td>ワイパイ ピミルボノガ ムォエヨ</td></tr>
+              <tr><td>チェックアウトは何時ですか</td><td class="area">체크아웃은 몇 시예요?</td><td>チェクアウスン ミョッ シエヨ</td></tr>
+              <tr><td>エアコンが動きません</td><td class="area">에어컨이 작동하지 않아요</td><td>エオコニ チャクトンハジ アナヨ</td></tr>
+              <tr><td>お湯が出ません</td><td class="area">뜨거운 물이 안 나와요</td><td>トゥゴウン ムリ アン ナワヨ</td></tr>
+              <tr><td>Wi-Fiにつながりません</td><td class="area">와이파이가 연결되지 않아요</td><td>ワイパイガ ヨンギョルデジ アナヨ</td></tr>
+              <tr><td>ドアが開きません</td><td class="area">문이 안 열려요</td><td>ムニ アン ヨルリョヨ</td></tr>
+              <tr><td>鍵をなくしました</td><td class="area">열쇠를 잃어버렸어요</td><td>ヨルセルル イロボリョッソヨ</td></tr>
+              <tr><td>タオルを追加してください</td><td class="area">수건 더 주세요</td><td>スゴン ト ジュセヨ</td></tr>
+              <tr><td>トイレットペーパーをください</td><td class="area">휴지 주세요</td><td>ヒュジ ジュセヨ</td></tr>
+              <tr><td>掃除をお願いします</td><td class="area">청소해 주세요</td><td>チョンソヘ ジュセヨ</td></tr>
+              <tr><td>部屋を変えられますか</td><td class="area">방을 바꿀 수 있어요?</td><td>パンウル パックル ス イッソヨ</td></tr>
+              <tr><td>少しうるさいです</td><td class="area">조금 시끄러워요</td><td>チョグム シックロウォヨ</td></tr>
+            </tbody>
+          </table></div>
+          <div class="showcard"><div class="ko">현관 비밀번호를 알려 주세요.</div><div class="ja">玄関の暗証番号を教えてください。（ヒョングァン ピミルボノルル アルリョ ジュセヨ）</div></div>
+          <div class="showcard"><div class="ko">쓰레기는 어디에 버리면 돼요?</div><div class="ja">ゴミはどこへ捨てればいいですか。（スレギヌン オディエ ポリミョン デヨ）</div></div>
+          <div class="showcard"><div class="ko">분리수거는 어떻게 해요?</div><div class="ja">分別はどうすればいいですか。（プルリスゴヌン オットケ ヘヨ）</div></div>
+          <div class="showcard"><div class="ko">난방은 어떻게 켜요?</div><div class="ja">暖房はどうやってつけますか。（ナンバンウン オットケ キョヨ）</div></div>
+        </div>
+
+        <div class="cat-sec" id="pc-sight">
+          <h2 class="block">10. 観光・施設・カジノ</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>日本語</th><th>韓国語</th><th>読み方</th></tr></thead>
+            <tbody>
+              <tr><td>営業していますか</td><td class="area">영업해요?</td><td>ヨンオペヨ</td></tr>
+              <tr><td>何時までですか</td><td class="area">몇 시까지예요?</td><td>ミョッ シッカジエヨ</td></tr>
+              <tr><td>入場できますか</td><td class="area">들어갈 수 있어요?</td><td>トゥロガル ス イッソヨ</td></tr>
+              <tr><td>入場料はいくらですか</td><td class="area">입장료가 얼마예요?</td><td>イプチャンニョガ オルマエヨ</td></tr>
+              <tr><td>パスポートが必要ですか</td><td class="area">여권이 필요해요?</td><td>ヨックォニ ピリョヘヨ</td></tr>
+              <tr><td>写真を撮ってもいいですか</td><td class="area">사진 찍어도 돼요?</td><td>サジン チゴド デヨ</td></tr>
+              <tr><td>荷物を預けられますか</td><td class="area">짐을 맡길 수 있어요?</td><td>チムル マッキル ス イッソヨ</td></tr>
+              <tr><td>初めてです</td><td class="area">처음이에요</td><td>チョウミエヨ</td></tr>
+              <tr><td>遊び方を教えてください</td><td class="area">게임 방법을 알려 주세요</td><td>ゲイム パンボブル アルリョ ジュセヨ</td></tr>
+              <tr><td>最低ベットはいくらですか</td><td class="area">최소 베팅 금액이 얼마예요?</td><td>チェソ ベティン クメギ オルマエヨ</td></tr>
+              <tr><td>チップに交換したいです</td><td class="area">칩으로 바꾸고 싶어요</td><td>チブロ パックゴ シポヨ</td></tr>
+              <tr><td>現金に戻したいです</td><td class="area">현금으로 바꾸고 싶어요</td><td>ヒョングムロ パックゴ シポヨ</td></tr>
+              <tr><td>会員登録したいです</td><td class="area">회원 가입하고 싶어요</td><td>フェウォン カイパゴ シポヨ</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="cat-sec" id="pc-emg">
+          <h2 class="block">11. 体調不良・病院・緊急時</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>日本語</th><th>韓国語</th><th>読み方</th></tr></thead>
+            <tbody>
+              <tr><td>気分が悪いです</td><td class="area">몸이 안 좋아요</td><td>モミ アン チョアヨ</td></tr>
+              <tr><td>頭が痛いです</td><td class="area">머리가 아파요</td><td>モリガ アパヨ</td></tr>
+              <tr><td>お腹が痛いです</td><td class="area">배가 아파요</td><td>ペガ アパヨ</td></tr>
+              <tr><td>吐き気があります</td><td class="area">토할 것 같아요</td><td>トハル ゴッ カタヨ</td></tr>
+              <tr><td>熱があります</td><td class="area">열이 있어요</td><td>ヨリ イッソヨ</td></tr>
+              <tr><td>喉が痛いです</td><td class="area">목이 아파요</td><td>モギ アパヨ</td></tr>
+              <tr><td>息苦しいです</td><td class="area">숨쉬기가 힘들어요</td><td>スムスィギガ ヒムドゥロヨ</td></tr>
+              <tr><td>めまいがします</td><td class="area">어지러워요</td><td>オジロウォヨ</td></tr>
+              <tr><td>アレルギー反応があります</td><td class="area">알레르기 반응이 있어요</td><td>アルレルギ パヌンイ イッソヨ</td></tr>
+              <tr><td>薬局はどこですか</td><td class="area">약국이 어디예요?</td><td>ヤックギ オディエヨ</td></tr>
+              <tr><td>病院へ行きたいです</td><td class="area">병원에 가고 싶어요</td><td>ピョンウォネ カゴ シポヨ</td></tr>
+              <tr><td>助けてください</td><td class="area">도와주세요</td><td>トワジュセヨ</td></tr>
+              <tr><td>警察を呼んでください</td><td class="area">경찰을 불러 주세요</td><td>キョンチャルル プルロ ジュセヨ</td></tr>
+              <tr><td>救急車を呼んでください</td><td class="area">구급차를 불러 주세요</td><td>クグプチャルル プルロ ジュセヨ</td></tr>
+              <tr><td>財布を盗まれました</td><td class="area">지갑을 도난당했어요</td><td>チガブル トナンダンヘッソヨ</td></tr>
+              <tr><td>携帯をなくしました</td><td class="area">휴대폰을 잃어버렸어요</td><td>ヒュデポヌル イロボリョッソヨ</td></tr>
+              <tr><td>パスポートをなくしました</td><td class="area">여권을 잃어버렸어요</td><td>ヨックォヌル イロボリョッソヨ</td></tr>
+              <tr><td>友達がいなくなりました</td><td class="area">친구를 잃어버렸어요</td><td>チングルル イロボリョッソヨ</td></tr>
+              <tr><td>ここは安全ですか</td><td class="area">여기는 안전해요?</td><td>ヨギヌン アンジョネヨ</td></tr>
+              <tr><td>触らないでください</td><td class="area">만지지 마세요</td><td>マンジジ マセヨ</td></tr>
+              <tr><td>やめてください（強）</td><td class="area">하지 마세요</td><td>ハジ マセヨ</td></tr>
+              <tr><td>嫌です</td><td class="area">싫어요</td><td>シロヨ</td></tr>
+              <tr><td>ダメです</td><td class="area">안 돼요</td><td>アン デヨ</td></tr>
+              <tr><td>離れてください</td><td class="area">떨어져 주세요</td><td>トロジョ ジュセヨ</td></tr>
+              <tr><td>警察に通報します</td><td class="area">경찰에 신고할게요</td><td>キョンチャレ シンゴハルケヨ</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="cat-sec" id="pc-friend">
+          <h2 class="block">12. 友達との日常会話</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>日本語</th><th>韓国語</th><th>読み方</th></tr></thead>
+            <tbody>
+              <tr><td>何してるの</td><td class="area">뭐 해요?</td><td>ムォ ヘヨ</td></tr>
+              <tr><td>どこにいるの</td><td class="area">어디예요?</td><td>オディエヨ</td></tr>
+              <tr><td>今向かっています</td><td class="area">지금 가고 있어요</td><td>チグム カゴ イッソヨ</td></tr>
+              <tr><td>もう着きました</td><td class="area">벌써 도착했어요</td><td>ポルソ トチャケッソヨ</td></tr>
+              <tr><td>何時に会いますか</td><td class="area">몇 시에 만날까요?</td><td>ミョッ シエ マンナルカヨ</td></tr>
+              <tr><td>どこで会いますか</td><td class="area">어디서 만날까요?</td><td>オディソ マンナルカヨ</td></tr>
+              <tr><td>一緒に行きましょう</td><td class="area">같이 가요</td><td>カチ カヨ</td></tr>
+              <tr><td>ちょっと休みましょう</td><td class="area">조금 쉬어요</td><td>チョグム スィオヨ</td></tr>
+              <tr><td>お腹が空きました</td><td class="area">배고파요</td><td>ペゴパヨ</td></tr>
+              <tr><td>喉が渇きました</td><td class="area">목말라요</td><td>モンマルラヨ</td></tr>
+              <tr><td>疲れました</td><td class="area">피곤해요</td><td>ピゴネヨ</td></tr>
+              <tr><td>面白いです</td><td class="area">재미있어요</td><td>チェミイッソヨ</td></tr>
+              <tr><td>おいしいです</td><td class="area">맛있어요</td><td>マシッソヨ</td></tr>
+              <tr><td>最高です</td><td class="area">최고예요</td><td>チェゴエヨ</td></tr>
+              <tr><td>本当ですか</td><td class="area">진짜예요?</td><td>チンチャエヨ</td></tr>
+              <tr><td>すごいですね</td><td class="area">대박이네요</td><td>テバギネヨ</td></tr>
+              <tr><td>いいですね</td><td class="area">좋네요</td><td>チョンネヨ</td></tr>
+              <tr><td>私もそう思います</td><td class="area">저도 그렇게 생각해요</td><td>チョド クロケ センガケヨ</td></tr>
+              <tr><td>今日は何をしますか</td><td class="area">오늘 뭐 할 거예요?</td><td>オヌル ムォ ハル コエヨ</td></tr>
+              <tr><td>次はどこへ行きますか</td><td class="area">다음에는 어디 갈까요?</td><td>タウメヌン オディ カルカヨ</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="cat-sec" id="pc-meet">
+          <h2 class="block">13. 異性との会話・初対面</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>日本語</th><th>韓国語</th><th>読み方</th></tr></thead>
+            <tbody>
+              <tr><td>すみません、少しお話ししてもいいですか</td><td class="area">실례지만, 잠깐 이야기해도 될까요?</td><td>シルレジマン チャムカン イヤギヘド トェルカヨ</td></tr>
+              <tr><td>日本から来ました</td><td class="area">일본에서 왔어요</td><td>イルボネソ ワッソヨ</td></tr>
+              <tr><td>旅行で来ました</td><td class="area">여행으로 왔어요</td><td>ヨヘンウロ ワッソヨ</td></tr>
+              <tr><td>お名前は何ですか</td><td class="area">이름이 뭐예요?</td><td>イルミ ムォエヨ</td></tr>
+              <tr><td>何歳ですか</td><td class="area">몇 살이에요?</td><td>ミョッ サリエヨ</td></tr>
+              <tr><td>どこに住んでいますか</td><td class="area">어디에 살아요?</td><td>オディエ サラヨ</td></tr>
+              <tr><td>ソウルの方ですか</td><td class="area">서울 사람이에요?</td><td>ソウル サラミエヨ</td></tr>
+              <tr><td>ここにはよく来ますか</td><td class="area">여기 자주 와요?</td><td>ヨギ チャジュ ワヨ</td></tr>
+              <tr><td>友達と来たんですか</td><td class="area">친구랑 왔어요?</td><td>チングラン ワッソヨ</td></tr>
+              <tr><td>お仕事は何をしていますか</td><td class="area">무슨 일 하세요?</td><td>ムスン イル ハセヨ</td></tr>
+              <tr><td>趣味は何ですか</td><td class="area">취미가 뭐예요?</td><td>チュィミガ ムォエヨ</td></tr>
+              <tr><td>きれいですね</td><td class="area">예쁘시네요</td><td>イェップシネヨ</td></tr>
+              <tr><td>かわいいですね</td><td class="area">귀여우시네요</td><td>クィヨウシネヨ</td></tr>
+              <tr><td>かっこいいですね</td><td class="area">멋있으시네요</td><td>モシッスシネヨ</td></tr>
+              <tr><td>笑顔が素敵ですね</td><td class="area">웃는 모습이 예쁘네요</td><td>ウンヌン モスビ イェップネヨ</td></tr>
+              <tr><td>雰囲気が素敵ですね</td><td class="area">분위기가 좋으시네요</td><td>プニギガ チョウシネヨ</td></tr>
+              <tr><td>ファッションが素敵ですね</td><td class="area">옷을 잘 입으시네요</td><td>オスル チャル イブシネヨ</td></tr>
+              <tr><td>日本語が上手ですね</td><td class="area">일본어를 잘하시네요</td><td>イルボノルル チャラシネヨ</td></tr>
+              <tr><td>話しやすいです</td><td class="area">이야기하기 편해요</td><td>イヤギハギ ピョネヨ</td></tr>
+              <tr><td>一緒にいると楽しいです</td><td class="area">같이 있으면 즐거워요</td><td>カチ イッスミョン チュルゴウォヨ</td></tr>
+              <tr><td>日本に来たことはありますか</td><td class="area">일본에 와 본 적 있어요?</td><td>イルボネ ワ ボン チョク イッソヨ</td></tr>
+              <tr><td>日本のどこが好きですか</td><td class="area">일본 어디를 좋아해요?</td><td>イルボン オディルル チョアヘヨ</td></tr>
+              <tr><td>韓国料理で何がおすすめですか</td><td class="area">한국 음식 중에 뭐가 제일 맛있어요?</td><td>ハングク ウムシク チュンエ ムォガ チェイル マシッソヨ</td></tr>
+              <tr><td>ソウルでおすすめの場所はありますか</td><td class="area">서울에서 추천할 만한 곳이 있어요?</td><td>ソウレソ チュチョナル マナン ゴシ イッソヨ</td></tr>
+              <tr><td>休みの日は何をしますか</td><td class="area">쉬는 날에는 뭐 해요?</td><td>スィヌン ナレヌン ムォ ヘヨ</td></tr>
+              <tr><td>どんな音楽が好きですか</td><td class="area">어떤 음악을 좋아해요?</td><td>オットン ウマグル チョアヘヨ</td></tr>
+              <tr><td>お酒は好きですか</td><td class="area">술 좋아해요?</td><td>スル チョアヘヨ</td></tr>
+              <tr><td>カラオケは好きですか</td><td class="area">노래방 좋아해요?</td><td>ノレバン チョアヘヨ</td></tr>
+            </tbody>
+          </table></div>
+          <div class="tip">💡 初対面では身体的なことより<strong>服装・笑顔・雰囲気・話しやすさ</strong>を褒める方が自然。年齢を聞くのは会話の流れの中で。</div>
+        </div>
+
+        <div class="cat-sec" id="pc-invite">
+          <h2 class="block">14. 食事・飲みに誘う</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>日本語</th><th>韓国語</th><th>読み方</th></tr></thead>
+            <tbody>
+              <tr><td>一緒に飲みませんか</td><td class="area">같이 한잔할래요?</td><td>カチ ハンジャナルレヨ</td></tr>
+              <tr><td>一緒にご飯を食べませんか</td><td class="area">같이 밥 먹을래요?</td><td>カチ パプ モグルレヨ</td></tr>
+              <tr><td>次のお店へ行きませんか</td><td class="area">다음 가게에 같이 갈래요?</td><td>タウム カゲエ カチ カルレヨ</td></tr>
+              <tr><td>近くにいい店はありますか</td><td class="area">근처에 좋은 곳 있어요?</td><td>クンチョエ チョウン ゴッ イッソヨ</td></tr>
+              <tr><td>もう一杯飲みませんか</td><td class="area">한잔 더 할래요?</td><td>ハンジャン ト ハルレヨ</td></tr>
+              <tr><td>コーヒーを飲みませんか</td><td class="area">커피 마실래요?</td><td>コピ マシルレヨ</td></tr>
+              <tr><td>明日時間はありますか</td><td class="area">내일 시간 있어요?</td><td>ネイル シガン イッソヨ</td></tr>
+              <tr><td>また会いたいです</td><td class="area">또 만나고 싶어요</td><td>ト マンナゴ シポヨ</td></tr>
+              <tr><td>次に韓国へ来たら会いましょう</td><td class="area">다음에 한국에 오면 만나요</td><td>タウメ ハングゲ オミョン マンナヨ</td></tr>
+              <tr><td>一緒に食事しませんか（丁寧）</td><td class="area">같이 식사하실래요?</td><td>カチ シクサハシルレヨ</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="cat-sec" id="pc-sns">
+          <h2 class="block">15. 連絡先交換・SNS</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>日本語</th><th>韓国語</th><th>読み方</th></tr></thead>
+            <tbody>
+              <tr><td>インスタを交換しませんか</td><td class="area">인스타 교환할래요?</td><td>インスタ キョファナルレヨ</td></tr>
+              <tr><td>Instagramを教えてください</td><td class="area">인스타그램 알려 주세요</td><td>インスタグレム アルリョ ジュセヨ</td></tr>
+              <tr><td>LINEを使っていますか</td><td class="area">라인 써요?</td><td>ライン ソヨ</td></tr>
+              <tr><td>カカオトークを使っていますか</td><td class="area">카카오톡 써요?</td><td>カカオトク ソヨ</td></tr>
+              <tr><td>IDを教えてください</td><td class="area">아이디 알려 주세요</td><td>アイディ アルリョ ジュセヨ</td></tr>
+              <tr><td>QRコードを見せてください</td><td class="area">QR코드 보여 주세요</td><td>キューアルコドゥ ポヨ ジュセヨ</td></tr>
+              <tr><td>フォローしました</td><td class="area">팔로우했어요</td><td>パルロウヘッソヨ</td></tr>
+              <tr><td>メッセージを送りました</td><td class="area">메시지 보냈어요</td><td>メシジ ポネッソヨ</td></tr>
+              <tr><td>写真を送ります</td><td class="area">사진 보낼게요</td><td>サジン ポネルケヨ</td></tr>
+              <tr><td>日本に帰ったら連絡します</td><td class="area">일본에 돌아가면 연락할게요</td><td>イルボネ トラガミョン ヨルラカルケヨ</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="cat-sec" id="pc-like">
+          <h2 class="block">16. 好意を伝える</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>日本語</th><th>韓国語</th><th>読み方</th></tr></thead>
+            <tbody>
+              <tr><td>もっと話したいです</td><td class="area">더 이야기하고 싶어요</td><td>ト イヤギハゴ シポヨ</td></tr>
+              <tr><td>あなたに興味があります</td><td class="area">당신에게 관심이 있어요</td><td>タンシネゲ クァンシミ イッソヨ</td></tr>
+              <tr><td>気になっています</td><td class="area">신경이 쓰여요</td><td>シンギョンイ スヨ</td></tr>
+              <tr><td>好きです</td><td class="area">좋아해요</td><td>チョアヘヨ</td></tr>
+              <tr><td>一緒にいると楽しいです</td><td class="area">같이 있으면 즐거워요</td><td>カチ イッスミョン チュルゴウォヨ</td></tr>
+              <tr><td>また会いたいです</td><td class="area">또 만나고 싶어요</td><td>ト マンナゴ シポヨ</td></tr>
+              <tr><td>今日会えてよかったです</td><td class="area">오늘 만나서 좋았어요</td><td>オヌル マンナソ チョアッソヨ</td></tr>
+              <tr><td>素敵な人ですね</td><td class="area">정말 멋진 사람이네요</td><td>チョンマル モッチン サラミネヨ</td></tr>
+              <tr><td>もっと知りたいです</td><td class="area">더 알고 싶어요</td><td>ト アルゴ シポヨ</td></tr>
+              <tr><td>○○さんに興味があります（例）</td><td class="area">민지 씨에게 관심이 있어요</td><td>ミンジ シエゲ クァンシミ イッソヨ</td></tr>
+            </tbody>
+          </table></div>
+          <div class="tip">💡「당신（タンシン）」は教科書の「あなた」だが実会話では不自然。相手の名前＋「씨（シ＝さん）」を使う方が自然。</div>
+        </div>
+
+        <div class="cat-sec" id="pc-no">
+          <h2 class="block">17. 断る・距離を取る・境界線を伝える</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>日本語</th><th>韓国語</th><th>読み方</th></tr></thead>
+            <tbody>
+              <tr><td>大丈夫です、結構です</td><td class="area">괜찮아요</td><td>クェンチャナヨ</td></tr>
+              <tr><td>今日はここまでにします</td><td class="area">오늘은 여기까지 할게요</td><td>オヌルン ヨギッカジ ハルケヨ</td></tr>
+              <tr><td>もう帰ります</td><td class="area">이제 갈게요</td><td>イジェ カルケヨ</td></tr>
+              <tr><td>友達として会いたいです</td><td class="area">친구로 만나고 싶어요</td><td>チングロ マンナゴ シポヨ</td></tr>
+              <tr><td>恋愛するつもりはありません</td><td class="area">연애할 생각은 없어요</td><td>ヨネハル センガグン オプソヨ</td></tr>
+              <tr><td>触らないでください</td><td class="area">만지지 마세요</td><td>マンジジ マセヨ</td></tr>
+              <tr><td>少し距離を置いてください</td><td class="area">조금 떨어져 주세요</td><td>チョグム トロジョ ジュセヨ</td></tr>
+              <tr><td>嫌です</td><td class="area">싫어요</td><td>シロヨ</td></tr>
+              <tr><td>不快です</td><td class="area">불편해요</td><td>プルピョネヨ</td></tr>
+              <tr><td>やめてください</td><td class="area">그만해 주세요</td><td>クマネ ジュセヨ</td></tr>
+              <tr><td>一人で帰れます</td><td class="area">혼자 갈 수 있어요</td><td>ホンジャ カル ス イッソヨ</td></tr>
+              <tr><td>友達を待っています</td><td class="area">친구를 기다리고 있어요</td><td>チングルル キダリゴ イッソヨ</td></tr>
+              <tr><td>わかりました、すみません（断られた時）</td><td class="area">알겠습니다. 미안해요</td><td>アルゲッスムニダ ミアネヨ</td></tr>
+            </tbody>
+          </table></div>
+          <div class="warn">🛑 異性との会話では相手の意思を確認し、<strong>嫌がっている場合はすぐやめる</strong>こと。断られたら「알겠습니다. 미안해요」で終了するのが適切。</div>
+        </div>
+
+        <div class="cat-sec" id="pc-club">
+          <h2 class="block">18. クラブ・バー・ナイトスポット</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>日本語</th><th>韓国語</th><th>読み方</th></tr></thead>
+            <tbody>
+              <tr><td>入れますか</td><td class="area">들어갈 수 있어요?</td><td>トゥロガル ス イッソヨ</td></tr>
+              <tr><td>入場料はいくらですか</td><td class="area">입장료가 얼마예요?</td><td>イプチャンニョガ オルマエヨ</td></tr>
+              <tr><td>テーブルを予約したいです</td><td class="area">테이블을 예약하고 싶어요</td><td>テイブルル イェヤカゴ シポヨ</td></tr>
+              <tr><td>6人です</td><td class="area">여섯 명이에요</td><td>ヨソッ ミョンイエヨ</td></tr>
+              <tr><td>ボトルはいくらですか</td><td class="area">보틀이 얼마예요?</td><td>ボトゥリ オルマエヨ</td></tr>
+              <tr><td>最低注文金額はいくらですか</td><td class="area">최소 주문 금액이 얼마예요?</td><td>チェソ チュムン クメギ オルマエヨ</td></tr>
+              <tr><td>荷物を預けられますか</td><td class="area">짐을 맡길 수 있어요?</td><td>チムル マッキル ス イッソヨ</td></tr>
+              <tr><td>再入場できますか</td><td class="area">재입장할 수 있어요?</td><td>チェイプチャンハル ス イッソヨ</td></tr>
+              <tr><td>友達が中にいます</td><td class="area">친구가 안에 있어요</td><td>チングガ アネ イッソヨ</td></tr>
+              <tr><td>友達を探しています</td><td class="area">친구를 찾고 있어요</td><td>チングルル チャッコ イッソヨ</td></tr>
+              <tr><td>お酒を弱めにしてください</td><td class="area">술을 약하게 해 주세요</td><td>スルル ヤカゲ ヘ ジュセヨ</td></tr>
+              <tr><td>水をください</td><td class="area">물 주세요</td><td>ムル ジュセヨ</td></tr>
+              <tr><td>酔いました</td><td class="area">취했어요</td><td>チュィヘッソヨ</td></tr>
+              <tr><td>タクシーを呼んでください</td><td class="area">택시를 불러 주세요</td><td>テクシルル プルロ ジュセヨ</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="cat-sec" id="pc-num">
+          <h2 class="block">19. 数字・人数・時間</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>数</th><th>固有数詞（人数・個数）</th><th>漢数詞（金額・時間）</th></tr></thead>
+            <tbody>
+              <tr><td class="rank">1</td><td class="area">하나 ハナ（한 명 ハン ミョン＝1人）</td><td>일 イル</td></tr>
+              <tr><td class="rank">2</td><td class="area">둘 トゥル（두 명 トゥ ミョン）</td><td>이 イ</td></tr>
+              <tr><td class="rank">3</td><td class="area">셋 セッ（세 명 セ ミョン）</td><td>삼 サム</td></tr>
+              <tr><td class="rank">4</td><td class="area">넷 ネッ（네 명 ネ ミョン）</td><td>사 サ</td></tr>
+              <tr><td class="rank">5</td><td class="area">다섯 タソッ</td><td>오 オ</td></tr>
+              <tr><td class="rank">6</td><td class="area">여섯 ヨソッ（여섯 명＝6人）</td><td>육 ユク</td></tr>
+              <tr><td class="rank">7</td><td class="area">일곱 イルゴプ</td><td>칠 チル</td></tr>
+              <tr><td class="rank">8</td><td class="area">여덟 ヨドル</td><td>팔 パル</td></tr>
+              <tr><td class="rank">9</td><td class="area">아홉 アホプ</td><td>구 ク</td></tr>
+              <tr><td class="rank">10</td><td class="area">열 ヨル</td><td>십 シプ</td></tr>
+              <tr><td class="rank">100</td><td class="area">—</td><td>백 ペク</td></tr>
+              <tr><td class="rank">1,000</td><td class="area">—</td><td>천 チョン</td></tr>
+              <tr><td class="rank">10,000</td><td class="area">—</td><td>만 マン</td></tr>
+            </tbody>
+          </table></div>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>金額</th><th>韓国語</th><th>読み方</th></tr></thead>
+            <tbody>
+              <tr><td>10,000ウォン</td><td class="area">만 원</td><td>マノン</td></tr>
+              <tr><td>20,000ウォン</td><td class="area">이만 원</td><td>イマノン</td></tr>
+              <tr><td>30,000ウォン</td><td class="area">삼만 원</td><td>サムマノン</td></tr>
+              <tr><td>50,000ウォン</td><td class="area">오만 원</td><td>オマノン</td></tr>
+              <tr><td>100,000ウォン</td><td class="area">십만 원</td><td>シムマノン</td></tr>
+            </tbody>
+          </table></div>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>時刻</th><th>韓国語</th><th>読み方</th></tr></thead>
+            <tbody>
+              <tr><td>1時 / 2時 / 3時</td><td class="area">한 시 / 두 시 / 세 시</td><td>ハン シ / トゥ シ / セ シ</td></tr>
+              <tr><td>4時 / 5時 / 6時</td><td class="area">네 시 / 다섯 시 / 여섯 시</td><td>ネ シ / タソッ シ / ヨソッ シ</td></tr>
+              <tr><td>7時 / 8時 / 9時</td><td class="area">일곱 시 / 여덟 시 / 아홉 시</td><td>イルゴプ シ / ヨドル シ / アホプ シ</td></tr>
+              <tr><td>10時 / 11時 / 12時</td><td class="area">열 시 / 열한 시 / 열두 시</td><td>ヨル シ / ヨラン シ / ヨルトゥ シ</td></tr>
+              <tr><td>午前 / 午後</td><td class="area">오전 / 오후</td><td>オジョン / オフ</td></tr>
+              <tr><td>30分 / 何時</td><td class="area">삼십 분 / 몇 시</td><td>サムシップン / ミョッ シ</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="cat-sec" id="pc-q">
+          <h2 class="block">20. 便利な疑問詞</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>韓国語</th><th>読み方</th><th>意味</th></tr></thead>
+            <tbody>
+              <tr><td class="area">뭐</td><td>ムォ</td><td>何</td></tr>
+              <tr><td class="area">어디</td><td>オディ</td><td>どこ</td></tr>
+              <tr><td class="area">언제</td><td>オンジェ</td><td>いつ</td></tr>
+              <tr><td class="area">누구</td><td>ヌグ</td><td>誰</td></tr>
+              <tr><td class="area">왜</td><td>ウェ</td><td>なぜ</td></tr>
+              <tr><td class="area">어떻게</td><td>オットケ</td><td>どうやって</td></tr>
+              <tr><td class="area">얼마</td><td>オルマ</td><td>いくら</td></tr>
+              <tr><td class="area">몇</td><td>ミョッ</td><td>いくつ、何</td></tr>
+              <tr><td class="area">어느</td><td>オヌ</td><td>どの</td></tr>
+              <tr><td class="area">어떤</td><td>オットン</td><td>どんな</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="cat-sec" id="pc-verb">
+          <h2 class="block">21. 覚えておくと便利な動詞</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>韓国語</th><th>読み方</th><th>意味</th></tr></thead>
+            <tbody>
+              <tr><td class="area">가다 / 오다</td><td>カダ / オダ</td><td>行く / 来る</td></tr>
+              <tr><td class="area">먹다 / 마시다</td><td>モクタ / マシダ</td><td>食べる / 飲む</td></tr>
+              <tr><td class="area">사다 / 보다</td><td>サダ / ポダ</td><td>買う / 見る</td></tr>
+              <tr><td class="area">하다 / 자다</td><td>ハダ / チャダ</td><td>する / 寝る</td></tr>
+              <tr><td class="area">기다리다 / 찾다</td><td>キダリダ / チャッタ</td><td>待つ / 探す</td></tr>
+              <tr><td class="area">알다 / 모르다</td><td>アルダ / モルダ</td><td>知る / 知らない</td></tr>
+              <tr><td class="area">좋아하다 / 싫어하다</td><td>チョアハダ / シロハダ</td><td>好き / 嫌い</td></tr>
+              <tr><td class="area">필요하다 / 가능하다</td><td>ピリョハダ / カヌンハダ</td><td>必要 / 可能</td></tr>
+              <tr><td class="area">도와주다 / 예약하다</td><td>トワジュダ / イェヤカダ</td><td>助ける / 予約する</td></tr>
+              <tr><td class="area">계산하다 / 연락하다</td><td>ケサナダ / ヨルラカダ</td><td>会計する / 連絡する</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="cat-sec" id="pc-form">
+          <h2 class="block">22. 頻出の形（これだけで応用可）</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>意味</th><th>形</th><th>例</th></tr></thead>
+            <tbody>
+              <tr><td>〜してください</td><td class="area">〜해 주세요（ヘ ジュセヨ）</td><td>확인해 주세요（確認してください）</td></tr>
+              <tr><td>〜してもいいですか</td><td class="area">〜해도 돼요?（ヘド デヨ）</td><td>사진 찍어도 돼요?（写真撮ってもいい？）</td></tr>
+              <tr><td>〜できますか</td><td class="area">〜할 수 있어요?（ハル ス イッソヨ）</td><td>예약할 수 있어요?（予約できますか）</td></tr>
+              <tr><td>〜したいです</td><td class="area">〜하고 싶어요（ハゴ シポヨ）</td><td>주문하고 싶어요（注文したいです）</td></tr>
+              <tr><td>〜はありますか</td><td class="area">〜있어요?（イッソヨ）</td><td>화장실 있어요?（トイレはありますか）</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="cat-sec" id="pc-aizuchi">
+          <h2 class="block">23. 自然に聞こえる相づち</h2>
+          <div class="tbl-wrap"><table>
+            <thead><tr><th>韓国語</th><th>読み方</th><th>ニュアンス</th></tr></thead>
+            <tbody>
+              <tr><td class="area">네 / 아니요</td><td>ネ / アニヨ</td><td>はい / いいえ</td></tr>
+              <tr><td class="area">맞아요</td><td>マジャヨ</td><td>そうです</td></tr>
+              <tr><td class="area">그래요?</td><td>クレヨ</td><td>そうなんですか</td></tr>
+              <tr><td class="area">진짜요?</td><td>チンチャヨ</td><td>本当ですか</td></tr>
+              <tr><td class="area">그렇군요</td><td>クロックニョ</td><td>なるほど</td></tr>
+              <tr><td class="area">알겠어요</td><td>アルゲッソヨ</td><td>わかりました</td></tr>
+              <tr><td class="area">괜찮아요</td><td>クェンチャナヨ</td><td>大丈夫です</td></tr>
+              <tr><td class="area">좋아요</td><td>チョアヨ</td><td>いいですね</td></tr>
+              <tr><td class="area">대박</td><td>テバク</td><td>すごい、やばい</td></tr>
+              <tr><td class="area">완전</td><td>ワンジョン</td><td>完全に、めっちゃ</td></tr>
+              <tr><td class="area">너무 좋아요</td><td>ノム チョアヨ</td><td>とてもいいです</td></tr>
+              <tr><td class="area">저도요</td><td>チョドヨ</td><td>私もです</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="cat-sec" id="pc-show">
+          <h2 class="block">24. そのままスマホで見せる文章</h2>
+          <div class="showcard"><div class="ko">죄송하지만 이 주소로 가는 길을 알려 주실 수 있을까요?</div><div class="ja">道に迷った：すみませんが、この住所への行き方を教えていただけますか。</div></div>
+          <div class="showcard"><div class="ko">이 주소까지 가 주세요. 가능하면 가장 빠른 길로 부탁드립니다.</div><div class="ja">タクシー：この住所までお願いします。できれば一番早い道でお願いします。</div></div>
+          <div class="showcard"><div class="ko">저희는 여섯 명입니다. 지금 자리가 있을까요? 가능하면 같이 앉고 싶습니다.</div><div class="ja">飲食店：私たちは6人です。今、席はありますか。可能であれば一緒に座りたいです。</div></div>
+          <div class="showcard"><div class="ko">매운 음식을 잘 못 먹습니다. 가능하면 맵지 않게 만들어 주세요.</div><div class="ja">辛さ：辛いものが苦手です。できれば辛くしないでください。</div></div>
+          <div class="showcard"><div class="ko">저는 새우 알레르기가 있습니다. 이 음식에 새우가 들어가나요?</div><div class="ja">アレルギー：エビアレルギーがあります。この料理にエビは入っていますか。</div></div>
+          <div class="showcard"><div class="ko">숙소에 도착했는데 현관문이 열리지 않습니다. 출입 방법을 다시 알려 주세요.</div><div class="ja">Airbnb：宿に到着しましたが、玄関が開きません。入室方法をもう一度教えてください。</div></div>
+          <div class="showcard"><div class="ko">방금 택시에서 휴대폰을 두고 내린 것 같습니다. 확인을 도와주세요.</div><div class="ja">忘れ物：先ほどタクシーに携帯を置き忘れたと思います。確認を手伝ってください。</div></div>
+          <div class="showcard"><div class="ko">몸이 좋지 않고 숨쉬기가 힘듭니다. 병원이나 응급실에 가고 싶습니다.</div><div class="ja">体調不良：体調が悪く、呼吸が苦しいです。病院か救急外来へ行きたいです。</div></div>
+          <div class="tip">🗣️ 長い文を無理に発音しなくてもOK。「안녕하세요」→「죄송하지만」→スマホ画面を見せる→「부탁드려요」→「감사합니다」だけでも十分通じる。タクシーなら「안녕하세요. 여기 가 주세요.」＋地図画面でOK。</div>
+        </div>
+
+      </div>
+    </section>
+
     <!-- ITINERARY -->
     <section class="page" id="page-plan">
       <div class="container">
@@ -1634,6 +2366,7 @@
       flight: "フライト・宿泊",
       esim: "eSIM設定",
       apps: "必携アプリ",
+      phrases: "会話フレーズ",
       distances: "江南からの移動",
       spots: "スポット移動",
       rests: "気になる店",
@@ -1707,6 +2440,67 @@
     var ttBtn = document.getElementById("themeToggleTop");
     if (tgBtn) tgBtn.addEventListener("click", toggleTheme);
     if (ttBtn) ttBtn.addEventListener("click", toggleTheme);
+
+    // Phrasebook: live search + chip jump + scroll-spy
+    var pcSearch = document.getElementById("phraseSearch");
+    var pcEmpty = document.getElementById("pcEmpty");
+    var catSecs = document.querySelectorAll("#page-phrases .cat-sec");
+    if (pcSearch) {
+      pcSearch.addEventListener("input", function () {
+        var q = this.value.trim().toLowerCase();
+        var totalVisible = 0;
+        catSecs.forEach(function (sec) {
+          var items = sec.querySelectorAll("tbody tr, .showcard");
+          var any = false;
+          items.forEach(function (it) {
+            var hit = !q || it.textContent.toLowerCase().indexOf(q) !== -1;
+            it.style.display = hit ? "" : "none";
+            if (hit) any = true;
+          });
+          sec.style.display = any ? "" : "none";
+          if (any) totalVisible++;
+        });
+        if (pcEmpty) pcEmpty.style.display = (q && totalVisible === 0) ? "block" : "none";
+      });
+    }
+    var chipsNav = document.getElementById("chipsNav");
+    if (chipsNav) {
+      var chipEls = chipsNav.querySelectorAll("[data-scroll]");
+      var chipMap = {};
+      chipEls.forEach(function (c) { chipMap[c.getAttribute("data-scroll")] = c; });
+      function jumpOffset() {
+        var off = 16;
+        var tools = document.querySelector(".phrase-tools");
+        if (tools) off += tools.offsetHeight;
+        var tb = document.querySelector(".topbar");
+        if (tb && getComputedStyle(tb).display !== "none") off += tb.offsetHeight;
+        return off;
+      }
+      chipEls.forEach(function (c) {
+        c.addEventListener("click", function () {
+          var el = document.getElementById(c.getAttribute("data-scroll"));
+          if (el) {
+            var y = el.getBoundingClientRect().top + window.pageYOffset - jumpOffset();
+            window.scrollTo({ top: y, behavior: "smooth" });
+          }
+        });
+      });
+      if ("IntersectionObserver" in window) {
+        var spy = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) {
+              chipEls.forEach(function (c) { c.classList.remove("active"); });
+              var c = chipMap[e.target.id];
+              if (c) {
+                c.classList.add("active");
+                chipsNav.scrollLeft = c.offsetLeft - chipsNav.clientWidth / 2 + c.offsetWidth / 2;
+              }
+            }
+          });
+        }, { rootMargin: "-130px 0px -70% 0px" });
+        catSecs.forEach(function (s) { spy.observe(s); });
+      }
+    }
 
     show((location.hash || "#home").slice(1));
   })();
