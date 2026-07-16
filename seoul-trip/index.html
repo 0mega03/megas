@@ -349,6 +349,29 @@
   .rules .r { display: grid; grid-template-columns: 24px 1fr; gap: 11px; align-items: start; font-size: 13.5px; line-height: 1.55; }
   .rules .r::before { counter-increment: r; content: counter(r); background: var(--accent); color: #fff; width: 22px; height: 22px; border-radius: 999px; display: grid; place-items: center; font-size: 12px; font-weight: 800; margin-top: 1px; }
 
+  /* ---------- First-to-do (home) ---------- */
+  .firsttodo {
+    background:
+      radial-gradient(600px 200px at 100% -30%, var(--accent-soft), transparent),
+      var(--bg-card);
+    border: 1px solid var(--accent); border-left: 4px solid var(--accent);
+    border-radius: var(--radius); padding: 20px 22px; margin-top: 22px; box-shadow: var(--shadow);
+  }
+  .firsttodo .ft-head { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+  .firsttodo p { font-size: 14px; color: var(--text); margin-bottom: 12px; }
+  .firsttodo .ft-btn {
+    display: inline-block; background: var(--accent); color: #fff; font-weight: 800; font-size: 14px;
+    text-decoration: none; padding: 11px 18px; border-radius: 10px; cursor: pointer; transition: 0.15s;
+  }
+  .firsttodo .ft-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .firsttodo .ft-mini { margin-top: 12px; font-size: 12.5px; color: var(--text-sub); line-height: 1.8; }
+
+  /* ---------- Setting path & checkboxes (eSIM) ---------- */
+  .path { font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; background: var(--bg-elev); border: 1px solid var(--line); border-radius: 6px; padding: 2px 7px; }
+  .checks { display: grid; gap: 8px; }
+  .checks .c { display: grid; grid-template-columns: 18px 1fr; gap: 9px; font-size: 13.5px; align-items: baseline; line-height: 1.5; }
+  .checks .c::before { content: "☐"; color: var(--accent); font-weight: 800; }
+
   /* ---------- Copy box (souvenir) ---------- */
   .copybox {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -400,6 +423,7 @@
     <nav class="nav" id="nav">
       <a data-target="home"><span class="ic">🏠</span>ホーム</a>
       <a data-target="flight"><span class="ic">✈️</span>フライト・宿泊</a>
+      <a data-target="esim"><span class="ic">📶</span>eSIM設定</a>
       <a data-target="apps"><span class="ic">📱</span>必携アプリ</a>
       <a data-target="distances"><span class="ic">🚕</span>江南からの移動</a>
       <a data-target="spots"><span class="ic">📍</span>スポット移動</a>
@@ -433,8 +457,17 @@
           <h1>ソウル旅行 事前キャッチアップガイド</h1>
           <p>男6人・江南（カンナム）拠点のソウル旅行に向けて、出発前に押さえるべきアプリ・移動・グルメ・体験・行程を1サイトに集約。左メニューから各ページへ。</p>
         </div>
+
+        <div class="firsttodo">
+          <div class="ft-head">🚨 まず最初にやること（超重要）</div>
+          <p><strong>全員、出発前に韓国eSIM（LG U+）を各自で購入・設定</strong>しておく。現地でネットが使えないと移動・連絡・地図・配車が全部止まる。iPhoneの対応確認 → 各自購入 → Wi-Fiで設定まで、出発前に必ず済ませる。</p>
+          <a class="ft-btn" data-target="esim">📶 eSIM設定ガイドを開く →</a>
+          <div class="ft-mini">☐ <span class="path">*#06#</span> でEID確認 ／ ☐ SIMロックなし確認 ／ ☐ 各自でLG U+購入（4日・LTE or 5G）／ ☐ Wi-FiでeSIM追加 ／ ☐ 日本ではLG U+回線オフ</div>
+        </div>
+
         <div class="home-grid">
           <a class="home-tile" data-target="flight"><div class="ic">✈️</div><b>フライト・宿泊</b><span>往復便・宿・空港⇄江南の移動</span></a>
+          <a class="home-tile" data-target="esim"><div class="ic">📶</div><b>eSIM設定</b><span>出発前に各自で購入・設定（必須）</span></a>
           <a class="home-tile" data-target="apps"><div class="ic">📱</div><b>必携アプリ</b><span>CATCHTABLE / Naver Map のDL</span></a>
           <a class="home-tile" data-target="distances"><div class="ic">🚕</div><b>江南からの移動</b><span>各エリアの距離・時間・タクシー代</span></a>
           <a class="home-tile" data-target="spots"><div class="ic">📍</div><b>スポット移動</b><span>スポットA〜Cへの行き方・時間・料金</span></a>
@@ -598,6 +631,153 @@
         </div>
 
         <div class="tip">💡 <strong>事前準備</strong>：京成スカイライナーは<strong>往復とも全席指定・事前予約推奨</strong>（各6席）。韓国側の移動用に<strong>Kakao T</strong>（配車・料金見積り）を全員インストール。往路T3・復路T2でターミナルが違う点、7/20は早朝出発になる点をグループで共有。T-money（交通カード）は到着後コンビニで人数分購入。</div>
+      </div>
+    </section>
+
+    <!-- ESIM -->
+    <section class="page" id="page-esim">
+      <div class="container">
+        <div class="phead">
+          <div class="kicker">eSIM Setup</div>
+          <h1>韓国eSIM設定ガイド（LG U+）</h1>
+          <p>現地のネットは<strong>韓国eSIM（LG U+）を各自で購入・設定</strong>して確保する。出発前にWi-Fi環境で追加まで済ませておくのが安全。手順はそのままLINEに転送してもOK。</p>
+        </div>
+
+        <div class="concl">
+          <h3>🎯 結論</h3>
+          <p><b>通常利用中心の人はLTE、MacBookへのテザリングや動画・Web会議が多い人は5G</b>。今回は3泊4日なので<b>4日プラン</b>。全員が出発前に各自で購入し、Wi-FiでeSIM追加まで完了させる。</p>
+        </div>
+
+        <h2 class="block">全員が出発前にやること</h2>
+        <div class="app-card">
+          <div class="checks">
+            <div class="c"><span>電話アプリで <span class="path">*#06#</span> → <strong>EID</strong> が表示される（eSIM対応）</span></div>
+            <div class="c"><span><strong>SIMロックなし</strong>を確認（設定 › 一般 › 情報 › SIMロック）</span></div>
+            <div class="c"><span>LG U+公式サイトで<strong>各自購入</strong>（4日プラン・LTE or 5G）</span></div>
+            <div class="c"><span>届いたQRコードのメールを保存</span></div>
+            <div class="c"><span>Wi-Fi環境で<strong>eSIMを追加</strong>（追加後は回線を一旦オフ）</span></div>
+            <div class="c"><span>回線名を「韓国LGU+」に変更</span></div>
+            <div class="c"><span>日本ではLG U+回線をオフ／到着後にオン</span></div>
+            <div class="c"><span>到着後：モバイルデータ通信を<strong>LG U+に設定</strong>、日本回線のデータローミングはオフ</span></div>
+          </div>
+        </div>
+
+        <h2 class="block">使うeSIM</h2>
+        <div class="apps" style="grid-template-columns:1fr;">
+          <div class="app-card">
+            <h3>LG U+公式 韓国eSIM <span style="font-size:13px;color:var(--gold);">데이터 전용</span></h3>
+            <div class="role">韓国大手キャリア直販・データ無制限</div>
+            <p>韓国全域で5G／LTE、データ無制限、テザリング可、QRで設定、物理SIM入替不要、日本のSIMを残したまま使える。<br />
+            <span style="color:var(--text-sub)">※公式は「速度制限なしの完全無制限」と案内。ただし通信網へ過度な負荷時は速度制限の可能性あり。</span></p>
+            <div class="dl-row">
+              <a class="dl-btn" href="https://lguplus.com/korea-sim/jpn/mobile/product/esim?tab=data" target="_blank" rel="noopener">LG U+ 公式ページ<small>購入はこちら</small></a>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="block">① 事前確認（3点）</h2>
+        <div class="kv">
+          <div class="k">eSIM対応</div><div class="v">iPhone XS/XS Max/XR・11以降・SE(第2世代)以降。<strong>電話で <span class="path">*#06#</span> → EID が出ればOK</strong>（または 設定 › 一般 › 情報 › EID）。EIDは32桁前後の番号。</div>
+          <div class="k">SIMロック</div><div class="v">設定 › 一般 › 情報 › SIMロック が<strong>「SIMロックなし」</strong>。2021年10月以降に日本で購入した端末は基本ロックなし。あり の場合は購入キャリアで解除。</div>
+          <div class="k">5G対応</div><div class="v">5Gプランは<strong>iPhone 12以降／SE(第3世代)</strong>が目安。11以前・SE2はeSIMは使えるが5G非対応（接続はLTEになる）。</div>
+        </div>
+
+        <h2 class="block">② プラン（3泊4日）</h2>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>プラン</th><th>期間</th><th>目安料金</th><th>向いている人</th></tr></thead>
+          <tbody>
+            <tr><td class="area">5G 無制限</td><td>4日</td><td>約30,000ウォン<span class="yen">≒¥3,300前後</span></td><td>PCへテザリング／動画／Web会議（Meet・Zoom）／写真・動画の大量送受信</td></tr>
+            <tr><td class="area">LTE 無制限</td><td>4日</td><td>約23,000ウォン<span class="yen">≒¥2,500前後</span></td><td>LINE／Google・NAVER Map／SNS／Web検索／店舗予約／軽い動画</td></tr>
+          </tbody>
+        </table></div>
+        <div class="note">💳 料金・キャンペーンは購入時点で変わるため最終は購入画面で確認。<strong>利用期間は「韓国で最初にデータ通信した時点」からカウント</strong>（例：7/17 19時に初通信なら4日プランは概ね7/21 19時頃まで）。</div>
+
+        <h2 class="block">③ 購入前に用意するもの</h2>
+        <div class="chips">
+          <span class="chip">パスポート</span><span class="chip">クレジットカード</span><span class="chip">設定するiPhone</span><span class="chip">Wi-Fi環境</span><span class="chip">QR表示用の別端末/PC</span><span class="chip">メールアドレス</span>
+        </div>
+        <div class="warn" style="margin-top:14px;">📷 <strong>QRコードの注意</strong>：設定するiPhone自身の画面にQRを出すと、そのiPhoneのカメラでは読めない。<strong>PCまたは同行者のスマホにQRを表示して自分のiPhoneで読み込む</strong>（または印刷）のが確実。</div>
+
+        <h2 class="block">④ 購入手順</h2>
+        <div class="kv">
+          <div class="k">1</div><div class="v">LG U+公式ページを開く（上の「公式ページ」ボタン）</div>
+          <div class="k">2</div><div class="v">商品が<strong>「韓国eSIM／データのみ」</strong>か確認（通話が必要なら「データ＋音声」）</div>
+          <div class="k">3</div><div class="v">速度を選択：<strong>LTE または 5G</strong></div>
+          <div class="k">4</div><div class="v">日数：<strong>4日</strong>（期間は現地初回通信からカウント）</div>
+          <div class="k">5</div><div class="v">氏名・パスポート情報・メール・利用予定日・支払情報を入力（<strong>パスポート表記どおり</strong>）</div>
+          <div class="k">6</div><div class="v">クレカ決済 → 登録メールに<strong>購入完了メール・設定用QR・注文番号</strong>が届く（届かなければ迷惑メール確認）</div>
+        </div>
+
+        <h2 class="block">⑤ 購入時の重要な注意</h2>
+        <div class="warn">
+          🚫 <strong>各自で購入</strong>（パスポート1冊で最大3つまで。6人分を1人がまとめない）／<strong>購入後は返金不可</strong>（EIDあり・SIMロックなし・日数・メールを購入前に必ず確認）／<strong>QRを他人のiPhoneで読み込まない</strong>（先に読むと本来の人が使えなくなる）／<strong>eSIMを削除しない</strong>（再インストール・再発行不可）／<strong>QRをSNS・グループに公開しない</strong>。
+        </div>
+
+        <h2 class="block">⑥ 日本での eSIM 追加（Wi-Fi環境で）</h2>
+        <div class="kv">
+          <div class="k">追加</div><div class="v">設定 › モバイル通信 › <strong>eSIMを追加</strong> › <strong>QRコードを使用</strong> → 届いたQRを読み取り → <strong>eSIMをアクティベート › 続ける</strong></div>
+          <div class="k">追加後</div><div class="v">日本で通信が始まらないよう、<strong>LG U+回線は一旦オフ</strong>にしておく</div>
+        </div>
+
+        <h2 class="block">⑦ 回線名を変更</h2>
+        <div class="kv">
+          <div class="k">手順</div><div class="v">設定 › モバイル通信 › 追加したLG U+回線 › <strong>モバイル通信プランの名称 › カスタム名称</strong> → 「韓国LGU+」「旅行用」などに</div>
+          <div class="k">例</div><div class="v">主回線：（普段の日本回線）／旅行用：<strong>韓国LGU+</strong>　→ 現地で間違えにくくなる</div>
+        </div>
+
+        <h2 class="block">⑧ 日本 出発前の状態</h2>
+        <div class="kv">
+          <div class="k">日本のSIM（主回線）</div><div class="v">オン／データローミング：<strong>オフ</strong></div>
+          <div class="k">LG U+ eSIM</div><div class="v">この回線：<strong>オフ</strong></div>
+          <div class="k">モバイルデータ通信</div><div class="v">普段の日本回線</div>
+        </div>
+
+        <h2 class="block">⑨ 韓国 到着後の設定</h2>
+        <div class="kv">
+          <div class="k">1</div><div class="v">設定 › モバイル通信 › 韓国LGU+ › <strong>この回線をオン</strong></div>
+          <div class="k">2</div><div class="v">設定 › モバイル通信 › モバイルデータ通信 › <strong>韓国LGU+</strong> に変更</div>
+          <div class="k">3</div><div class="v"><strong>「モバイルデータ通信の切替を許可」→ オフ</strong>（意図しないローミング防止）</div>
+          <div class="k">4</div><div class="v">LG U+側の<strong>データローミング</strong>は購入案内／届いたメールに従って設定（旅行用eSIMはオンが必要な場合あり）</div>
+          <div class="k">5</div><div class="v">日本回線（主回線）のデータローミングを<strong>オフ</strong>に固定</div>
+        </div>
+
+        <h2 class="block">⑩ デュアルSIM 推奨設定（主回線＝普段の日本回線）</h2>
+        <div class="kv">
+          <div class="k">主回線（日本）</div><div class="v">この回線：オン／データローミング：<strong>オフ</strong>／デフォルト音声回線：主回線</div>
+          <div class="k">LG U+</div><div class="v">この回線：オン／モバイルデータ通信：<strong>LG U+</strong></div>
+          <div class="k">共通</div><div class="v">モバイルデータ通信の切替を許可：<strong>オフ</strong></div>
+          <div class="k">結果</div><div class="v">データ通信＝LG U+／日本の電話番号・SMS受信＝主回線／LINE通話＝LG U+のデータ／テザリング＝LG U+</div>
+        </div>
+        <div class="note">📱 <strong>主回線はどのキャリアでも手順は同じ</strong>（povo／docomo／au／SoftBank／ahamo／楽天モバイル 等）。ただし<strong>韓国で主回線の通常電話に出る・かけると海外ローミング通話料</strong>がかかる可能性。海外データの扱いは各社で異なる（ahamo・楽天は一部無料枠、他は基本オフ推奨）が、<strong>今回はデータをLG U+に固定するので、主回線のデータローミングは全社オフでOK</strong>。povoなど海外データトッピング未購入の回線は特にデータをLG U+側へ固定する。</div>
+
+        <h2 class="block">⑪ 現地で電話を使いたい場合</h2>
+        <div class="kv">
+          <div class="k">データ通話</div><div class="v">LINE通話／FaceTime Audio／WhatsApp／Instagram／Google Meet／Zoom は<strong>データ通信なので利用可</strong></div>
+          <div class="k">通常電話</div><div class="v">データ専用eSIMからは<strong>通常発信・SMS不可</strong>。① 主回線から国際ローミング発信 ② 店員・ホテルに依頼 ③ NAVER予約・Catch Table を使う ④ 「データ＋音声」プランを購入、のいずれか</div>
+        </div>
+
+        <h2 class="block">⑫ テザリング</h2>
+        <div class="kv">
+          <div class="k">iPhone側</div><div class="v">設定 › <strong>インターネット共有 › ほかの人の接続を許可 → オン</strong>。表示のWi-FiパスワードをMacBook等に入力</div>
+          <div class="k">つながらない</div><div class="v">① iPhone再起動 ② LG U+回線オンか ③ モバイルデータがLG U+か ④ 機内モードON→OFF ⑤ 共有OFF→ON ⑥ パスワード再入力</div>
+        </div>
+
+        <h2 class="block">⑬ 接続できない時のチェック</h2>
+        <div class="kv">
+          <div class="k">順に確認</div><div class="v">① 韓国LGU+：この回線オン ② モバイルデータ通信＝韓国LGU+ ③ データローミング（購入メールの指示に従う）④ iPhone再起動 ⑤ 機内モードON→10秒→OFF ⑥ ネットワーク選択＝自動</div>
+          <div class="k">最終手段</div><div class="v">設定 › 一般 › 転送またはiPhoneをリセット › <strong>ネットワーク設定をリセット</strong>（保存Wi-Fiパス・VPN設定が消えるので最後に）</div>
+        </div>
+
+        <h2 class="block">⑭ 絶対にしないこと</h2>
+        <div class="warn">
+          ✋ eSIMを削除する／他人のQRを読み込む／QRをSNS・グループへ公開する／1つのQRを複数端末で使う／日本回線をモバイルデータ通信のままにする／「モバイルデータ通信の切替を許可」をオンにする／購入メールを削除する／EID・SIMロックを確認せず購入する。
+        </div>
+
+        <h2 class="block">⑮ 帰国後の設定</h2>
+        <div class="kv">
+          <div class="k">日本回線（主回線）</div><div class="v">モバイルデータ通信：普段の回線に戻す／データローミング：オフ</div>
+          <div class="k">LG U+</div><div class="v">この回線：オフ。<strong>すぐ削除しない</strong>（不要が確定してから削除）</div>
+        </div>
       </div>
     </section>
 
@@ -1355,6 +1535,7 @@
     var titles = {
       home: "ソウル旅行ガイド",
       flight: "フライト・宿泊",
+      esim: "eSIM設定",
       apps: "必携アプリ",
       distances: "江南からの移動",
       spots: "スポット移動",
